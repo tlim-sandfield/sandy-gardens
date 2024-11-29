@@ -3,7 +3,7 @@
 
 Problem: Filling out timesheets is tedious, boring and often result in incomplete or inaccurate submissions.
 
-Solution: **SandyGardens** - Gamify your timesheets by cultivating your very own garden
+Solution: **SandyGardens** - Cultivate your very own garden by filling out your timesheet!
 
 >Incomplete Description
 
