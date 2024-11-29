@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const settings = ['Neighbours', 'Help', 'Settings'];
+const menu = ['🧑‍🤝‍🧑 Neighbours', '❓ Help', '⚙️ Settings'];
 
 export default function AppBarUsage() {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -59,8 +59,7 @@ export default function AppBarUsage() {
                 </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
                 <Box sx={{ flexGrow: 0, mr: 5, }}>
-                    {/* TODO: REPLACE WITH COIN ICON */}
-                    Coins: 52
+                    🪙 52
                 </Box>
                 <Box>
                     <Tooltip title="Open menu">
@@ -84,9 +83,9 @@ export default function AppBarUsage() {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                     >
-                        {settings.map((setting) => (
-                            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                        {menu.map((menu) => (
+                            <MenuItem key={menu} onClick={handleCloseUserMenu}>
+                                <Typography sx={{ textAlign: 'center' }}>{menu}</Typography>
                             </MenuItem>
                         ))}
                     </Menu>
