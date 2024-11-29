@@ -1,7 +1,8 @@
+"use client"
+
 import { useRef, useState } from 'react';
 import { IRefPhaserGame, PhaserGame } from './game/PhaserGame';
 import { MainMenu } from './game/scenes/MainMenu';
-import AppBarUsage from './components/AppBarUsage';
 
 export default function App() {
     // The sprite can only be moved in the MainMenu Scene
@@ -75,23 +76,20 @@ export default function App() {
     }
 
     return (
-        <div id="app">
-            <AppBarUsage />
-            <div id="game">
-                <PhaserGame ref={phaserRef} currentActiveScene={currentScene} />
+        <div id="game">
+            <PhaserGame ref={phaserRef} currentActiveScene={currentScene} />
+            <div>
                 <div>
-                    <div>
-                        <button className="button" onClick={changeScene}>Change Scene</button>
-                    </div>
-                    <div>
-                        <button disabled={canMoveSprite} className="button" onClick={moveSprite}>Toggle Movement</button>
-                    </div>
-                    <div className="spritePosition">Sprite Position:
-                        <pre>{`{\n  x: ${spritePosition.x}\n  y: ${spritePosition.y}\n}`}</pre>
-                    </div>
-                    <div>
-                        <button className="button" onClick={addSprite}>Add New Sprite</button>
-                    </div>
+                    <button className="button" onClick={changeScene}>Change Scene</button>
+                </div>
+                <div>
+                    <button disabled={canMoveSprite} className="button" onClick={moveSprite}>Toggle Movement</button>
+                </div>
+                <div className="spritePosition">Sprite Position:
+                    <pre>{`{\n  x: ${spritePosition.x}\n  y: ${spritePosition.y}\n}`}</pre>
+                </div>
+                <div>
+                    <button className="button" onClick={addSprite}>Add New Sprite</button>
                 </div>
             </div>
         </div>

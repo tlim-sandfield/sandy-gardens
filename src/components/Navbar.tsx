@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,10 +10,16 @@ import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Link from 'next/link';
+import ProfilePicture from '../../public/assets/bg.png';
 
-const menu = ['🧑‍🤝‍🧑 Neighbours', '❓ Help', '⚙️ Settings'];
+const menu = [
+    { label: '🧑‍🤝‍🧑 Neighbours', href: '/neighbours' },
+    { label: '❓ Help', href: '/help' },
+    { label: '⚙️ Settings', href: '/settings' },
+];
 
-export default function AppBarUsage() {
+export default function Navbar() {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -64,7 +72,7 @@ export default function AppBarUsage() {
                 <Box>
                     <Tooltip title="Open menu">
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                            <Avatar alt="Remy Sharp" src={ProfilePicture.src} />
                         </IconButton>
                     </Tooltip>
                     <Menu
@@ -83,10 +91,16 @@ export default function AppBarUsage() {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                     >
-                        {menu.map((menu) => (
-                            <MenuItem key={menu} onClick={handleCloseUserMenu}>
-                                <Typography sx={{ textAlign: 'center' }}>{menu}</Typography>
-                            </MenuItem>
+                        {menu.map(({ label, href }) => (
+                            <Link
+                                href={href}
+                                className='nav-link'>
+                                <MenuItem
+                                    key={label}
+                                    onClick={handleCloseUserMenu}>
+                                    <Typography sx={{ textAlign: 'center' }}>{label}</Typography>
+                                </MenuItem>
+                            </Link>
                         ))}
                     </Menu>
                 </Box>
