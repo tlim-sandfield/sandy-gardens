@@ -1,9 +1,11 @@
 import App from "@/App";
+import GameNavbar from "@/components/GameNavbar";
 
 export default function Home() {
-    return (
-      <div>
-        <App />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <GameNavbar />
+      <App />
+    </div>
+  );
+}

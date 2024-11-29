@@ -19,7 +19,7 @@ const menu = [
     { label: '⚙️ Settings', href: '/settings' },
 ];
 
-export default function Navbar() {
+export default function GameNavbar() {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -39,22 +39,7 @@ export default function Navbar() {
                     component="a"
                     sx={{
                         mr: 2,
-                        display: { xs: 'none', md: 'flex' },
-                        fontWeight: 700,
-                        color: 'inherit',
-                        textDecoration: 'none',
-                    }}
-                >
-                    John Doe
-                </Typography>
-                <Typography
-                    variant="h5"
-                    noWrap
-                    component="a"
-                    href="#app-bar-with-responsive-menu"
-                    sx={{
-                        mr: 2,
-                        display: { xs: 'flex', md: 'none' },
+                        display: { md: 'flex' },
                         fontWeight: 700,
                         color: 'inherit',
                         textDecoration: 'none',
@@ -65,7 +50,6 @@ export default function Navbar() {
                 <Box sx={{ flexGrow: 2, ml: 3 }}>
                     Level 23
                 </Box>
-                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
                 <Box sx={{ flexGrow: 0, mr: 5, }}>
                     🪙 52
                 </Box>
