@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const settings = ['Shop', 'Neighbours', 'Help', 'Settings'];
+const settings = ['Neighbours', 'Help', 'Settings'];
 
 export default function AppBarUsage() {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -39,9 +39,6 @@ export default function AppBarUsage() {
                 >
                     John Doe
                 </Typography>
-                <Box sx={{ flexGrow: 0, ml: 3, }}>
-                    Level 23
-                </Box>
                 <Typography
                     variant="h5"
                     noWrap
@@ -50,7 +47,6 @@ export default function AppBarUsage() {
                     sx={{
                         mr: 2,
                         display: { xs: 'flex', md: 'none' },
-                        flexGrow: 1,
                         fontWeight: 700,
                         color: 'inherit',
                         textDecoration: 'none',
@@ -58,13 +54,15 @@ export default function AppBarUsage() {
                 >
                     John Doe
                 </Typography>
+                <Box sx={{ flexGrow: 2, ml: 3 }}>
+                    Level 23
+                </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
                 <Box sx={{ flexGrow: 0, mr: 5, }}>
                     {/* TODO: REPLACE WITH COIN ICON */}
                     Coins: 52
                 </Box>
-                <Box sx={{ flexGrow: 0 }}>
-
+                <Box>
                     <Tooltip title="Open menu">
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                             <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
