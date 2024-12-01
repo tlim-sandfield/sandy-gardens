@@ -16,7 +16,7 @@ const menu = [
   { label: '⚙️ Settings', href: '/settings' },
 ];
 
-export default function PermanentDrawerLeft() {
+export default function PermanentDrawer() {
   return (
     <Box sx={{ position: "absolute", zIndex: 0 }}>
       <Drawer

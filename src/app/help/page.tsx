@@ -1,10 +1,14 @@
 import MenuNavbar from "@/components/MenuNavbar";
+import PermanentDrawer from "@/components/PermanentDrawer";
 
 export default function HelpPage() {
-    return(
+    return (
         <div>
             <MenuNavbar />
-            Help
+            <PermanentDrawer />
+            <div className="page-content">
+                <h1>Help</h1>
+            </div>
         </div>
     )
 }
