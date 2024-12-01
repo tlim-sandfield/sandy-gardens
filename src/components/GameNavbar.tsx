@@ -50,7 +50,7 @@ export default function GameNavbar() {
                 <Box sx={{ flexGrow: 2, ml: 3 }}>
                     Level 23
                 </Box>
-                <Box sx={{ flexGrow: 0, mr: 5, }}>
+                <Box sx={{ mr: 5 }}>
                     🪙 52
                 </Box>
                 <Box>
