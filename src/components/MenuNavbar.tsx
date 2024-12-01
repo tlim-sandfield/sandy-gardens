@@ -15,7 +15,7 @@ const menu = [
 
 export default function MenuNavbar() {
     return (
-        <AppBar position="static" sx={{ backgroundColor: "white", color: "black" }}>
+        <AppBar position="absolute" sx={{ backgroundColor: "white", color: "black" }}>
             <Toolbar>
                 <Typography
                     variant="h5"
