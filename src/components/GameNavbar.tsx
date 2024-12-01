@@ -36,7 +36,6 @@ export default function GameNavbar() {
                 <Typography
                     variant="h5"
                     noWrap
-                    component="a"
                     sx={{
                         mr: 2,
                         display: { md: 'flex' },

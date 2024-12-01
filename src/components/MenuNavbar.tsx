@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
-import Link from 'next/link';
 
 const menu = [
     { label: '🧑‍🤝‍🧑 Neighbours', href: '/neighbours' },
@@ -17,13 +16,12 @@ const menu = [
 export default function MenuNavbar() {
     return (
         <AppBar position="static" sx={{ backgroundColor: "white", color: "black" }}>
-            <Toolbar sx={{ mx: 3 }}>
+            <Toolbar>
                 <Typography
                     variant="h5"
                     noWrap
                     component="a"
                     sx={{
-                        mr: 2,
                         display: { md: 'flex' },
                         fontWeight: 700,
                         color: 'inherit',
@@ -32,29 +30,21 @@ export default function MenuNavbar() {
                 >
                     Main Menu
                 </Typography>
-                <Box sx={{ flexGrow: 2 }}>
-                </Box>
+                <Box sx={{ flexGrow: 2 }} />
                 <Box>
-                    <Link
-                        href="/"
-                        className='nav-link'>
-                        <Button variant='contained'>
-                            <Typography
-                                variant="h5"
-                                noWrap
-                                component="a"
-                                sx={{
-                                    mr: 2,
-                                    display: { md: 'flex' },
-                                    textDecoration: 'none',
-                                }}
-                            >
-                                ⬅ Go Back
-                            </Typography>
-                        </Button>
-                    </Link>
+                    <Button variant='contained' sx={{ backgroundColor: "lightgreen" }}>
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="a"
+                            href="/"
+                            className='go-back'
+                        >
+                            ⬅ Go Back
+                        </Typography>
+                    </Button>
                 </Box>
             </Toolbar>
-        </AppBar>
+        </AppBar >
     );
 }
