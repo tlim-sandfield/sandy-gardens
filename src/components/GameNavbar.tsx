@@ -1,93 +1,77 @@
 "use client"
 
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import Link from 'next/link';
-import ProfilePicture from '../../public/assets/bg.png';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Box, styled } from '@mui/material';
 
-const menu = [
-    { label: '🧑‍🤝‍🧑 Neighbours', href: '/neighbours' },
-    { label: '❓ Help', href: '/help' },
-    { label: '⚙️ Settings', href: '/settings' },
-];
+const drawerWidth = 240;
 
-export default function GameNavbar() {
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+interface GameNavbarProps {
+    open: boolean;
+    setOpen: Function
+}
 
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
+interface AppBarProps extends MuiAppBarProps {
+    open?: boolean;
+}
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({ theme }) => ({
+    transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    variants: [
+        {
+            props: ({ open }) => open,
+            style: {
+                width: `calc(100% - ${drawerWidth}px)`,
+                marginLeft: `${drawerWidth}px`,
+                transition: theme.transitions.create(['margin', 'width'], {
+                    easing: theme.transitions.easing.easeOut,
+                    duration: theme.transitions.duration.enteringScreen,
+                }),
+            },
+        },
+    ],
+}));
+
+export default function GameNavbar({ open, setOpen }: GameNavbarProps) {
+    const handleDrawerOpen = () => {
+        setOpen(true);
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: "white", color: "black" }}>
-            <Toolbar sx={{ mx: 3 }}>
-                <Typography
-                    variant="h5"
-                    noWrap
-                    sx={{
-                        mr: 2,
-                        display: { md: 'flex' },
-                        fontWeight: 700,
-                        color: 'inherit',
-                        textDecoration: 'none',
-                    }}
+        <AppBar position="fixed" open={open} sx={{ backgroundColor: "forestgreen" }}>
+            <Toolbar>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start"
+                    sx={[
+                        {
+                            mr: 2,
+                        },
+                        open && { display: 'none' },
+                    ]}
                 >
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" noWrap component="div">
                     John Doe
                 </Typography>
-                <Box sx={{ flexGrow: 2, ml: 3 }}>
-                    Level 23
-                </Box>
-                <Box sx={{ mr: 5 }}>
-                    🪙 52
-                </Box>
+                <Box sx={{ flexGrow: 2 }} />
                 <Box>
-                    <Tooltip title="Open menu">
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Avatar alt="Remy Sharp" src={ProfilePicture.src} />
-                        </IconButton>
-                    </Tooltip>
-                    <Menu
-                        sx={{ mt: '45px' }}
-                        id="menu-appbar"
-                        anchorEl={anchorElUser}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={Boolean(anchorElUser)}
-                        onClose={handleCloseUserMenu}
-                    >
-                        {menu.map(({ label, href }) => (
-                            <Link
-                                href={href}
-                                className='nav-link'>
-                                <MenuItem
-                                    key={label}
-                                    onClick={handleCloseUserMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}>{label}</Typography>
-                                </MenuItem>
-                            </Link>
-                        ))}
-                    </Menu>
+                    Level 23 &nbsp; | &nbsp; 🪙 52
                 </Box>
             </Toolbar>
         </AppBar>
     );
 }
+
