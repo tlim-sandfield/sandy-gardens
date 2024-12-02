@@ -19,6 +19,7 @@ const theme = createTheme({
       fontWeightMedium: 500,
       fontWeightBold: 700,
   },
+  cssVariables: true,
 });
 
 export default theme;

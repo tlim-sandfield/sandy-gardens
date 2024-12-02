@@ -2,7 +2,7 @@
 
 import MenuContentStructure from "@/components/MenuContentStructure";
 import MenuNavbar from "@/components/MenuNavbar";
-import PersistentDrawer from "@/components/PersistentDrawer";
+import PersistentDrawer from "@/components/PersistentDrawerLeft";
 import SettingsContent from "@/components/content/SettingsContent";
 import { useState } from "react";
 

@@ -12,6 +12,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { useEffect, useState } from "react";
 
 const drawerWidth = 240;
 
@@ -41,6 +42,15 @@ export default function PersistentDrawerLeft({
     setOpen,
 }: PersistentDrawerLeftProps) {
     const theme = useTheme();
+    const [currentPage, setCurrentPage] = useState("");
+
+    // TODO: drawer-active not being added for 🏡 Garden due to conflicts with PhaserGame
+    useEffect(() => {
+        const storedPage = localStorage.getItem("currentPage");
+        if (storedPage) {
+            setCurrentPage(storedPage);
+        }
+    }, []);
 
     const handleDrawerClose = () => {
         setOpen(false);
@@ -76,7 +86,15 @@ export default function PersistentDrawerLeft({
                 <List>
                     {menu.map(({ label, href }) => (
                         <ListItem key={label} disablePadding>
-                            <ListItemButton href={href}>
+                            <ListItemButton
+                                href={href}
+                                className={
+                                    currentPage === label ? "drawer-active" : ""
+                                }
+                                onClick={() =>
+                                    localStorage.setItem("currentPage", label)
+                                }
+                            >
                                 <ListItemText primary={label} />
                             </ListItemButton>
                         </ListItem>

@@ -2,7 +2,7 @@
 
 import App from "@/App";
 import GameNavbar from "@/components/GameNavbar";
-import PersistentDrawerLeft from "@/components/PersistentDrawer";
+import PersistentDrawerLeft from "@/components/PersistentDrawerLeft";
 import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/styles/theme.js";

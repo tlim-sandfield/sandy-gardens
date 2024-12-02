@@ -16,9 +16,9 @@ body {
     text-decoration: none;
 }
 
-.active {
+.drawer-active {
     background-color: var(--mui-palette-primary-main);
-    font-weight: bold;
+    color: white;
 
     &:hover {
         background-color: var(--mui-palette-primary-main);
