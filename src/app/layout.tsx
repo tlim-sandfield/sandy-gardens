@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import { ThemeProvider } from "@mui/material/styles";
+import theme from '@/styles/theme.js';
 
 export const metadata: Metadata = {
     title: "SandyGardens",
@@ -18,7 +17,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <link rel="icon" href="favicon.png" type="image/x-icon" />
-            <body className={`${inter.className}`}>{children}</body>
+            <body>
+                <ThemeProvider theme={theme}>{children}</ThemeProvider>
+            </body>
         </html>
     );
 }

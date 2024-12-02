@@ -8,6 +8,7 @@ const Search = styled("div")(({ theme }) => ({
     borderRadius: theme.shape.borderRadius,
     border: "1px solid black",
     backgroundColor: alpha(theme.palette.common.white, 0.15),
+    marginBottom: "20px",
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -30,7 +31,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function NeighbourSearchBar() {
+export default function NeighboursSearchBar() {
     return (
         <div>
             <Search>

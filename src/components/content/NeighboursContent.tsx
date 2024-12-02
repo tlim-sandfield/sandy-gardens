@@ -1,4 +1,5 @@
-import NeighbourSearchBar from "../NeighbourSearchBar";
+import NeighboursList from "../NeighboursList";
+import NeighboursSearchBar from "../NeighboursSearchBar";
 
 export default function NeighboursContent() {
     return (
@@ -15,12 +16,8 @@ export default function NeighboursContent() {
                 </div>
 
                 <div className="content-right">
-                    <NeighbourSearchBar />
-                    <p>
-                        {/* Add people as neighbors and choose where they are on
-                        your map, the higher up on this list the closer they
-                        will be to your plot. */}
-                    </p>
+                    <NeighboursSearchBar />
+                    <NeighboursList />
                 </div>
             </div>
         </div>
