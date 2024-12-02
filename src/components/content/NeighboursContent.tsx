@@ -1,4 +1,4 @@
-import NeighboursList from "../NeighboursList";
+import NeighboursAddList from "../NeighboursAddList";
 import NeighboursSearchBar from "../NeighboursSearchBar";
 import DraggableList from "../DraggableList";
 
@@ -19,7 +19,7 @@ export default function NeighboursContent() {
 
                 <div className="content-right">
                     <NeighboursSearchBar />
-                    <NeighboursList />
+                    <NeighboursAddList />
                 </div>
             </div>
         </div>
