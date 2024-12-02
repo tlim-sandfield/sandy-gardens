@@ -17,11 +17,11 @@ body {
 }
 
 .active {
-    background-color: lightgreen;
+    background-color: var(--mui-palette-primary-main);
     font-weight: bold;
 
     &:hover {
-        background-color: lightgreen;
+        background-color: var(--mui-palette-primary-main);
     }
 }
 

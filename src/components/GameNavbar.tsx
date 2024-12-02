@@ -50,7 +50,7 @@ export default function GameNavbar({ open, setOpen }: GameNavbarProps) {
         <AppBar
             position="fixed"
             open={open}
-            sx={{ backgroundColor: "forestgreen" }}
+            sx={{ backgroundColor: "--mui-palette-primary-main" }}
         >
             <Toolbar>
                 <IconButton
