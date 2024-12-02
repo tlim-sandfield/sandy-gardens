@@ -37,7 +37,7 @@ export default function NeighboursList() {
                                 id={labelId}
                                 primary={`Person ${value + 1}`}
                             />
-                            <Button>Add</Button>
+                            <Button color="primary">Add</Button>
                         </div>
                     </ListItem>
                 );
