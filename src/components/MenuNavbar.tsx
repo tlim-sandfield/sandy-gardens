@@ -6,14 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, styled } from "@mui/material";
-import { lightGreen } from "@mui/material/colors";
-
-const menu = [
-    { label: "🧑‍🤝‍🧑 Neighbours", href: "/neighbours" },
-    { label: "❓ Help", href: "/help" },
-    { label: "⚙️ Settings", href: "/settings" },
-];
+import { styled } from "@mui/material";
 
 const drawerWidth = 240;
 
