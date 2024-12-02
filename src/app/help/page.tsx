@@ -1,14 +1,21 @@
+"use client"
+
+import MenuContentStructure from "@/components/MenuContentStructure";
 import MenuNavbar from "@/components/MenuNavbar";
-import PermanentDrawer from "@/components/PermanentDrawer";
+import PersistentDrawer from "@/components/PersistentDrawer";
+import HelpContent from "@/components/content/HelpContent";
+import { useState } from "react";
 
 export default function HelpPage() {
+    const [open, setOpen] = useState(true);
+
     return (
-        <div>
-            <MenuNavbar />
-            <PermanentDrawer />
-            <div className="page-content">
-                <h1>Help</h1>
-            </div>
+        <div className="page-content">
+            <MenuNavbar open={open} setOpen={setOpen} />
+            <PersistentDrawer open={open} setOpen={setOpen} />
+            <MenuContentStructure open={open}>
+                <HelpContent />
+            </MenuContentStructure>
         </div>
     )
 }

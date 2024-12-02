@@ -1,15 +1,21 @@
+"use client"
+
+import MenuContentStructure from "@/components/MenuContentStructure";
 import MenuNavbar from "@/components/MenuNavbar";
-import PermanentDrawer from "@/components/PermanentDrawer";
+import PersistentDrawer from "@/components/PersistentDrawer";
+import NeighboursContent from "@/components/content/NeighboursContent";
+import { useState } from "react";
 
 export default function NeighboursPage() {
+    const [open, setOpen] = useState(true);
+
     return (
-        <div>
-            <MenuNavbar />
-            <PermanentDrawer />
-            <div className="page-content">
-                <h1>Neighbours</h1>
-                <p>Add people as neighbors and choose where they are on your map, the higher up on this list the closer they will be to your plot. Random players will appear around your plot first if you don’t add neighbours.</p>
-            </div>
+        <div className="page-content">
+            <MenuNavbar open={open} setOpen={setOpen} />
+            <PersistentDrawer open={open} setOpen={setOpen} />
+            <MenuContentStructure open={open}>
+                <NeighboursContent />
+            </MenuContentStructure>
         </div>
     )
 }
