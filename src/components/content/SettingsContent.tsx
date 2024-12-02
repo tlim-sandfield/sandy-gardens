@@ -3,5 +3,5 @@ export default function SettingsContent() {
         <div>
             <h1>Settings</h1>
         </div>
-    )
+    );
 }

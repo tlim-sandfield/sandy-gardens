@@ -1,17 +1,12 @@
 {
-    "name": "template-nextjs",
+    "name": "sandy-gardens",
     "version": "1.1.1",
-    "description": "A Phaser 3 Next.js project template that demonstrates Next.js with React communication and uses Vite for bundling.",
+    "description": "Cultivate your very own garden by filling out your Sandfield timesheet!",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/phaserjs/template-nextjs.git"
+        "url": "git+https://github.com/tlim-sandfield/sandy-gardens"
     },
-    "author": "Phaser Studio <support@phaser.io> (https://phaser.io/)",
-    "license": "MIT",
-    "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
-    "bugs": {
-        "url": "https://github.com/phaserjs/template-nextjs/issues"
-    },
+    "author": "Tony Lim (https://tonylxm.com)",
     "homepage": "https://github.com/phaserjs/template-nextjs#readme",
     "keywords": [
         "phaser",
@@ -23,7 +18,8 @@
     ],
     "scripts": {
         "dev": "next dev",
-        "build": "next build"
+        "build": "next build",
+        "prettier": "npx prettier . --write"
     },
     "dependencies": {
         "@emotion/react": "^11.13.5",

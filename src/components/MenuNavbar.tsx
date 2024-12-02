@@ -1,25 +1,18 @@
-"use client"
+"use client";
 
-import * as React from 'react';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Box, styled } from '@mui/material';
-import { lightGreen } from '@mui/material/colors';
-
-const menu = [
-    { label: '🧑‍🤝‍🧑 Neighbours', href: '/neighbours' },
-    { label: '❓ Help', href: '/help' },
-    { label: '⚙️ Settings', href: '/settings' },
-];
+import * as React from "react";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import MenuIcon from "@mui/icons-material/Menu";
+import { styled } from "@mui/material";
 
 const drawerWidth = 240;
 
 interface GameNavbarProps {
     open: boolean;
-    setOpen: Function
+    setOpen: Function;
 }
 
 interface AppBarProps extends MuiAppBarProps {
@@ -27,9 +20,9 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
+    shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme }) => ({
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
@@ -39,7 +32,7 @@ const AppBar = styled(MuiAppBar, {
             style: {
                 width: `calc(100% - ${drawerWidth}px)`,
                 marginLeft: `${drawerWidth}px`,
-                transition: theme.transitions.create(['margin', 'width'], {
+                transition: theme.transitions.create(["margin", "width"], {
                     easing: theme.transitions.easing.easeOut,
                     duration: theme.transitions.duration.enteringScreen,
                 }),
@@ -54,7 +47,11 @@ export default function GameNavbar({ open, setOpen }: GameNavbarProps) {
     };
 
     return (
-        <AppBar position="fixed" open={open} sx={{ backgroundColor: "forestgreen" }}>
+        <AppBar
+            position="fixed"
+            open={open}
+            sx={{ backgroundColor: "--mui-palette-primary-main" }}
+        >
             <Toolbar>
                 <IconButton
                     color="inherit"
@@ -65,7 +62,7 @@ export default function GameNavbar({ open, setOpen }: GameNavbarProps) {
                         {
                             mr: 2,
                         },
-                        open && { display: 'none' },
+                        open && { display: "none" },
                     ]}
                 >
                     <MenuIcon />
@@ -77,4 +74,3 @@ export default function GameNavbar({ open, setOpen }: GameNavbarProps) {
         </AppBar>
     );
 }
-
