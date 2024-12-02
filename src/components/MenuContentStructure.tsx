@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
 
 const drawerWidth = 240;
 
@@ -8,13 +8,18 @@ interface MenuContentStructureProps {
     children?: React.ReactNode;
 }
 
-const MenuContentStructure = ({ open, children }: MenuContentStructureProps) => {
-    const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+const MenuContentStructure = ({
+    open,
+    children,
+}: MenuContentStructureProps) => {
+    const Main = styled("main", {
+        shouldForwardProp: (prop) => prop !== "open",
+    })<{
         open?: boolean;
     }>(({ theme }) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
+        transition: theme.transitions.create("margin", {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
@@ -23,7 +28,7 @@ const MenuContentStructure = ({ open, children }: MenuContentStructureProps) => 
             {
                 props: ({ open }) => open,
                 style: {
-                    transition: theme.transitions.create('margin', {
+                    transition: theme.transitions.create("margin", {
                         easing: theme.transitions.easing.easeOut,
                         duration: theme.transitions.duration.enteringScreen,
                     }),
@@ -33,11 +38,7 @@ const MenuContentStructure = ({ open, children }: MenuContentStructureProps) => 
         ],
     }));
 
-    return (
-        <Main open={open}>
-            {children}
-        </Main>
-    );
+    return <Main open={open}>{children}</Main>;
 };
 
 export default MenuContentStructure;

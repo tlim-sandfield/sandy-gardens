@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import MenuContentStructure from "@/components/MenuContentStructure";
 import MenuNavbar from "@/components/MenuNavbar";
@@ -17,5 +17,5 @@ export default function SettingsPage() {
                 <SettingsContent />
             </MenuContentStructure>
         </div>
-    )
+    );
 }

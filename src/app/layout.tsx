@@ -1,12 +1,13 @@
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: 'SandyGardens',
-    description: "Cultivate your very own garden by filling out your Sandfield timesheet!",
+    title: "SandyGardens",
+    description:
+        "Cultivate your very own garden by filling out your Sandfield timesheet!",
 };
 
 export default function RootLayout({
@@ -17,9 +18,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <link rel="icon" href="favicon.png" type="image/x-icon" />
-            <body className={`${inter.className}`}>
-                {children}
-            </body>
+            <body className={`${inter.className}`}>{children}</body>
         </html>
-    )
+    );
 }

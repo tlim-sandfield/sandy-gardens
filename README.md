@@ -1,21 +1,22 @@
 # SandyGardens
+
 **Developed by [Tony Lim](https://tonylxm.com/)**
 
 Problem: Filling out timesheets is tedious, boring and often result in incomplete or inaccurate submissions.
 
 Solution: **SandyGardens** - Cultivate your very own garden by filling out your timesheet!
 
->Incomplete Description
+> Incomplete Description
 
-* Multiplayer
-* Compete with your colleagues
+- Multiplayer
+- Compete with your colleagues
 
 ## Getting Started
 
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install project dependencies |
-| `npm run dev` | Launch a development web server |
+| Command         | Description                                    |
+| --------------- | ---------------------------------------------- |
+| `npm install`   | Install project dependencies                   |
+| `npm run dev`   | Launch a development web server                |
 | `npm run build` | Create a production build in the `dist` folder |
 
 ## Requirements
@@ -23,6 +24,7 @@ Solution: **SandyGardens** - Cultivate your very own garden by filling out your 
 [Node.js](https://nodejs.org) is required to install dependencies and run scripts via `npm`.
 
 ## Tech Stack
+
 <div align="center">
     <!-- React -->
     <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
@@ -43,7 +45,6 @@ Solution: **SandyGardens** - Cultivate your very own garden by filling out your 
     <img src="https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E"/>
 </div>
 
-
 ## Phaser
 
 This is a Phaser 3 project template that uses the Next.js framework. It includes a bridge for React to Phaser game communication, hot-reloading for quick development workflow and scripts to generate production-ready builds.
@@ -57,10 +58,6 @@ This template has been updated for:
 - [TypeScript 5](https://github.com/microsoft/TypeScript)
 
 ![screenshot](screenshot.png)
-
-
-
-
 
 ## Writing Code
 
@@ -86,6 +83,7 @@ We have provided a default project structure to get you started. This is as foll
 - `src/game/scenes/` - The Phaser Scenes are in this folder.
 - `public/favicon.png` - The default favicon for the project.
 - `public/assets` - Contains the static assets used by the game.
+
 ## React Bridge
 
 The `PhaserGame.tsx` component is the bridge between React and Phaser. It initializes the Phaser game and passes events between the two.
@@ -94,14 +92,14 @@ To communicate between React and Phaser, you can use the **EventBus.js** file. T
 
 ```js
 // In React
-import { EventBus } from './EventBus';
+import { EventBus } from "./EventBus";
 
 // Emit an event
-EventBus.emit('event-name', data);
+EventBus.emit("event-name", data);
 
 // In Phaser
 // Listen for an event
-EventBus.on('event-name', (data) => {
+EventBus.on("event-name", (data) => {
     // Do something with the data
 });
 ```
@@ -118,21 +116,17 @@ You can get the current Phaser Scene from the component event `"current-active-s
 
 **Important**: When you add a new Scene to your game, make sure you expose to React by emitting the `"current-scene-ready"` event via the `EventBus`, like this:
 
-
 ```ts
-class MyScene extends Phaser.Scene
-{
-    constructor ()
-    {
-        super('MyScene');
+class MyScene extends Phaser.Scene {
+    constructor() {
+        super("MyScene");
     }
 
-    create ()
-    {
+    create() {
         // Your Game Objects and logic here
 
         // At the end of create method:
-        EventBus.emit('current-scene-ready', this);
+        EventBus.emit("current-scene-ready", this);
     }
 }
 ```
@@ -153,7 +147,7 @@ const ReactComponent = () => {
     const phaserRef = useRef<IRefPhaserGame>(); // you can access to this ref from phaserRef.current
 
     const onCurrentActiveScene = (scene: Phaser.Scene) => {
-    
+
         // This is invoked
 
     }
@@ -178,11 +172,11 @@ The `onCurrentActiveScene` callback will also be invoked whenever the the Phaser
 To load your static games files such as audio files, images, videos, etc place them into the `public/assets` folder. Then you can use this path in the Loader calls within Phaser:
 
 ```js
-preload ()
+preload();
 {
     //  This is an example of loading a static image
     //  from the public/assets folder:
-    this.load.image('background', 'assets/bg.png');
+    this.load.image("background", "assets/bg.png");
 }
 ```
 
@@ -192,7 +186,7 @@ When you issue the `npm run build` command, all static assets are automatically 
 
 After you run the `npm run build` command, your code will be built into a single bundle and saved to the `dist` folder, along with any other assets your project imported, or stored in the public assets folder.
 
-In order to deploy your game, you will need to upload *all* of the contents of the `dist` folder to a public facing web server.
+In order to deploy your game, you will need to upload _all_ of the contents of the `dist` folder to a public facing web server.
 
 ## Customizing the Template
 

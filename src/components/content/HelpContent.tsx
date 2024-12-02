@@ -3,5 +3,5 @@ export default function HelpContent() {
         <div>
             <h1>Help</h1>
         </div>
-    )
+    );
 }

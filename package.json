@@ -18,7 +18,8 @@
     ],
     "scripts": {
         "dev": "next dev",
-        "build": "next build"
+        "build": "next build",
+        "prettier": "npx prettier . --write"
     },
     "dependencies": {
         "@emotion/react": "^11.13.5",
