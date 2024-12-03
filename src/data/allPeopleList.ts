@@ -1,4 +1,4 @@
-const people: string[] = [
+const people = [
     "John Doe",
     "Jane Doe",
     "Bob the Builder",

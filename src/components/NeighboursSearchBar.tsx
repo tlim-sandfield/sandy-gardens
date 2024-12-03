@@ -1,6 +1,7 @@
-import * as React from "react";
 import { TextField } from "@mui/material";
 import allPeopleList from "@/data/allPeopleList";
+import randomiseAndShortenList from "@/util/randomiseAndShortenList";
+import { useEffect, useMemo, useState } from "react";
 
 interface NeighboursSearchBarProps {
     setSearchList: Function;
@@ -9,18 +10,35 @@ interface NeighboursSearchBarProps {
 export default function NeighboursSearchBar({
     setSearchList,
 }: NeighboursSearchBarProps) {
-    const [inputValue, setInputValue] = React.useState("");
+    const [inputValue, setInputValue] = useState("");
+    const [defaultList, setDefaultList] = useState([]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let filteredList;
         const newInputValue = event.target.value;
         setInputValue(newInputValue);
 
-        const filteredList = allPeopleList.filter((person) =>
-            person.toLowerCase().includes(newInputValue.toLowerCase())
-        );
-
+        if (newInputValue === "") {
+            filteredList = defaultList;
+        } else {
+            filteredList = allPeopleList.filter((person) =>
+                person.toLowerCase().includes(newInputValue.toLowerCase())
+            );
+        }
         setSearchList(filteredList);
     };
+
+    useEffect(() => {
+        const initialDefaultList = randomiseAndShortenList(allPeopleList, 5);
+        setDefaultList(initialDefaultList);
+        setSearchList(initialDefaultList);
+    }, []);
+
+    useEffect(() => {
+        if (inputValue === "") {
+            setSearchList(defaultList);
+        }
+    }, [inputValue, defaultList]);
 
     return (
         <TextField

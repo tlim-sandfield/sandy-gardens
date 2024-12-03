@@ -3,7 +3,6 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
-import allPeopleList from "@/data/allPeopleList";
 import randomiseAndShortenList from "@/util/randomiseAndShortenList"
 
 interface NeighboursAddListProps {
@@ -13,12 +12,10 @@ interface NeighboursAddListProps {
 export default function NeighboursAddList({
     searchList,
 }: NeighboursAddListProps) {
-    const limitedSearchList = randomiseAndShortenList(searchList, 5);
-    const limitedPeopleList = randomiseAndShortenList(allPeopleList, 5);
     return (
         <List dense sx={{ width: "100%" }}>
             {searchList.length > 0
-                ? limitedSearchList.map((value: string) => {
+                ? searchList.map((value: string) => {
                       const labelId = `checkbox-list-secondary-label-${value}`;
                       return (
                           <ListItem
