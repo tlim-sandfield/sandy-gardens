@@ -59,6 +59,14 @@ li {
     cursor: grab;
 }
 
+.clear-btn {
+    min-width: 0;
+}
+
+.clear-btn svg {
+    cursor: pointer !important;
+}
+
 .refresh {
     padding: 10px;
     position: absolute;
