@@ -1,5 +1,6 @@
-import NeighboursList from "../NeighboursList";
+import NeighboursAddList from "../NeighboursAddList";
 import NeighboursSearchBar from "../NeighboursSearchBar";
+import DraggableList from "../DraggableList";
 
 export default function NeighboursContent() {
     return (
@@ -13,11 +14,13 @@ export default function NeighboursContent() {
                         will be to your plot. Random players will appear around
                         your plot first if you don’t add neighbours.
                     </p>
+                    <p>Drag neighbours to change proximity</p>
+                    <DraggableList />
                 </div>
 
                 <div className="content-right">
                     <NeighboursSearchBar />
-                    <NeighboursList />
+                    <NeighboursAddList />
                 </div>
             </div>
         </div>

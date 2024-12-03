@@ -25,6 +25,55 @@ body {
     }
 }
 
+.draggable-list ul,
+li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+    overflow: hidden;
+}
+
+.draggable-list ul {
+    position: relative;
+    width: 28rem;
+}
+
+.draggable-list li {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px 18px;
+    position: relative;
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.draggable-list li svg {
+    width: 18px;
+    height: 18px;
+    cursor: grab;
+}
+
+.refresh {
+    padding: 10px;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    width: 20px;
+    height: 20px;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
 /* PAGES */
 .page-content {
     display: flex;
@@ -38,7 +87,7 @@ body {
 }
 
 .content-left {
-    width: 50vw;
+    width: 40vw;
 }
 
 .content-right {
