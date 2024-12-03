@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
-import allPeopleList from "@/data/allPeopleList";
+import salnetHoursWorkedList from "@/data/salnetHoursWorkedList";
 import randomiseAndShortenList from "@/util/randomiseAndShortenList";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface NeighboursSearchBarProps {
     setSearchList: Function;
@@ -11,7 +11,8 @@ export default function NeighboursSearchBar({
     setSearchList,
 }: NeighboursSearchBarProps) {
     const [inputValue, setInputValue] = useState("");
-    const [defaultList, setDefaultList] = useState([]);
+    const [defaultList, setDefaultList] = useState<string[]>([]);
+    const allNames = salnetHoursWorkedList.map((person) => person.name);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let filteredList;
@@ -21,7 +22,7 @@ export default function NeighboursSearchBar({
         if (newInputValue === "") {
             filteredList = defaultList;
         } else {
-            filteredList = allPeopleList.filter((person) =>
+            filteredList = allNames.filter((person) =>
                 person.toLowerCase().includes(newInputValue.toLowerCase())
             );
         }
@@ -29,7 +30,7 @@ export default function NeighboursSearchBar({
     };
 
     useEffect(() => {
-        const initialDefaultList = randomiseAndShortenList(allPeopleList, 5);
+        const initialDefaultList = randomiseAndShortenList(allNames, 5);
         setDefaultList(initialDefaultList);
         setSearchList(initialDefaultList);
     }, []);
