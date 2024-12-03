@@ -59,6 +59,14 @@ li {
     cursor: grab;
 }
 
+.clear-btn {
+    min-width: 0;
+}
+
+.clear-btn svg {
+    cursor: pointer !important;
+}
+
 .refresh {
     padding: 10px;
     position: absolute;
@@ -84,6 +92,7 @@ li {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-top: -20px;
 }
 
 .content-left {
