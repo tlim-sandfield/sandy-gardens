@@ -5,11 +5,12 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import { Button } from "@mui/material";
+import people from "@/data/people"
 
 export default function NeighboursAddList() {
     return (
         <List dense sx={{ width: "100%" }}>
-            {[0, 1, 2, 3].map((value) => {
+            {people.map((value) => {
                 const labelId = `checkbox-list-secondary-label-${value}`;
                 return (
                     <ListItem
@@ -25,17 +26,9 @@ export default function NeighboursAddList() {
                         }}
                     >
                         <div className="neighbours-list">
-                            <ListItemAvatar>
-                                <Avatar
-                                    alt={`Avatar n°${value + 1}`}
-                                    src={`/static/images/avatar/${
-                                        value + 1
-                                    }.jpg`}
-                                />
-                            </ListItemAvatar>
                             <ListItemText
                                 id={labelId}
-                                primary={`Person ${value + 1}`}
+                                primary={value}
                             />
                             <Button color="primary">Add</Button>
                         </div>

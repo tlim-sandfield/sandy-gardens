@@ -29,14 +29,7 @@ export const Item = ({ item }: Props) => {
             dragControls={dragControls}
         >
             <ReorderIcon dragControls={dragControls} />
-
-            <ListItemAvatar sx={{ ml: 2 }}>
-                <Avatar
-                    alt={`Avatar n°${item + 1}`}
-                    src={`/static/images/avatar/${item + 1}.jpg`}
-                />
-            </ListItemAvatar>
-            <ListItemText primary={item} />
+            <ListItemText primary={item} sx={{ ml: 2 }} />
             <Button className="clear-btn">
                 <ClearIcon />
             </Button>
