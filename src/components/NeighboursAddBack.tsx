@@ -2,15 +2,13 @@ import * as React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
 import { Button } from "@mui/material";
-import people from "@/data/people"
+import incomingAddBacksList from "@/data/incomingAddBacksList"
 
 export default function NeighboursAddBack() {
     return (
         <List dense sx={{ width: "100%" }}>
-            {people.map((value) => {
+            {incomingAddBacksList.map((value) => {
                 const labelId = `checkbox-list-secondary-label-${value}`;
                 return (
                     <ListItem

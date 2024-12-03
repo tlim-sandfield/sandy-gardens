@@ -1,15 +1,35 @@
 import * as React from "react";
-import { Autocomplete, TextField } from "@mui/material";
-import people from "@/data/people";
+import { TextField } from "@mui/material";
+import allPeopleList from "@/data/allPeopleList";
 
-export default function NeighboursSearchBar() {
+interface NeighboursSearchBarProps {
+    setSearchList: Function;
+}
+
+export default function NeighboursSearchBar({
+    setSearchList,
+}: NeighboursSearchBarProps) {
+    const [inputValue, setInputValue] = React.useState("");
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newInputValue = event.target.value;
+        setInputValue(newInputValue);
+
+        const filteredList = allPeopleList.filter((person) =>
+            person.toLowerCase().includes(newInputValue.toLowerCase())
+        );
+
+        setSearchList(filteredList);
+    };
+
     return (
-        <Autocomplete
-            disablePortal
-            options={people}
-            renderInput={(params) => (
-                <TextField {...params} label="🔍 Search neighbours…" />
-            )}
+        <TextField
+            id="outlined-basic"
+            onChange={handleInputChange}
+            value={inputValue}
+            variant="outlined"
+            fullWidth
+            label="🔍 Search neighbours…"
         />
     );
 }

@@ -1,10 +1,15 @@
+"use client";
+
 import NeighboursAddList from "../NeighboursAddList";
 import NeighboursSearchBar from "../NeighboursSearchBar";
 import DraggableList from "../DraggableList";
 import NeighboursAddBack from "../NeighboursAddBack";
 import { Divider } from "@mui/material";
+import { useState } from "react";
 
 export default function NeighboursContent() {
+    const [searchList, setSearchList] = useState([]);
+
     return (
         <div>
             <h1>Neighbours</h1>
@@ -22,8 +27,8 @@ export default function NeighboursContent() {
 
                 <div className="content-right">
                     <h3>Search</h3>
-                    <NeighboursSearchBar />
-                    <NeighboursAddList />
+                    <NeighboursSearchBar setSearchList={setSearchList} />
+                    <NeighboursAddList searchList={searchList} />
                     <br />
                     <Divider />
                     <h3>Notifications</h3>
