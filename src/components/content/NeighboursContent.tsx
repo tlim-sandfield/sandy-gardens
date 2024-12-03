@@ -14,7 +14,7 @@ export default function NeighboursContent() {
                         will be to your plot. Random players will appear around
                         your plot first if you don’t add neighbours.
                     </p>
-                    <p>Drag neighbours to change proximity</p>
+                    <p>Drag neighbours to change proximity to you</p>
                     <DraggableList />
                 </div>
 
