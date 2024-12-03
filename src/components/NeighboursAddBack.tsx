@@ -6,7 +6,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import { Button } from "@mui/material";
 
-export default function NeighboursAddList() {
+export default function NeighboursAddBack() {
     return (
         <List dense sx={{ width: "100%" }}>
             {[0, 1, 2, 3].map((value) => {
@@ -35,9 +35,9 @@ export default function NeighboursAddList() {
                             </ListItemAvatar>
                             <ListItemText
                                 id={labelId}
-                                primary={`Person ${value + 1}`}
+                                primary={`Person ${value + 1} just added you as a neighbour!`}
                             />
-                            <Button color="primary">Add</Button>
+                            <Button color="primary">Add back</Button>
                         </div>
                     </ListItem>
                 );

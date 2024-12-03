@@ -1,6 +1,8 @@
 import NeighboursAddList from "../NeighboursAddList";
 import NeighboursSearchBar from "../NeighboursSearchBar";
 import DraggableList from "../DraggableList";
+import NeighboursAddBack from "../NeighboursAddBack";
+import { Divider } from "@mui/material";
 
 export default function NeighboursContent() {
     return (
@@ -19,8 +21,13 @@ export default function NeighboursContent() {
                 </div>
 
                 <div className="content-right">
+                    <h3>Search</h3>
                     <NeighboursSearchBar />
                     <NeighboursAddList />
+                    <br />
+                    <Divider />
+                    <h3>Notifications</h3>
+                    <NeighboursAddBack />
                 </div>
             </div>
         </div>
