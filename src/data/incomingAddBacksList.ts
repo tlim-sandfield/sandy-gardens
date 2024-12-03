@@ -1,3 +1,3 @@
-const incomingAddBacksList: string[] = ["Josh Hart", "Jalen Green", "Dyson Daniels"];
+const incomingAddBacksList: integer[] = [403, 1080, 14];
 
 export default incomingAddBacksList

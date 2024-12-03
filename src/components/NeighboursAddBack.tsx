@@ -3,12 +3,17 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
-import incomingAddBacksList from "@/data/incomingAddBacksList"
+import incomingAddBacksList from "@/data/incomingAddBacksList";
+import salnetHoursWorkedList from "@/data/salnetHoursWorkedList";
 
 export default function NeighboursAddBack() {
+    const allNames = salnetHoursWorkedList
+        .filter((person) => incomingAddBacksList.includes(person.resourceID))
+        .map((person) => person.name);
+
     return (
         <List dense sx={{ width: "100%" }}>
-            {incomingAddBacksList.map((value) => {
+            {allNames.map((value) => {
                 const labelId = `checkbox-list-secondary-label-${value}`;
                 return (
                     <ListItem
