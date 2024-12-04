@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { Reorder } from "framer-motion";
 import { Item } from "./Item";
-import neighbourList from "@/data/neighboursList";
+import neighbourList from "@/data/neighboursHashMap";
 import getNames from "@/util/getNames";
 
 export default function DraggableList() {

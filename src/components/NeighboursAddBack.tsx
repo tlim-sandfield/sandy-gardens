@@ -3,11 +3,11 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
-import incomingAddsList from "@/data/incomingAddsList";
+import incomingAddsHashMap from "@/data/incomingAddsHashMap";
 import getNames from "@/util/getNames";
 
 export default function NeighboursAddBack() {
-    const incomingAddsNames = getNames(incomingAddsList);
+    const incomingAddsNames = getNames(incomingAddsHashMap);
 
     return (
         <List dense sx={{ width: "100%" }}>
