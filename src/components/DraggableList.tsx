@@ -2,11 +2,11 @@ import * as React from "react";
 import { useState } from "react";
 import { Reorder } from "framer-motion";
 import { Item } from "./Item";
-
-const initialItems = ["John Doe", "Jane Doe", "Bob the Builder"];
+import neighbourList from "@/data/neighboursList";
+import getNames from "@/util/getNames";
 
 export default function DraggableList() {
-    const [items, setItems] = useState(initialItems);
+    const [items, setItems] = useState(getNames(neighbourList));
 
     return (
         <div className="draggable-list">

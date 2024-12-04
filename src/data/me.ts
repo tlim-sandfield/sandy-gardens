@@ -1,3 +1,3 @@
-const me = 23;
+const me = 10;
 
 export default me;
