@@ -10,6 +10,9 @@ import {
     Button,
     IconButton,
 } from "@mui/material";
+import me from "@/data/me";
+import neighboursHashMap from "@/data/neighboursHashMap";
+import nameToID from "@/util/nameToID";
 
 interface Props {
     item: string;
@@ -30,7 +33,12 @@ export const Item = ({ item }: Props) => {
         >
             <ReorderIcon dragControls={dragControls} />
             <ListItemText primary={item} sx={{ ml: 2 }} />
-            <Button className="clear-btn">
+            <Button
+                className="clear-btn"
+                onClick={() => {
+                    neighboursHashMap[me].delete(nameToID(item) as number);
+                }}
+            >
                 <ClearIcon />
             </Button>
         </Reorder.Item>
