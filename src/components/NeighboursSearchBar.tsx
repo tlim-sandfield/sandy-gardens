@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import salnetHoursWorkedList from "@/data/salnetHoursWorkedList";
 import randomiseAndShortenList from "@/util/randomiseAndShortenList";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface NeighboursSearchBarProps {
     setSearchList: Function;
@@ -11,35 +11,31 @@ export default function NeighboursSearchBar({
     setSearchList,
 }: NeighboursSearchBarProps) {
     const [inputValue, setInputValue] = useState("");
-    const [defaultList, setDefaultList] = useState<string[]>([]);
-    const allNames = salnetHoursWorkedList.map((person) => person.name);
+    const initialListRef = useRef<string[]>([]);
+    const allNames = useMemo(
+        () => salnetHoursWorkedList.map((person) => person.name),
+        []
+    );
+
+    useEffect(() => {
+        const initialList = randomiseAndShortenList(allNames, 5);
+        setSearchList(initialList);
+        initialListRef.current = initialList;
+    }, [allNames]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let filteredList;
         const newInputValue = event.target.value;
         setInputValue(newInputValue);
 
         if (newInputValue === "") {
-            filteredList = defaultList;
+            setSearchList(initialListRef.current);
         } else {
-            filteredList = allNames.filter((person) =>
+            const filteredList = allNames.filter((person) =>
                 person.toLowerCase().includes(newInputValue.toLowerCase())
             );
+            setSearchList(filteredList);
         }
-        setSearchList(filteredList);
     };
-
-    useEffect(() => {
-        const initialDefaultList = randomiseAndShortenList(allNames, 5);
-        setDefaultList(initialDefaultList);
-        setSearchList(initialDefaultList);
-    }, []);
-
-    useEffect(() => {
-        if (inputValue === "") {
-            setSearchList(defaultList);
-        }
-    }, [inputValue, defaultList]);
 
     return (
         <TextField
