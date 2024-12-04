@@ -5,6 +5,9 @@ import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
 import incomingAddsHashMap from "@/data/incomingAddsHashMap";
 import getNames from "@/util/getNames";
+import neighboursHashMap from "@/data/neighboursHashMap";
+import me from "@/data/me";
+import nameToID from "@/util/nameToID";
 
 export default function NeighboursAddBack() {
     const incomingAddsNames = getNames(incomingAddsHashMap);
@@ -31,7 +34,19 @@ export default function NeighboursAddBack() {
                                 id={labelId}
                                 primary={`${value} just added you as a neighbour!`}
                             />
-                            <Button color="primary">Add back</Button>
+                            <Button
+                                color="primary"
+                                onClick={() => {
+                                    neighboursHashMap[me].add(
+                                        nameToID(value) as number
+                                    );
+                                    incomingAddsHashMap[
+                                        nameToID(value) as number
+                                    ].add(me);
+                                }}
+                            >
+                                Add back
+                            </Button>
                         </div>
                     </ListItem>
                 );
