@@ -1,7 +1,7 @@
 "use client";
 
 import MenuContentStructure from "@/components/MenuContentStructure";
-import MenuNavbar from "@/components/MenuNavbar";
+import CustomNavbar from "@/components/CustomNavbar";
 import PersistentDrawer from "@/components/PersistentDrawerLeft";
 import SettingsContent from "@/components/content/SettingsContent";
 import { useState } from "react";
@@ -11,7 +11,7 @@ export default function SettingsPage() {
 
     return (
         <div className="page-content">
-            <MenuNavbar open={open} setOpen={setOpen} />
+            <CustomNavbar open={open} setOpen={setOpen} />
             <PersistentDrawer open={open} setOpen={setOpen} />
             <MenuContentStructure open={open}>
                 <SettingsContent />

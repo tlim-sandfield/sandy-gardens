@@ -12,7 +12,7 @@ import salnetHoursWorkedList from "@/data/salnetHoursWorkedList";
 
 const drawerWidth = 240;
 
-interface GameNavbarProps {
+interface CustomNavbarProps {
     open: boolean;
     setOpen: Function;
 }
@@ -43,7 +43,7 @@ const AppBar = styled(MuiAppBar, {
     ],
 }));
 
-export default function GameNavbar({ open, setOpen }: GameNavbarProps) {
+export default function CustomNavbar({ open, setOpen }: CustomNavbarProps) {
     const handleDrawerOpen = () => {
         setOpen(true);
     };
