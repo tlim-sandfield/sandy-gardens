@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/material";
+import me from "@/data/me";
+import salnetHoursWorkedList from "@/data/salnetHoursWorkedList";
 
 const drawerWidth = 240;
 
@@ -68,7 +70,11 @@ export default function GameNavbar({ open, setOpen }: GameNavbarProps) {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap component="div">
-                    Main Menu
+                    {
+                        salnetHoursWorkedList.filter(
+                            (person) => person.resourceID === me
+                        )[0].name
+                    }
                 </Typography>
             </Toolbar>
         </AppBar>
