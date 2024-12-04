@@ -34,27 +34,6 @@ const salnetHoursWorkedList = [
         hoursWorked: 8.0,
         dayCompleted: false,
     },
-    {
-        resourceID: 23,
-        email: "kyrie.irving@sandfield.co.nz",
-        name: "Kyrie Irving",
-        hoursWorked: 8.0,
-        dayCompleted: false,
-    },
-    {
-        resourceID: 45,
-        email: "yao.ming@sandfield.co.nz",
-        name: "Yao Ming",
-        hoursWorked: 8.0,
-        dayCompleted: false,
-    },
-    {
-        resourceID: 67,
-        email: "michael.jordan@sandfield.co.nz",
-        name: "Michael Jordan",
-        hoursWorked: 8.0,
-        dayCompleted: false,
-    },
 ];
 
 export default salnetHoursWorkedList;

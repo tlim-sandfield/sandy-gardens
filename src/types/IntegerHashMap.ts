@@ -1,3 +1,3 @@
 export default interface IntegerHashMap {
-    [key: number]: number[];
+    [key: number]: Set<number>;
 }
