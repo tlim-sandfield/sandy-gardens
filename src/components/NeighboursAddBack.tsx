@@ -5,10 +5,11 @@ import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
 import incomingAddBacksList from "@/data/incomingAddBacksList";
 import salnetHoursWorkedList from "@/data/salnetHoursWorkedList";
+import me from "@/data/me";
 
 export default function NeighboursAddBack() {
     const allNames = salnetHoursWorkedList
-        .filter((person) => incomingAddBacksList.includes(person.resourceID))
+        .filter((person) => incomingAddBacksList[me]?.includes(person.resourceID))
         .map((person) => person.name);
 
     return (

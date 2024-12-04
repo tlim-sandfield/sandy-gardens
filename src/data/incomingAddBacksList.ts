@@ -1,3 +1,9 @@
-const incomingAddBacksList: integer[] = [403, 1080, 14];
+interface IntegerHashMap {
+  [key: number]: number[];
+}
+const incomingAddBacksList: IntegerHashMap = {
+  10: [403, 12, 1080],
+  403: [23, 45, 67],
+};
 
-export default incomingAddBacksList
+export default incomingAddBacksList;
