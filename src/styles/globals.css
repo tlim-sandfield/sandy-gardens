@@ -25,6 +25,55 @@ body {
     }
 }
 
+/* PAGES */
+.page-content {
+    display: flex;
+    padding: 50px 0px 0px 10px;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: -20px;
+}
+
+.content-left {
+    width: 40%;
+}
+
+.content-right {
+    width: 25vw;
+    margin: 0px 20px 0px 20px;
+}
+
+@media (max-width: 1008px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .content-left {
+        width: 90%;
+    }
+
+    .content-right {
+        width: 80%;
+        min-width: 25rem;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: 20px;
+    }
+}
+
+/* NEIGHBOURS */
+.neighbours-list {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+
 .draggable-list ul,
 li {
     list-style: none;
@@ -36,7 +85,7 @@ li {
 
 .draggable-list ul {
     position: relative;
-    width: 28rem;
+    width: 25rem;
 }
 
 .draggable-list li {
@@ -80,54 +129,6 @@ li {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-}
-
-/* PAGES */
-.page-content {
-    display: flex;
-    padding: 50px 0px 0px 10px;
-}
-
-.content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: -20px;
-}
-
-.content-left {
-    width: 40vw;
-}
-
-.content-right {
-    width: 25vw;
-    margin: 10px 20px 0px 20px;
-}
-
-@media (max-width: 1008px) {
-    .content {
-        flex-direction: column;
-    }
-
-    .content-left {
-        width: 90vw;
-    }
-
-    .content-right {
-        width: 90vw;
-        margin-left: 0px;
-        margin-right: 0px;
-        margin-top: 20px;
-    }
-}
-
-/* NEIGHBOURS */
-.neighbours-list {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 10px;
 }
 
 /* GAME */
