@@ -4,9 +4,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
 import nameToID from "@/util/nameToID";
-import me from "@/data/me";
-import incomingAddsHashMap from "@/data/incomingAddsHashMap";
-import neighboursHashMap from "@/data/neighboursHashMap";
+import { useNeighboursDispatch } from "../contexts/NeighboursContext";
+import { useIncomingAddsDispatch } from "@/contexts/IncomingAddsContext";
 
 interface NeighboursAddListProps {
     searchList: string[];
@@ -15,6 +14,9 @@ interface NeighboursAddListProps {
 export default function NeighboursAddList({
     searchList,
 }: NeighboursAddListProps) {
+    const dispatchNeighbours = useNeighboursDispatch();
+    const dispatchIncomingAdds = useIncomingAddsDispatch();
+    
     return (
         <List dense sx={{ width: "100%" }}>
             {searchList.length > 0 ? (
@@ -38,12 +40,18 @@ export default function NeighboursAddList({
                                 <Button
                                     color="primary"
                                     onClick={() => {
-                                        neighboursHashMap[me].add(
-                                            nameToID(value) as number
-                                        );
-                                        incomingAddsHashMap[
-                                            nameToID(value) as number
-                                        ].add(me);
+                                        if (dispatchNeighbours) {
+                                            dispatchNeighbours({
+                                                type: "added",
+                                                id: nameToID(value) as number,
+                                            });
+                                        }
+                                        if (dispatchIncomingAdds) {
+                                            dispatchIncomingAdds({
+                                                type: "added",
+                                                id: nameToID(value) as number,
+                                            });
+                                        }
                                     }}
                                 >
                                     Add
