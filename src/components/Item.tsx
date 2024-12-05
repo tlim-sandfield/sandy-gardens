@@ -3,16 +3,9 @@ import { useMotionValue, Reorder, useDragControls } from "framer-motion";
 import { useRaisedShadow } from "@/util/use-raised-shadow";
 import { ReorderIcon } from "../../public/ReorderIcon";
 import ClearIcon from "@mui/icons-material/Clear";
-import {
-    ListItemAvatar,
-    Avatar,
-    ListItemText,
-    Button,
-    IconButton,
-} from "@mui/material";
-import me from "@/data/me";
-import neighboursHashMap from "@/data/neighboursHashMap";
+import { ListItemText, Button } from "@mui/material";
 import nameToID from "@/util/nameToID";
+import { useNeighboursDispatch } from "../contexts/NeighboursContext";
 
 interface Props {
     item: string;
@@ -22,6 +15,7 @@ export const Item = ({ item }: Props) => {
     const y = useMotionValue(0);
     const boxShadow = useRaisedShadow(y);
     const dragControls = useDragControls();
+    const dispatch = useNeighboursDispatch();
 
     return (
         <Reorder.Item
@@ -36,7 +30,12 @@ export const Item = ({ item }: Props) => {
             <Button
                 className="clear-btn"
                 onClick={() => {
-                    neighboursHashMap[me].delete(nameToID(item) as number);
+                    if (dispatch) {
+                        dispatch({
+                            type: "deleted",
+                            id: nameToID(item) as number,
+                        });
+                    }
                 }}
             >
                 <ClearIcon />
