@@ -4,13 +4,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
 import nameToID from "@/util/nameToID";
-import {
-    useNeighbours,
-    useNeighboursDispatch,
-} from "../contexts/NeighboursContext";
+import { useNeighboursDispatch } from "../contexts/NeighboursContext";
 import { useIncomingAddsDispatch } from "@/contexts/IncomingAddsContext";
-import randomiseAndShortenList from "@/util/randomiseAndShortenList";
-import salnetHoursWorkedList from "@/data/salnetHoursWorkedList";
 
 interface NeighboursAddListProps {
     searchList: string[];
@@ -23,12 +18,15 @@ export default function NeighboursAddList({
 }: NeighboursAddListProps) {
     const dispatchNeighbours = useNeighboursDispatch();
     const dispatchIncomingAdds = useIncomingAddsDispatch();
-    const neighbours = useNeighbours();
 
     function handleAdd(value: string) {
-        // setSearchList(() => {
-        //     delete searchList[searchList.indexOf(value)];
-        // });
+        setSearchList(() => {
+            // Remove the added neighbour from the search list
+            const filteredList = searchList.filter(
+                (person) => person !== value
+            );
+            return filteredList;
+        });
 
         if (dispatchNeighbours) {
             dispatchNeighbours({

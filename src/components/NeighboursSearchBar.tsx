@@ -19,6 +19,8 @@ export default function NeighboursSearchBar({
         () => salnetHoursWorkedList.map((person) => person.name),
         []
     );
+
+    // TODO: SQL query has to be made to get all names except me and LEFT JOIN with the neighbours table to exclude my neighbours
     const allNamesExceptMe = useMemo(() => removeMe(allNames), [allNames]);
 
     useEffect(() => {
