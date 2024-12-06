@@ -3,6 +3,7 @@ import salnetHoursWorkedList from "@/data/salnetHoursWorkedList";
 import randomiseAndShortenList from "@/util/randomiseAndShortenList";
 import { useEffect, useMemo, useRef, useState } from "react";
 import me from "@/data/me";
+import removeMe from "@/util/removeMe";
 
 interface NeighboursSearchBarProps {
     setSearchList: Function;
@@ -13,19 +14,18 @@ export default function NeighboursSearchBar({
 }: NeighboursSearchBarProps) {
     const [inputValue, setInputValue] = useState("");
     const initialListRef = useRef<string[]>([]);
-    const allNamesExceptMe = useMemo(
-        () =>
-            salnetHoursWorkedList
-                .filter((person) => person.name !== me.name)
-                .map((person) => person.name),
+
+    const allNames = useMemo(
+        () => salnetHoursWorkedList.map((person) => person.name),
         []
     );
+    const allNamesExceptMe = useMemo(() => removeMe(allNames), [allNames]);
 
     useEffect(() => {
         const initialList = randomiseAndShortenList(allNamesExceptMe, 5);
         setSearchList(initialList);
         initialListRef.current = initialList;
-    }, [allNamesExceptMe]);
+    }, []);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newInputValue = event.target.value;

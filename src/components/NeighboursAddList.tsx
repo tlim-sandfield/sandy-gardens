@@ -27,13 +27,7 @@ export default function NeighboursAddList({
 
     function handleAdd(value: string) {
         // setSearchList(() => {
-        //     searchList.filter((name) => name !== value);
-        //     // searchList.push(
-        //     //     randomiseAndShortenList(
-        //     //         salnetHoursWorkedList.map((person) => person.name),
-        //     //         1
-        //     //     )[0]
-        //     // );
+        //     delete searchList[searchList.indexOf(value)];
         // });
 
         if (dispatchNeighbours) {

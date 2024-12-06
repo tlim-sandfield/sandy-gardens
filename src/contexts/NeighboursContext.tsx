@@ -47,9 +47,13 @@ function neighboursReducer(
             break;
         }
         case "deleted": {
-            newNeighbours[me.resourceID].remove(action.id);
+            newNeighbours[me.resourceID].delete(action.id);
             break;
         }
+        // case "reordered": {
+        //     newNeighbours[me.resourceID]
+        //     break;
+        // }
         default: {
             throw new Error("Unknown action");
         }
