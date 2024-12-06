@@ -1,8 +1,8 @@
 import { createContext, useReducer, useContext } from "react";
 import incomingAddsHashMap from "@/data/incomingAddsHashMap";
 import me from "@/data/me";
-import IntegerHashMapState from "@/types/IntegerHashMapState";
 import Action from "@/types/Action";
+import IntegerHashMapState from "@/types/IntegerHashMapState";
 
 export const IncomingAddsContext = createContext<IntegerHashMapState | null>(
     null
@@ -40,7 +40,7 @@ function incomingAddsReducer(
     state: IntegerHashMapState,
     action: Action
 ): IntegerHashMapState {
-    const newIncomingAdds = { ...state.integerHashMap };
+    const newIncomingAdds = state.integerHashMap;
     switch (action.type) {
         case "added": {
             newIncomingAdds[action.id].add(me);

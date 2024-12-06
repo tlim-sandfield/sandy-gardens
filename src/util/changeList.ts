@@ -3,9 +3,9 @@ import IntegerHashMap from "@/types/IntegerHashMap";
 
 export default function changeList(
     person: number,
-    hashMap1: IntegerHashMap,
-    hashMap2: IntegerHashMap
+    hashMap1: IntegerHashMap,   // to remove from
+    hashMap2: IntegerHashMap    // to add to
 ) {
-    hashMap2[me].push(person);
-    delete hashMap1[person][me];
+    hashMap2[me.resourceID].add(person);
+    hashMap1[person].remove(me.resourceID);
 }

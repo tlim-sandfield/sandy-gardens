@@ -1,8 +1,8 @@
 import { createContext, useReducer, useContext } from "react";
 import neighboursHashMap from "@/data/neighboursHashMap";
 import me from "@/data/me";
-import IntegerHashMapState from "@/types/IntegerHashMapState";
 import Action from "@/types/Action";
+import IntegerHashMapState from "@/types/IntegerHashMapState";
 
 export const NeighboursContext = createContext<IntegerHashMapState | null>(
     null
@@ -43,11 +43,11 @@ function neighboursReducer(
     const newNeighbours = { ...state.integerHashMap };
     switch (action.type) {
         case "added": {
-            newNeighbours[me].add(action.id);
+            newNeighbours[me.resourceID].add(action.id);
             break;
         }
         case "deleted": {
-            newNeighbours[me].delete(action.id);
+            newNeighbours[me.resourceID].remove(action.id);
             break;
         }
         default: {

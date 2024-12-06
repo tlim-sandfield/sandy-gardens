@@ -1,3 +1,5 @@
+import UniqueNumberList from "@/types/UniqueNumberList";
+
 export default function randomiseAndShortenList(
     list: string[],
     maxItems: integer

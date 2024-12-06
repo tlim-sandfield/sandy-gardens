@@ -4,6 +4,6 @@ import IntegerHashMap from "@/types/IntegerHashMap";
 
 export default function getNames(hashMap: IntegerHashMap) {
     return salnetHoursWorkedList
-        .filter((person) => hashMap[me]?.has(person.resourceID))
+        .filter((person) => hashMap[me.resourceID].includes(person.resourceID))
         .map((person: { name: string }) => person.name);
 }

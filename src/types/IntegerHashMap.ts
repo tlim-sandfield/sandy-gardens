@@ -1,3 +1,5 @@
-export default interface IntegerHashMap {
-    [key: number]: Set<number>;
+import UniqueNumberList from "./UniqueNumberList";
+
+export default class IntegerHashMap {
+    [key: number]: UniqueNumberList;
 }

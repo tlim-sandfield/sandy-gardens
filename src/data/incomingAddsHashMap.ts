@@ -1,11 +1,13 @@
-import IntegerHashMap from "@/types/IntegerHashMap";
 
-const incomingAddsHashMap: IntegerHashMap = {
-    10: new Set(),
-    403: new Set(),
-    12: new Set(),
-    1080: new Set(),
-    14: new Set(),
-};
+import UniqueNumberList from "@/types/UniqueNumberList";
+import IntegerHashMap from "@/types/IntegerHashMap";
+import salnetHoursWorkedList from "./salnetHoursWorkedList";
+
+const incomingAddsHashMap: IntegerHashMap = new IntegerHashMap();
+
+for (let i = 0; i < salnetHoursWorkedList.length; i++) {
+    incomingAddsHashMap[salnetHoursWorkedList[i].resourceID] =
+        new UniqueNumberList(salnetHoursWorkedList[i].resourceID);
+}
 
 export default incomingAddsHashMap;

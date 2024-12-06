@@ -28,7 +28,7 @@ export default function NeighboursContent() {
                 <div className="content-right">
                     <h3>Search</h3>
                     <NeighboursSearchBar setSearchList={setSearchList} />
-                    <NeighboursAddList searchList={searchList} />
+                    <NeighboursAddList searchList={searchList} setSearchList={setSearchList}/>
                     <br />
                     <Divider />
                     <h3>Notifications</h3>

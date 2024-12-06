@@ -65,11 +65,7 @@ export default function CustomNavbar({ open, setOpen }: CustomNavbarProps) {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap component="div">
-                    {
-                        salnetHoursWorkedList.filter(
-                            (person) => person.resourceID === me
-                        )[0].name
-                    }
+                    {me.name}
                 </Typography>
                 <Box sx={{ flexGrow: 2 }} />
                 <Box>Level 23 &nbsp; | &nbsp; 🪙 52</Box>
