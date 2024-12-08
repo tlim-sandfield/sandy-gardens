@@ -43,11 +43,10 @@ function incomingAddsReducer(
     const newIncomingAdds = state.integerHashMap;
     switch (action.type) {
         case "added": {
-            newIncomingAdds[action.id].push(me.resourceID);
+            if (!newIncomingAdds[me.resourceID].includes(action.id)) {
+                newIncomingAdds[action.id].push(me.resourceID);
+            }
             break;
-        }
-        default: {
-            throw new Error("Unknown action");
         }
     }
     return { integerHashMap: newIncomingAdds };

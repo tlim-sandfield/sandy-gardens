@@ -43,7 +43,9 @@ function neighboursReducer(
     const newNeighbours = { ...state.integerHashMap };
     switch (action.type) {
         case "added": {
-            newNeighbours[me.resourceID].push(action.id);
+            if (!newNeighbours[me.resourceID].includes(action.id)) {
+                newNeighbours[me.resourceID].push(action.id);
+            }
             break;
         }
         case "deleted": {
