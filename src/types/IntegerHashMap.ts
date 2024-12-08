@@ -1,3 +1,3 @@
 export default class IntegerHashMap {
-    [key: number]: Set<number>;
+    [key: number]: number[];
 }

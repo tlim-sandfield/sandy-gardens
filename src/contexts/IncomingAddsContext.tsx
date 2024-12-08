@@ -43,7 +43,7 @@ function incomingAddsReducer(
     const newIncomingAdds = state.integerHashMap;
     switch (action.type) {
         case "added": {
-            newIncomingAdds[action.id].add(me);
+            newIncomingAdds[action.id].push(me.resourceID);
             break;
         }
         default: {

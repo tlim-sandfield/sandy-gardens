@@ -7,6 +7,8 @@ import {
     useNeighboursDispatch,
 } from "../contexts/NeighboursContext";
 import IntegerHashMap from "@/types/IntegerHashMap";
+import nameToID from "@/util/nameToID";
+import me from "@/data/me";
 
 export default function DraggableList() {
     const neighbours = useNeighbours();
@@ -20,10 +22,7 @@ export default function DraggableList() {
         updateItems();
     }, [neighbours]);
 
-    // const handleReorder = (newOrder) => {
-    //     dispatch({ type: "reordered", newOrder });
-    //     setItems(getNames(neighbours)); // Update items state for rendering
-    // };
+    function handleReorder(): void {}
 
     return (
         <div className="draggable-list">

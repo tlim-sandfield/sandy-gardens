@@ -43,17 +43,16 @@ function neighboursReducer(
     const newNeighbours = { ...state.integerHashMap };
     switch (action.type) {
         case "added": {
-            newNeighbours[me.resourceID].add(action.id);
+            newNeighbours[me.resourceID].push(action.id);
             break;
         }
         case "deleted": {
-            newNeighbours[me.resourceID].delete(action.id);
+            const index = newNeighbours[me.resourceID].indexOf(action.id);
+            if (index > -1) {
+                newNeighbours[me.resourceID].splice(index, 1);
+            }
             break;
         }
-        // case "reordered": {
-        //     newNeighbours[me.resourceID]
-        //     break;
-        // }
         default: {
             throw new Error("Unknown action");
         }
