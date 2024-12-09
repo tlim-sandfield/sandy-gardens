@@ -1,6 +1,6 @@
 import salnetHoursWorkedList from "@/data/salnetHoursWorkedList";
 
-export default function nameToID(name: string) {
+export default function nameToID(name: string): number {
     return salnetHoursWorkedList.find((person) => person.name === name)
-        ?.resourceID;
+        ?.resourceID ?? 0;
 }

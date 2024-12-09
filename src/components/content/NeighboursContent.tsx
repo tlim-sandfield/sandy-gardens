@@ -6,9 +6,9 @@ import DraggableList from "../DraggableList";
 import NeighboursAddBack from "../NeighboursAddBack";
 import { Divider } from "@mui/material";
 import { useState } from "react";
-
 export default function NeighboursContent() {
     const [searchList, setSearchList] = useState([]);
+    const [items, setItems] = useState([] as string[]);
 
     return (
         <div>
@@ -22,13 +22,17 @@ export default function NeighboursContent() {
                         your plot first if you don’t add neighbours.
                     </p>
                     <p>Drag neighbours to change proximity to you</p>
-                    <DraggableList />
+                    <DraggableList items={items} setItems={setItems} />
                 </div>
 
                 <div className="content-right">
                     <h3>Search</h3>
                     <NeighboursSearchBar setSearchList={setSearchList} />
-                    <NeighboursAddList searchList={searchList} setSearchList={setSearchList}/>
+                    <NeighboursAddList
+                        searchList={searchList}
+                        setSearchList={setSearchList}
+                        setItems={setItems}
+                    />
                     <br />
                     <Divider />
                     <h3>Notifications</h3>

@@ -4,24 +4,31 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
 import nameToID from "@/util/nameToID";
-import { useNeighboursDispatch } from "../contexts/NeighboursContext";
+import {
+    useNeighbours,
+    useNeighboursDispatch,
+} from "../contexts/NeighboursContext";
 import { useIncomingAddsDispatch } from "@/contexts/IncomingAddsContext";
+import IDsToNames from "@/util/IDsToNames";
+import me from "@/data/me";
 
 interface NeighboursAddListProps {
     searchList: string[];
     setSearchList: Function;
+    setItems: Function;
 }
 
 export default function NeighboursAddList({
     searchList,
     setSearchList,
+    setItems,
 }: NeighboursAddListProps) {
+    const neighbours = useNeighbours();
     const dispatchNeighbours = useNeighboursDispatch();
     const dispatchIncomingAdds = useIncomingAddsDispatch();
 
     function handleAdd(value: string) {
         setSearchList(() => {
-            // Remove the added neighbour from the search list
             const filteredList = searchList.filter(
                 (person) => person !== value
             );
@@ -40,6 +47,7 @@ export default function NeighboursAddList({
                 id: nameToID(value) as number,
             });
         }
+        setItems(IDsToNames(neighbours?.[me.resourceID]) as string[]);
     }
 
     return (

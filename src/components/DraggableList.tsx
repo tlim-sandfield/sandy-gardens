@@ -1,34 +1,26 @@
 import { useEffect, useState } from "react";
 import { Reorder } from "framer-motion";
 import { Item } from "./Item";
-import getNames from "@/util/getNames";
-import {
-    useNeighbours,
-    useNeighboursDispatch,
-} from "../contexts/NeighboursContext";
-import IntegerHashMap from "@/types/IntegerHashMap";
-import nameToID from "@/util/nameToID";
+import { useNeighbours } from "../contexts/NeighboursContext";
+import IDsToNames from "@/util/IDsToNames";
 import me from "@/data/me";
 
-export default function DraggableList() {
-    const neighbours = useNeighbours();
-    // const dispatch = useNeighboursDispatch();
-    const [items, setItems] = useState(getNames(neighbours as IntegerHashMap));
+interface DraggableListProps {
+    items: string[];
+    setItems: (newOrder: string[]) => void;
+}
 
-    useEffect(() => {
-        const updateItems = () => {
-            setItems(getNames(neighbours as IntegerHashMap));
-        };
-        updateItems();
-    }, [neighbours]);
-
-    function handleReorder(): void {}
-
+export default function DraggableList({ items, setItems }: DraggableListProps) {
     return (
         <div className="draggable-list">
-            <Reorder.Group axis="y" onReorder={setItems} values={items}>
+            <Reorder.Group as="ol" axis="y" onReorder={setItems} values={items}>
                 {items.map((item) => (
-                    <Item key={item} item={item} />
+                    <Item
+                        key={item}
+                        item={item}
+                        newOrder={items}
+                        setItems={setItems}
+                    />
                 ))}
             </Reorder.Group>
         </div>

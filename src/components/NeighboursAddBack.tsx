@@ -9,11 +9,11 @@ import {
     useIncomingAddsDispatch,
 } from "@/contexts/IncomingAddsContext";
 import { useNeighboursDispatch } from "@/contexts/NeighboursContext";
-import getNames from "@/util/getNames";
+import getAllNames from "@/util/getAllNames";
 import IntegerHashMap from "@/types/IntegerHashMap";
 
 export default function NeighboursAddBack() {
-    const incomingAddsNames = getNames(useIncomingAdds() as IntegerHashMap);
+    const incomingAddsNames = getAllNames(useIncomingAdds() as IntegerHashMap);
     const neighboursDispatch = useNeighboursDispatch();
     const incomingAddsDispatch = useIncomingAddsDispatch();
 

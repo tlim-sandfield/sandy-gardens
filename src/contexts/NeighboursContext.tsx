@@ -3,6 +3,7 @@ import neighboursHashMap from "@/data/neighboursHashMap";
 import me from "@/data/me";
 import Action from "@/types/Action";
 import IntegerHashMapState from "@/types/IntegerHashMapState";
+import nameToID from "@/util/nameToID";
 
 export const NeighboursContext = createContext<IntegerHashMapState | null>(
     null
@@ -55,8 +56,12 @@ function neighboursReducer(
             }
             break;
         }
-        default: {
-            throw new Error("Unknown action");
+        case "reordered": {
+            const reorderedItems = [];
+            for (let i = 0; i < action.newOrder.length; i++) {
+                reorderedItems.push(nameToID(action.newOrder[i]));
+            }
+            neighboursHashMap[me.resourceID] = [...reorderedItems];
         }
     }
     return { integerHashMap: newNeighbours };
