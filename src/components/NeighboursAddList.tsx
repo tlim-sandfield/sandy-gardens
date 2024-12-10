@@ -74,7 +74,9 @@ export default function NeighboursAddList({
                     );
                 })
             ) : (
-                <p>No neighbours found!</p>
+                <div className="neighbours-list">
+                    <ListItemText primary="No neighbours found!" />
+                </div>
             )}
         </List>
     );

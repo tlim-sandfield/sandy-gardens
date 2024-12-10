@@ -5,7 +5,7 @@ import NeighboursSearchBar from "../NeighboursSearchBar";
 import DraggableList from "../DraggableList";
 import NeighboursAddBack from "../NeighboursAddBack";
 import { Divider } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function NeighboursContent() {
     const [searchList, setSearchList] = useState([]);
