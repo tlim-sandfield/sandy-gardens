@@ -1,6 +1,6 @@
 export default function HelpContent() {
     return (
-        <div>
+        <div className="page-content">
             <h1>Help</h1>
             <div className="content">
                 <div className="content-left">

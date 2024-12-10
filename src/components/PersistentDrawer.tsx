@@ -27,7 +27,7 @@ const menu = [
     { label: "Settings", icon: <SettingsIcon />, href: "/settings" },
 ];
 
-interface PersistentDrawerLeftProps {
+interface PersistentDrawerProps {
     open: boolean;
     setOpen: Function;
 }
@@ -41,14 +41,13 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     justifyContent: "flex-end",
 }));
 
-export default function PersistentDrawerLeft({
+export default function PersistentDrawer({
     open,
     setOpen,
-}: PersistentDrawerLeftProps) {
+}: PersistentDrawerProps) {
     const theme = useTheme();
     const [currentPage, setCurrentPage] = useState("");
 
-    // TODO: drawer-active not being added for 🏡 Garden due to conflicts with PhaserGame
     useEffect(() => {
         const storedPage = localStorage.getItem("currentPage");
         if (storedPage) {
@@ -63,7 +62,6 @@ export default function PersistentDrawerLeft({
     return (
         <div>
             <CssBaseline />
-
             <Drawer
                 sx={{
                     width: drawerWidth,
@@ -73,7 +71,6 @@ export default function PersistentDrawerLeft({
                         boxSizing: "border-box",
                     },
                 }}
-                variant="persistent"
                 anchor="left"
                 open={open}
             >
@@ -89,8 +86,8 @@ export default function PersistentDrawerLeft({
                 <Divider />
                 <List>
                     {menu.map(({ label, icon, href }) => (
-                        <div className="drawer-items">
-                            <ListItem key={label} disablePadding>
+                        <div key={label} className="drawer-items">
+                            <ListItem disablePadding>
                                 <ListItemButton
                                     href={href}
                                     className={
