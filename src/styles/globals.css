@@ -17,11 +17,11 @@ body {
 }
 
 .drawer-active {
-    background-color: var(--mui-palette-primary-main);
-    color: white;
+    background-color: var(--mui-palette-primary-main) !important;
+    color: white !important;
 
     &:hover {
-        background-color: var(--mui-palette-primary-main);
+        background-color: var(--mui-palette-primary-main) !important;
     }
 }
 
@@ -31,9 +31,13 @@ body {
 }
 
 /* PAGES */
-.page-content {
+.page {
     display: flex;
-    padding: 50px 0px 0px 10px;
+    padding-top: 50px;
+}
+
+.page-content {
+    padding: 40px;
 }
 
 .content {

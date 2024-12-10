@@ -2,7 +2,7 @@ import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 
 export default function SettingsContent() {
     return (
-        <div>
+        <div className="page-content">
             <h1>Settings</h1>
             <div className="content">
                 <div className="content-left">

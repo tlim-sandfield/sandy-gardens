@@ -11,7 +11,7 @@ export default function NeighboursContent() {
     const [searchList, setSearchList] = useState([]);
 
     return (
-        <div>
+        <div className="page-content">
             <h1>Neighbours</h1>
             <div className="content">
                 <div className="content-left">

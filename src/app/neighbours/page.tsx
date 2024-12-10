@@ -1,27 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import MenuContentStructure from "@/components/MenuContentStructure";
 import CustomNavbar from "@/components/CustomNavbar";
-import PersistentDrawer from "@/components/PersistentDrawerLeft";
+import PersistentDrawer from "@/components/PersistentDrawer";
 import NeighboursContent from "@/components/content/NeighboursContent";
 import NeighboursProvider from "@/contexts/NeighboursContext";
 import IncomingAddsProvider from "@/contexts/IncomingAddsContext";
 
 export default function NeighboursPage() {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     return (
-        <div className="page-content">
-            <CustomNavbar open={open} setOpen={setOpen} />
+        <div className="page">
+            <CustomNavbar setOpen={setOpen} />
             <PersistentDrawer open={open} setOpen={setOpen} />
-            <MenuContentStructure open={open}>
-                <NeighboursProvider>
-                    <IncomingAddsProvider>
-                        <NeighboursContent />
-                    </IncomingAddsProvider>
-                </NeighboursProvider>
-            </MenuContentStructure>
+            <NeighboursProvider>
+                <IncomingAddsProvider>
+                    <NeighboursContent />
+                </IncomingAddsProvider>
+            </NeighboursProvider>
         </div>
     );
 }
