@@ -7,10 +7,12 @@ import Typography from "@mui/material/Typography";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, styled } from "@mui/material";
+import me from "@/data/me";
+import salnetHoursWorkedList from "@/data/salnetHoursWorkedList";
 
 const drawerWidth = 240;
 
-interface GameNavbarProps {
+interface CustomNavbarProps {
     open: boolean;
     setOpen: Function;
 }
@@ -41,7 +43,7 @@ const AppBar = styled(MuiAppBar, {
     ],
 }));
 
-export default function GameNavbar({ open, setOpen }: GameNavbarProps) {
+export default function CustomNavbar({ open, setOpen }: CustomNavbarProps) {
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -63,7 +65,7 @@ export default function GameNavbar({ open, setOpen }: GameNavbarProps) {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap component="div">
-                    John Doe
+                    {me.name}
                 </Typography>
                 <Box sx={{ flexGrow: 2 }} />
                 <Box>Level 23 &nbsp; | &nbsp; 🪙 52</Box>

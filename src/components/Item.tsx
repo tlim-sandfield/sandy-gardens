@@ -3,22 +3,31 @@ import { useMotionValue, Reorder, useDragControls } from "framer-motion";
 import { useRaisedShadow } from "@/util/use-raised-shadow";
 import { ReorderIcon } from "../../public/ReorderIcon";
 import ClearIcon from "@mui/icons-material/Clear";
-import {
-    ListItemAvatar,
-    Avatar,
-    ListItemText,
-    Button,
-    IconButton,
-} from "@mui/material";
+import { ListItemText, Button } from "@mui/material";
+import nameToID from "@/util/nameToID";
+import { useNeighboursDispatch } from "../contexts/NeighboursContext";
 
-interface Props {
+interface ItemProps {
     item: string;
+    newOrder: string[];
+    setItems: Function;
 }
 
-export const Item = ({ item }: Props) => {
+export const Item = ({ item, newOrder, setItems }: ItemProps) => {
     const y = useMotionValue(0);
     const boxShadow = useRaisedShadow(y);
     const dragControls = useDragControls();
+    const dispatch = useNeighboursDispatch();
+
+    function handleReorder(setItems: Function) {
+        if (dispatch) {
+            dispatch({
+                type: "reordered",
+                newOrder: newOrder,
+            });
+        }
+        setItems(newOrder);
+    }
 
     return (
         <Reorder.Item
@@ -27,17 +36,23 @@ export const Item = ({ item }: Props) => {
             style={{ boxShadow, y }}
             dragListener={false}
             dragControls={dragControls}
+            onDragEnd={() => {
+                handleReorder(setItems);
+            }}
         >
             <ReorderIcon dragControls={dragControls} />
-
-            <ListItemAvatar sx={{ ml: 2 }}>
-                <Avatar
-                    alt={`Avatar n°${item + 1}`}
-                    src={`/static/images/avatar/${item + 1}.jpg`}
-                />
-            </ListItemAvatar>
-            <ListItemText primary={item} />
-            <Button className="clear-btn">
+            <ListItemText primary={item} sx={{ ml: 2 }} />
+            <Button
+                className="clear-btn"
+                onClick={() => {
+                    if (dispatch) {
+                        dispatch({
+                            type: "deleted",
+                            id: nameToID(item) as number,
+                        });
+                    }
+                }}
+            >
                 <ClearIcon />
             </Button>
         </Reorder.Item>

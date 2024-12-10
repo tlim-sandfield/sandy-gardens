@@ -25,18 +25,68 @@ body {
     }
 }
 
+/* PAGES */
+.page-content {
+    display: flex;
+    padding: 50px 0px 0px 10px;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: -20px;
+}
+
+.content-left {
+    width: 40%;
+}
+
+.content-right {
+    width: 25vw;
+    margin: 0px 20px 0px 20px;
+}
+
+@media (max-width: 1008px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .content-left {
+        width: 90%;
+    }
+
+    .content-right {
+        width: 80%;
+        min-width: 25rem;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: 20px;
+    }
+}
+
+/* NEIGHBOURS */
+.neighbours-list {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
 .draggable-list ul,
+ol,
 li {
     list-style: none;
     padding: 0;
     margin: 0;
     user-select: none;
-    overflow: hidden;
 }
 
-.draggable-list ul {
+.draggable-list ul,
+ol {
     position: relative;
-    width: 28rem;
+    width: 25rem;
 }
 
 .draggable-list li {
@@ -81,54 +131,37 @@ li {
     align-items: center;
     cursor: pointer;
 }
+/* 
 
-/* PAGES */
-.page-content {
-    display: flex;
-    padding: 50px 0px 0px 10px;
-}
 
-.content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: -20px;
-}
+.item {
+    border: 1px solid black;
+    overflow: hidden;
+    transform-origin: 30% 50% 0px;
+    padding-left: 20px;
+    background: white;
+    max-height: 100%;
+  }
+  .item .dragHandle {
 
-.content-left {
-    width: 40vw;
-}
-
-.content-right {
-    width: 25vw;
-    margin: 10px 20px 0px 20px;
-}
-
-@media (max-width: 1008px) {
-    .content {
-        flex-direction: column;
-    }
-
-    .content-left {
-        width: 90vw;
-    }
-
-    .content-right {
-        width: 90vw;
-        margin-left: 0px;
-        margin-right: 0px;
-        margin-top: 20px;
-    }
-}
-
-/* NEIGHBOURS */
-.neighbours-list {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 10px;
-}
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: move;
+    width: 20px;
+    height: 16px;
+    background: url('/assets/favicon.png') 30% 50% no-repeat no-repeat;
+  }
+  .item:hover .dragHandle,
+  .item.dragged .dragHandle {
+    visibility: visible;
+  }
+  .item h2 {
+    margin: 0;
+  }
+  .item .subtitle {
+    font-weight: bold;
+  } */
 
 /* GAME */
 #game {

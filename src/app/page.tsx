@@ -1,7 +1,7 @@
 "use client";
 
 import App from "@/App";
-import GameNavbar from "@/components/GameNavbar";
+import CustomNavbar from "@/components/CustomNavbar";
 import PersistentDrawerLeft from "@/components/PersistentDrawerLeft";
 import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
@@ -13,7 +13,7 @@ export default function Home() {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <GameNavbar open={open} setOpen={setOpen} />
+                <CustomNavbar open={open} setOpen={setOpen} />
                 <PersistentDrawerLeft open={open} setOpen={setOpen} />
                 <App />
             </ThemeProvider>

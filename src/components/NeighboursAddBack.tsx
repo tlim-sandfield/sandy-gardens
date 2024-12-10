@@ -2,14 +2,24 @@ import * as React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
 import { Button } from "@mui/material";
+import nameToID from "@/util/nameToID";
+import {
+    useIncomingAdds,
+    useIncomingAddsDispatch,
+} from "@/contexts/IncomingAddsContext";
+import { useNeighboursDispatch } from "@/contexts/NeighboursContext";
+import getAllNames from "@/util/getAllNames";
+import IntegerHashMap from "@/types/IntegerHashMap";
 
 export default function NeighboursAddBack() {
+    const incomingAddsNames = getAllNames(useIncomingAdds() as IntegerHashMap);
+    const neighboursDispatch = useNeighboursDispatch();
+    const incomingAddsDispatch = useIncomingAddsDispatch();
+
     return (
         <List dense sx={{ width: "100%" }}>
-            {[0, 1, 2, 3].map((value) => {
+            {incomingAddsNames.map((value) => {
                 const labelId = `checkbox-list-secondary-label-${value}`;
                 return (
                     <ListItem
@@ -25,19 +35,29 @@ export default function NeighboursAddBack() {
                         }}
                     >
                         <div className="neighbours-list">
-                            <ListItemAvatar>
-                                <Avatar
-                                    alt={`Avatar n°${value + 1}`}
-                                    src={`/static/images/avatar/${
-                                        value + 1
-                                    }.jpg`}
-                                />
-                            </ListItemAvatar>
                             <ListItemText
                                 id={labelId}
-                                primary={`Person ${value + 1} just added you as a neighbour!`}
+                                primary={`${value} just added you as a neighbour!`}
                             />
-                            <Button color="primary">Add back</Button>
+                            <Button
+                                color="primary"
+                                onClick={() => {
+                                    if (neighboursDispatch) {
+                                        neighboursDispatch({
+                                            type: "added",
+                                            id: nameToID(value) as number,
+                                        });
+                                    }
+                                    if (incomingAddsDispatch) {
+                                        incomingAddsDispatch({
+                                            type: "added",
+                                            id: nameToID(value) as number,
+                                        });
+                                    }
+                                }}
+                            >
+                                Add back
+                            </Button>
                         </div>
                     </ListItem>
                 );

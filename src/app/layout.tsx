@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/styles/theme.js";
+import React from "react";
 
 export const metadata: Metadata = {
     title: "SandyGardens",
