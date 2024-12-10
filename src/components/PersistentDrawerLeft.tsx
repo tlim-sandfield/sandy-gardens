@@ -9,6 +9,10 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import GroupsIcon from "@mui/icons-material/Groups";
+import SettingsIcon from "@mui/icons-material/Settings";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -17,10 +21,10 @@ import { useEffect, useState } from "react";
 const drawerWidth = 240;
 
 const menu = [
-    { label: "🏡 Garden", href: "/" },
-    { label: "🧑‍🤝‍🧑 Neighbours", href: "/neighbours" },
-    { label: "❓ Help", href: "/help" },
-    { label: "⚙️ Settings", href: "/settings" },
+    { label: "Garden", icon: <LocalFloristIcon />, href: "/" },
+    { label: "Neighbours", icon: <GroupsIcon />, href: "/neighbours" },
+    { label: "Help", icon: <QuestionMarkIcon />, href: "/help" },
+    { label: "Settings", icon: <SettingsIcon />, href: "/settings" },
 ];
 
 interface PersistentDrawerLeftProps {
@@ -84,20 +88,29 @@ export default function PersistentDrawerLeft({
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {menu.map(({ label, href }) => (
-                        <ListItem key={label} disablePadding>
-                            <ListItemButton
-                                href={href}
-                                className={
-                                    currentPage === label ? "drawer-active" : ""
-                                }
-                                onClick={() =>
-                                    localStorage.setItem("currentPage", label)
-                                }
-                            >
-                                <ListItemText primary={label} />
-                            </ListItemButton>
-                        </ListItem>
+                    {menu.map(({ label, icon, href }) => (
+                        <div className="drawer-items">
+                            <ListItem key={label} disablePadding>
+                                <ListItemButton
+                                    href={href}
+                                    className={
+                                        currentPage === label
+                                            ? "drawer-active"
+                                            : ""
+                                    }
+                                    onClick={() =>
+                                        localStorage.setItem(
+                                            "currentPage",
+                                            label
+                                        )
+                                    }
+                                >
+                                    {icon}
+                                    &nbsp; &nbsp;
+                                    <ListItemText primary={label} />
+                                </ListItemButton>
+                            </ListItem>
+                        </div>
                     ))}
                 </List>
             </Drawer>

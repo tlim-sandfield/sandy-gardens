@@ -25,6 +25,11 @@ body {
     }
 }
 
+.drawer-items {
+    display: flex;
+    align-items: center;
+}
+
 /* PAGES */
 .page-content {
     display: flex;
