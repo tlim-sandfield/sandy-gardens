@@ -1,7 +1,6 @@
 import * as React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
 import nameToID from "@/util/nameToID";
 import { useNeighboursDispatch } from "../contexts/NeighboursContext";
@@ -22,7 +21,7 @@ export default function NeighboursAddList({
     function handleAdd(value: string) {
         setSearchList(() => {
             const filteredList = searchList.filter(
-                (person) => person !== value,
+                (person) => person !== value
             );
             return filteredList;
         });
@@ -60,7 +59,7 @@ export default function NeighboursAddList({
                             }}
                         >
                             <div className="neighbours-list">
-                                <ListItemText id={labelId} primary={value} />
+                                <p id={labelId}>{value}</p>
                                 <Button
                                     color="primary"
                                     onClick={() => {
@@ -75,7 +74,7 @@ export default function NeighboursAddList({
                 })
             ) : (
                 <div className="neighbours-list">
-                    <ListItemText primary="No neighbours found!" />
+                    <p>No neighbours found!</p>
                 </div>
             )}
         </List>
