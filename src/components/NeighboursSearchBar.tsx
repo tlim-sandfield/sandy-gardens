@@ -2,6 +2,7 @@ import { TextField } from "@mui/material";
 import randomiseAndShortenList from "@/util/randomiseAndShortenList";
 import { useEffect, useRef, useState } from "react";
 import removeMeAndCurrentNeighbours from "@/util/removeMeAndCurrentNeighbours";
+import SearchIcon from "@mui/icons-material/Search";
 
 interface NeighboursSearchBarProps {
     setSearchList: Function;
@@ -27,12 +28,12 @@ export default function NeighboursSearchBar({
         if (newInputValue === "") {
             initialListRef.current = randomiseAndShortenList(
                 allAddableNames,
-                5,
+                5
             );
             setSearchList(initialListRef.current);
         } else {
             const filteredList = allAddableNames.filter((person) =>
-                person.toLowerCase().includes(newInputValue.toLowerCase()),
+                person.toLowerCase().includes(newInputValue.toLowerCase())
             );
             setSearchList(filteredList);
         }
@@ -45,7 +46,12 @@ export default function NeighboursSearchBar({
             value={inputValue}
             variant="outlined"
             fullWidth
-            label="🔍 Search neighbours…"
+            label={
+                <div className="search-placeholder">
+                    <SearchIcon />
+                    <span>&nbsp; Search neighbours...</span>
+                </div>
+            }
         />
     );
 }
