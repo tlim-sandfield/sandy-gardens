@@ -61,7 +61,8 @@ function neighboursReducer(
             for (let i = 0; i < action.newOrder.length; i++) {
                 reorderedItems.push(nameToID(action.newOrder[i]));
             }
-            neighboursHashMap[me.resourceID] = [...reorderedItems];
+            newNeighbours[me.resourceID] = [...reorderedItems];
+            break;
         }
     }
     return { integerHashMap: newNeighbours };

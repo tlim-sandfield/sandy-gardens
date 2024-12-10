@@ -5,12 +5,14 @@ import { useNeighbours } from "../contexts/NeighboursContext";
 import IDsToNames from "@/util/IDsToNames";
 import me from "@/data/me";
 
-interface DraggableListProps {
-    items: string[];
-    setItems: (newOrder: string[]) => void;
-}
+export default function DraggableList() {
+    const [items, setItems] = useState([] as string[]);
+    const neighbours = useNeighbours();
 
-export default function DraggableList({ items, setItems }: DraggableListProps) {
+    useEffect(() => {
+        setItems(IDsToNames(neighbours?.[me.resourceID]) as string[]);
+    }, [neighbours]);
+
     return (
         <div className="draggable-list">
             <Reorder.Group as="ol" axis="y" onReorder={setItems} values={items}>
