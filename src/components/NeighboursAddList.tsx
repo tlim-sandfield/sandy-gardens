@@ -22,7 +22,7 @@ export default function NeighboursAddList({
     function handleAdd(value: string) {
         setSearchList(() => {
             const filteredList = searchList.filter(
-                (person) => person !== value
+                (person) => person !== value,
             );
             return filteredList;
         });

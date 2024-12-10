@@ -5,7 +5,7 @@ import Action from "@/types/Action";
 import IntegerHashMapState from "@/types/IntegerHashMapState";
 
 export const IncomingAddsContext = createContext<IntegerHashMapState | null>(
-    null
+    null,
 );
 export const IncomingAddsDispatchContext =
     createContext<React.Dispatch<Action> | null>(null);
@@ -38,7 +38,7 @@ export function useIncomingAddsDispatch() {
 
 function incomingAddsReducer(
     state: IntegerHashMapState,
-    action: Action
+    action: Action,
 ): IntegerHashMapState {
     const newIncomingAdds = state.integerHashMap;
     switch (action.type) {

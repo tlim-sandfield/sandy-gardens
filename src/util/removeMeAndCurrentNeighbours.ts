@@ -6,12 +6,12 @@ export default function removeMeAndCurrentNeighbours(): string[] {
     const currentNeighbours = useNeighbours();
 
     const allNamesExceptMe = salnetHoursWorkedList.filter(
-        (person) => person.resourceID !== me.resourceID
+        (person) => person.resourceID !== me.resourceID,
     );
 
     const allAddableNames = allNamesExceptMe.filter(
         (person) =>
-            !currentNeighbours?.[me.resourceID]?.includes(person.resourceID)
+            !currentNeighbours?.[me.resourceID]?.includes(person.resourceID),
     );
 
     return allAddableNames.map((person) => person.name);

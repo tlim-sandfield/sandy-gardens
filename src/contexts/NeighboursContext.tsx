@@ -6,7 +6,7 @@ import IntegerHashMapState from "@/types/IntegerHashMapState";
 import nameToID from "@/util/nameToID";
 
 export const NeighboursContext = createContext<IntegerHashMapState | null>(
-    null
+    null,
 );
 export const NeighboursDispatchContext =
     createContext<React.Dispatch<Action> | null>(null);
@@ -39,7 +39,7 @@ export function useNeighboursDispatch() {
 
 function neighboursReducer(
     state: IntegerHashMapState,
-    action: Action
+    action: Action,
 ): IntegerHashMapState {
     const newNeighbours = { ...state.integerHashMap };
     switch (action.type) {
