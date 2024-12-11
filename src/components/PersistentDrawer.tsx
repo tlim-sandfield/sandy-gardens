@@ -1,6 +1,3 @@
-"use client";
-
-import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,7 +13,7 @@ import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const drawerWidth = 240;
 
@@ -41,19 +38,27 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     justifyContent: "flex-end",
 }));
 
+function translatePathnameToLabel(pathname: string) {
+    switch (pathname) {
+        case "/":
+            return "Garden";
+        case "/neighbours":
+            return "Neighbours";
+        case "/help":
+            return "Help";
+        case "/settings":
+            return "Settings";
+        default:
+            return "";
+    }
+}
+
 export default function PersistentDrawer({
     open,
     setOpen,
 }: PersistentDrawerProps) {
     const theme = useTheme();
-    const [currentPage, setCurrentPage] = useState("");
-
-    useEffect(() => {
-        const storedPage = localStorage.getItem("currentPage");
-        if (storedPage) {
-            setCurrentPage(storedPage);
-        }
-    }, []);
+    const currentRoute = usePathname();
 
     const handleDrawerClose = () => {
         setOpen(false);
@@ -91,7 +96,9 @@ export default function PersistentDrawer({
                                 <ListItemButton
                                     href={href}
                                     className={
-                                        currentPage === label
+                                        translatePathnameToLabel(
+                                            currentRoute
+                                        ) === label
                                             ? "drawer-active"
                                             : ""
                                     }
