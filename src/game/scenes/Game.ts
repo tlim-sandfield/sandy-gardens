@@ -6,38 +6,42 @@ export class Game extends Scene {
     background: Phaser.GameObjects.Image;
     gameText: Phaser.GameObjects.Text;
 
+    xTiles: 10;
+    yTiles: 10;
+
     constructor() {
         super("Game");
     }
 
     create() {
         this.camera = this.cameras.main;
-        this.camera.setBackgroundColor(0x00ff00);
 
-        this.background = this.add.image(512, 384, "background");
-        this.background.setAlpha(0.5);
+        // this.add.image(0, 0, "base_tiles")
 
-        this.gameText = this.add
-            .text(
-                512,
-                384,
-                "Make something fun!\nand share it with us:\nsupport@phaser.io",
-                {
-                    fontFamily: "Arial Black",
-                    fontSize: 38,
-                    color: "#ffffff",
-                    stroke: "#000000",
-                    strokeThickness: 8,
-                    align: "center",
-                },
-            )
-            .setOrigin(0.5)
-            .setDepth(100);
-
+        this.drawTiles();
         EventBus.emit("current-scene-ready", this);
     }
 
-    changeScene() {
-        this.scene.start("GameOver");
+    drawTiles() {
+        const xStartPoint = 0;
+        const yStartPoint = 0;
+
+        this.add.image(xStartPoint, yStartPoint, "base_tiles");
+
+        for (let x = 0; x < this.xTiles; x++) {
+            for (let y = 0; y < this.yTiles; y++) {}
+        }
+    }
+
+    update() {
+        const scrollDelta = this.input.activePointer.deltaY;
+        this.camera.zoom += scrollDelta * -0.001;
+        // Clamp the zoom factor to prevent excessive zooming
+        this.camera.zoom = Phaser.Math.Clamp(this.camera.zoom, 0.25, 0.75);
+
+        if (this.input.activePointer.isDown) {
+            this.camera.scrollX -= this.input.activePointer.velocity.x / 10;
+            this.camera.scrollY -= this.input.activePointer.velocity.y / 10;
+        }
     }
 }

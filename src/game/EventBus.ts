@@ -1,3 +1,5 @@
+"use client"
+
 import { Events } from "phaser";
 
 // Used to emit events between React components and Phaser scenes
