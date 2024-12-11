@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Reorder } from "framer-motion";
 import { Item } from "./Item";
 import { useNeighbours } from "../contexts/NeighboursContext";
-import IDsToNames from "@/util/IDsToNames";
+import IDsToNames from "@/utils/IDsToNames";
 import me from "@/data/me";
 
 export default function DraggableList() {

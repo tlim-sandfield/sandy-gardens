@@ -2,7 +2,7 @@ import * as React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { Button } from "@mui/material";
-import nameToID from "@/util/nameToID";
+import nameToID from "@/utils/nameToID";
 import { useNeighboursDispatch } from "../contexts/NeighboursContext";
 import { useIncomingAddsDispatch } from "@/contexts/IncomingAddsContext";
 

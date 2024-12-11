@@ -3,13 +3,13 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
-import nameToID from "@/util/nameToID";
+import nameToID from "@/utils/nameToID";
 import {
     useIncomingAdds,
     useIncomingAddsDispatch,
 } from "@/contexts/IncomingAddsContext";
 import { useNeighboursDispatch } from "@/contexts/NeighboursContext";
-import getAllNames from "@/util/getAllNames";
+import getAllNames from "@/utils/getAllNames";
 import IntegerHashMap from "@/types/IntegerHashMap";
 
 export default function NeighboursAddBack() {
