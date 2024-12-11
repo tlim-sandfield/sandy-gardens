@@ -8,6 +8,7 @@ export class Game extends Scene {
 
     xTiles: 1;
     yTiles: 1;
+    plotSize: 20;
 
     constructor() {
         super("Game");
@@ -16,9 +17,8 @@ export class Game extends Scene {
     create() {
         this.camera = this.cameras.main;
 
-        // this.add.image(0, 0, "base_tiles")
-
         this.drawTiles();
+        this.add.image(128, 0, "tile-outline");
         EventBus.emit("current-scene-ready", this);
     }
 
@@ -26,11 +26,15 @@ export class Game extends Scene {
         const xStartPoint = 0;
         const yStartPoint = 0;
 
-        this.add.image(xStartPoint, yStartPoint, "base_tiles");
+        this.add.image(0, 0, "base_tiles");
 
         for (let x = 0; x < this.xTiles; x++) {
             for (let y = 0; y < this.yTiles; y++) {
-                
+                // this.add.image(
+                //     xStartPoint + this.plotSize,
+                //     yStartPoint + this.plotSize,
+                //     "base_tiles"
+                // ).setOrigin(0, 0);
             }
         }
     }
