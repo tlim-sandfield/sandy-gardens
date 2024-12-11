@@ -69,7 +69,7 @@ export default function App() {
     return (
         <div id="game">
             <PhaserGame ref={phaserRef} currentActiveScene={currentScene} />
-            <div>
+            {/* <div>
                 <div>
                     <button className="button" onClick={changeScene}>
                         Change Scene
@@ -93,7 +93,7 @@ export default function App() {
                         Add New Sprite
                     </button>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
