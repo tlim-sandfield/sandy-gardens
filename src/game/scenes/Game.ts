@@ -46,10 +46,28 @@ export class Game extends Scene {
         // Clamp the zoom factor to prevent excessive zooming
         this.camera.zoom = Phaser.Math.Clamp(this.camera.zoom, 0.25, 0.75);
 
+        // TODO: Limit to game canvas (not navbar)
         if (this.input.activePointer.isDown) {
             this.camera.scrollX -= this.input.activePointer.velocity.x / 10;
             this.camera.scrollY -= this.input.activePointer.velocity.y / 10;
         }
+
+        // const scrollSensitivity = 0.001; // Adjust sensitivity as needed
+
+        // this.input.on(
+        //     "wheel",
+        //     (
+        //         _pointer: any,
+        //         _gameObjects: any,
+        //         _deltaX: any,
+        //         deltaY: number,
+        //         _deltaZ: any
+        //     ) => {
+        //         const zoomChange = Math.sign(deltaY) * scrollSensitivity;
+        //         this.camera.zoom -= zoomChange;
+        //         console.log(this.camera.zoom);
+        //     }
+        // );
 
         // TILE HIGHLIGHT
         const worldPoint = this.cameras.main.getWorldPoint(
@@ -57,11 +75,13 @@ export class Game extends Scene {
             this.input.y
         );
 
-        this.tileOutline.x = Phaser.Math.Snap.To(worldPoint.x, TILE_WIDTH - TILE_HEIGHT);
-        this.tileOutline.y = Phaser.Math.Snap.To(worldPoint.y, (TILE_WIDTH + TILE_HEIGHT) / 2);
-
-        console.log(this.tileOutline.x, this.tileOutline.y);
-
-
+        this.tileOutline.x = Phaser.Math.Snap.To(
+            worldPoint.x,
+            TILE_WIDTH - TILE_HEIGHT
+        );
+        this.tileOutline.y = Phaser.Math.Snap.To(
+            worldPoint.y,
+            (TILE_WIDTH + TILE_HEIGHT) / 2
+        );
     }
 }

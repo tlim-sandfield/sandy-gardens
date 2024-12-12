@@ -1,8 +1,7 @@
 import { Boot } from "./scenes/Boot";
 import { GameOver } from "./scenes/GameOver";
 import { Game as MainGame } from "./scenes/Game";
-import { MainMenu } from "./scenes/MainMenu";
-import { AUTO, Game, WEBGL } from "phaser";
+import { AUTO, Game } from "phaser";
 import { Preloader } from "./scenes/Preloader";
 
 // Information about Game Config: https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
@@ -13,12 +12,8 @@ const config: Phaser.Types.Core.GameConfig = {
     height: "100%",
     parent: "game-container",
     backgroundColor: "#CBDCB4",
-    physics: {
-        default: "arcade",
-        arcade: {
-            debug: true,
-            gravity: { x: 10, y: 10 },
-        },
+    scale: {
+        mode: Phaser.Scale.RESIZE,
     },
     scene: [Boot, Preloader, MainGame, GameOver],
 };
