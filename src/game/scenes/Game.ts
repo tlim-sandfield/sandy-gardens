@@ -15,6 +15,8 @@ export class Game extends Scene {
 
     create() {
         this.camera = this.cameras.main;
+        this.camera.setZoom(0.3);
+        this.camera.centerOn(0, 0);
 
         this.drawTiles();
         this.tileOutline = this.add.image(0, 0, "tile-outline");
@@ -41,33 +43,55 @@ export class Game extends Scene {
 
     update() {
         // CAMERA CONTROLS
-        const scrollDelta = this.input.activePointer.deltaY;
-        this.camera.zoom += scrollDelta * -0.0001;
-        // Clamp the zoom factor to prevent excessive zooming
-        this.camera.zoom = Phaser.Math.Clamp(this.camera.zoom, 0.25, 0.75);
+        // const scrollDelta = this.input.activePointer.deltaY;
+        // this.camera.zoom += scrollDelta * -0.0001;
+        // this.camera.zoom = Phaser.Math.Clamp(this.camera.zoom, 0.25, 0.75);
+
+        const sensitivity = 0.001; // Adjust sensitivity as needed
+
+        this.input.on(
+            "wheel",
+            (
+                _pointer: any,
+                _gameObjects: any,
+                _deltaX: any,
+                deltaY: number,
+                _deltaZ: any
+            ) => {
+                const zoomChange = Math.sign(deltaY) * sensitivity;
+                this.camera.zoom -= zoomChange;
+                console.log(this.camera.zoom);
+            }
+        );
 
         // TODO: Limit to game canvas (not navbar)
-        if (this.input.activePointer.isDown) {
-            this.camera.scrollX -= this.input.activePointer.velocity.x / 10;
-            this.camera.scrollY -= this.input.activePointer.velocity.y / 10;
-        }
+        this.input.on(
+            "pointerdown",
+            (pointer: { isDown: any; x: any; y: any }) => {
+                if (pointer.isDown) {
+                    let initialX = pointer.x;
+                    let initialY = pointer.y;
 
-        // const scrollSensitivity = 0.001; // Adjust sensitivity as needed
+                    this.input.on(
+                        "pointermove",
+                        (pointer: { x: number; y: number }) => {
+                            const deltaX = pointer.x - initialX;
+                            const deltaY = pointer.y - initialY;
 
-        // this.input.on(
-        //     "wheel",
-        //     (
-        //         _pointer: any,
-        //         _gameObjects: any,
-        //         _deltaX: any,
-        //         deltaY: number,
-        //         _deltaZ: any
-        //     ) => {
-        //         const zoomChange = Math.sign(deltaY) * scrollSensitivity;
-        //         this.camera.zoom -= zoomChange;
-        //         console.log(this.camera.zoom);
-        //     }
-        // );
+                            this.camera.scrollX -= deltaX * sensitivity;
+                            this.camera.scrollY -= deltaY * sensitivity;
+
+                            initialX = pointer.x;
+                            initialY = pointer.y; // Reset initial position for continuous panning
+                        }
+                    );
+
+                    this.input.on("pointerup", () => {
+                        this.input.off("pointermove");
+                    });
+                }
+            }
+        );
 
         // TILE HIGHLIGHT
         const worldPoint = this.cameras.main.getWorldPoint(
