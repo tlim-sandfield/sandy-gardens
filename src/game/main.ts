@@ -8,8 +8,8 @@ import { Preloader } from "./scenes/Preloader";
 
 const config: Phaser.Types.Core.GameConfig = {
     type: AUTO,
-    width: "100%",
-    height: "100%",
+    width: window.innerWidth,
+    height: window.innerHeight,
     parent: "game-container",
     backgroundColor: "#CBDCB4",
     scale: {

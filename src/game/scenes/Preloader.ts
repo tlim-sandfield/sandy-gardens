@@ -27,10 +27,12 @@ export class Preloader extends Scene {
     preload() {
         //  Load the assets for the game
         this.load.image("base_tiles", "assets/tiles/20x20.png");
-        this.load.json("tilemap", "assets/tiles/20x20.json");
+        this.load.image("grass", "assets/tiles/grass.png");
         this.load.image("tile-outline", "assets/tiles/tile-outline.png");
-
-        this.load.image("star", "assets/star.png");
+        this.load.image(
+            "tile-colour-corners",
+            "assets/tiles/tile-colour-corners.png"
+        );
     }
 
     create() {
