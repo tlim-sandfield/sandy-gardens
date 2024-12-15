@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useMotionValue, Reorder, useDragControls } from "framer-motion";
-import { useRaisedShadow } from "@/util/use-raised-shadow";
+import { useRaisedShadow } from "@/utils/use-raised-shadow";
 import { ReorderIcon } from "../../public/ReorderIcon";
 import ClearIcon from "@mui/icons-material/Clear";
 import { ListItemText, Button } from "@mui/material";
-import nameToID from "@/util/nameToID";
+import nameToID from "@/utils/nameToID";
 import { useNeighboursDispatch } from "../contexts/NeighboursContext";
 
 interface ItemProps {

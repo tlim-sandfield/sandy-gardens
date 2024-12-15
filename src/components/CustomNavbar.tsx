@@ -21,7 +21,11 @@ export default function CustomNavbar({ setOpen }: CustomNavbarProps) {
     return (
         <MuiAppBar
             position="fixed"
-            sx={{ backgroundColor: "--mui-palette-primary-main" }}
+            sx={{
+                backgroundColor: "--mui-palette-primary-main",
+                height: "64px",
+                justifyContent: "center",
+            }}
         >
             <Toolbar>
                 <IconButton

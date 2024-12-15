@@ -3,7 +3,7 @@ import neighboursHashMap from "@/data/neighboursHashMap";
 import me from "@/data/me";
 import Action from "@/types/Action";
 import IntegerHashMapState from "@/types/IntegerHashMapState";
-import nameToID from "@/util/nameToID";
+import nameToID from "@/utils/nameToID";
 
 export const NeighboursContext = createContext<IntegerHashMapState | null>(
     null,

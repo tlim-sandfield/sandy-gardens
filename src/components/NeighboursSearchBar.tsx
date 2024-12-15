@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
-import randomiseAndShortenList from "@/util/randomiseAndShortenList";
+import randomiseAndShortenList from "@/utils/randomiseAndShortenList";
 import { useEffect, useRef, useState } from "react";
-import removeMeAndCurrentNeighbours from "@/util/removeMeAndCurrentNeighbours";
+import removeMeAndCurrentNeighbours from "@/utils/removeMeAndCurrentNeighbours";
 import SearchIcon from "@mui/icons-material/Search";
 
 interface NeighboursSearchBarProps {
