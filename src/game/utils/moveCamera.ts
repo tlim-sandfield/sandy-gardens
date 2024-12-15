@@ -4,9 +4,21 @@ interface MoveCameraProps {
 }
 
 export default function moveCamera({ camera, input }: MoveCameraProps) {
-    // SCROLL: mouse wheel up and down
-    const movementSpeed = 50;
-    const cameraYChange =
-        input.activePointer.deltaY > 0 ? movementSpeed : -movementSpeed;
-    camera.scrollY += cameraYChange;
+    const ZOOM_SPEED = 0.001;
+    const MOVEMENT_SPEED = 50;
+
+    const keyCtrl = input?.keyboard?.addKey(
+        Phaser.Input.Keyboard.KeyCodes.CTRL
+    );
+
+    if (keyCtrl?.isDown) {
+        // ZOOM: CTRL + mouse wheel up and down
+        const zoomChange = input.activePointer.deltaY * -ZOOM_SPEED;
+        camera.zoom += zoomChange;
+    } else {
+        // SCROLL: mouse wheel up and down
+        const cameraYChange =
+            input.activePointer.deltaY > 0 ? MOVEMENT_SPEED : -MOVEMENT_SPEED;
+        camera.scrollY += cameraYChange;
+    }
 }
