@@ -1,6 +1,7 @@
 import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
 import moveCamera from "../utils/moveCamera";
+import panCamera from "../utils/panCamera";
 
 const NAVBAR_HEIGHT = 64;
 const ZOOM = 0.3;
@@ -54,6 +55,13 @@ export class Game extends Scene {
 
         this.input.on("wheel", () =>
             moveCamera({ camera: this.camera, input: this.input })
+        );
+        this.input.on("pointerdown", () =>
+            panCamera({
+                camera: this.camera,
+                input: this.input,
+                pointer: this.input.activePointer,
+            })
         );
 
         EventBus.emit("current-scene-ready", this);
