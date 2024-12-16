@@ -3,17 +3,15 @@ interface PanCameraProps {
     input: Phaser.Input.InputPlugin;
     pointer: Phaser.Input.Pointer;
 }
-3;
 
-export default function panCamera({ camera, input, pointer }: PanCameraProps) {
-    const keySpace = input?.keyboard?.addKey(
-        Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
-
-    // PAN: SPACE + left-click mouse drag or middle mouse button drag
+// PAN: SPACE + left-click mouse drag or scroll wheel drag
+export default function panCameraMouseWheel({
+    camera,
+    input,
+    pointer,
+}: PanCameraProps) {
     if (pointer.middleButtonDown()) {
         input.setDefaultCursor("grabbing");
-
         let initialX = pointer.x;
         let initialY = pointer.y;
 
@@ -24,7 +22,6 @@ export default function panCamera({ camera, input, pointer }: PanCameraProps) {
             camera.scrollX -= deltaX;
             camera.scrollY -= deltaY;
 
-            // Update initial position for the next frame
             initialX = pointer.x;
             initialY = pointer.y;
         });

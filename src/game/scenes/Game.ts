@@ -1,7 +1,8 @@
 import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
 import moveCamera from "../utils/moveCamera";
-import panCamera from "../utils/panCamera";
+import panCameraMouseWheel from "../utils/panCameraMouseWheel";
+import panCameraSpaceBar from "../utils/panCameraSpaceBar";
 
 const NAVBAR_HEIGHT = 64;
 const ZOOM = 0.3;
@@ -53,16 +54,30 @@ export class Game extends Scene {
             color: "#000",
         });
 
+        const keySpace = this.input?.keyboard?.addKey(
+            Phaser.Input.Keyboard.KeyCodes.SPACE
+        );
+
         this.input.on("wheel", () =>
             moveCamera({ camera: this.camera, input: this.input })
         );
         this.input.on("pointerdown", () =>
-            panCamera({
+            panCameraMouseWheel({
                 camera: this.camera,
                 input: this.input,
                 pointer: this.input.activePointer,
             })
         );
+        // keySpace?.on("down", () => {
+        //     panCameraSpaceBar({
+        //         camera: this.camera,
+        //         input: this.input,
+        //         pointer: this.input.activePointer,
+        //     });
+        // });
+        // keySpace?.on("up", () => {
+        //     this.input.setDefaultCursor("default");
+        // });
 
         EventBus.emit("current-scene-ready", this);
     }
