@@ -4,7 +4,6 @@ import zoomAndScrollCamera from "../utils/zoomAndScrollCamera";
 import panCameraMouseWheel from "../utils/panCameraMouseWheel";
 import panCameraSpaceBar from "../utils/panCameraSpaceBar";
 
-const NAVBAR_HEIGHT = 64;
 const TILE_WIDTH = 256;
 const TILE_HEIGHT = 128;
 const ORIGIN = { x: 0, y: 0 };
@@ -13,8 +12,6 @@ export class Game extends Scene {
     private tilemap: Phaser.Tilemaps.Tilemap;
     private layer: Phaser.Tilemaps.TilemapLayer;
     private highlightSprite: Phaser.GameObjects.Sprite;
-
-    private posText: Phaser.GameObjects.Text;
 
     constructor() {
         super("Game");
@@ -27,37 +24,10 @@ export class Game extends Scene {
         this.cameras.main.setZoom(0.3);
         this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
 
-        this.posText = this.add
-            .text(10, 10, "Cursors to move", {
-                color: "#000000",
-                fontSize: "50px",
-            })
-            .setScrollFactor(0, 0);
-
         EventBus.emit("current-scene-ready", this);
     }
 
     update() {
-        const worldPoint = this.input.activePointer.positionToCamera(
-            this.cameras.main
-        ) as Phaser.Math.Vector2;
-
-        const cellX = worldPoint.x / TILE_WIDTH;
-        const cellY = worldPoint.y / TILE_HEIGHT;
-
-        const tileX = Math.round(cellY - ORIGIN.y + (cellX - ORIGIN.x));
-        const tileY = Math.round(cellY - ORIGIN.y - (cellX - ORIGIN.x));
-
-        this.posText.setText([
-            `screen x: ${Math.round(this.input.x)}`,
-            `screen y: ${Math.round(this.input.y)}`,
-            `worldPoint x: ${Math.round(worldPoint.x)}`,
-            `worldPoint y: ${Math.round(worldPoint.y)}`,
-            `tileX: ${tileX}`,
-            `tileY: ${tileY}`,
-        ]);
-
-        // Set up mouse move listener
         this.input.on("pointermove", this.handlePointerMove, this);
     }
 
