@@ -5,12 +5,9 @@ import panCameraMouseWheel from "../utils/panCameraMouseWheel";
 import panCameraSpaceBar from "../utils/panCameraSpaceBar";
 
 const NAVBAR_HEIGHT = 64;
-const WORLD_SIZE = { x: 4, y: 8 };
 const TILE_WIDTH = 256;
 const TILE_HEIGHT = 128;
-const ORIGIN = { x: 5, y: 1 };
-
-const P_WORLD = new Array(WORLD_SIZE.x * WORLD_SIZE.y).fill(0);
+const ORIGIN = { x: 0, y: 0 };
 
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
@@ -85,10 +82,12 @@ export class Game extends Scene {
             this.layer = this.tilemap.createLayer(
                 "Tile Layer 1",
                 tileset,
-                0,
-                0
+                ORIGIN.x * TILE_WIDTH - TILE_WIDTH / 2,
+                ORIGIN.y * TILE_HEIGHT,
             ) as Phaser.Tilemaps.TilemapLayer;
         }
+
+        console.log(this.tilemap);
 
         // Add a highlight sprite
         this.highlightSprite = this.add.sprite(0, 0, "highlight");
@@ -96,35 +95,30 @@ export class Game extends Scene {
         this.highlightSprite.setVisible(false);
     }
 
-    toScreen(x: number, y: number) {
-        return new Phaser.Math.Vector2(
-            ORIGIN.x * TILE_WIDTH + (x - y) * (TILE_WIDTH / 2) + TILE_WIDTH / 2,
-            ORIGIN.y * TILE_HEIGHT +
-                (x + y) * (TILE_HEIGHT / 2) +
-                TILE_HEIGHT * (3 / 4)
-        );
-    }
-
-    drawTiles() {
-        for (let y = 0; y < WORLD_SIZE.y; y++) {
-            for (let x = 0; x < WORLD_SIZE.x; x++) {
-                let vWorld = this.toScreen(x, y);
-
-                switch (P_WORLD[y * WORLD_SIZE.x + x]) {
-                    case 0:
-                        this.add.image(vWorld.x, vWorld.y, "grass");
-                        break;
-                }
-            }
-        }
-    }
-
     update() {
+        const worldPoint = this.input.activePointer.positionToCamera(
+            this.cameras.main
+        ) as Phaser.Math.Vector2;
+
+        const cellX = worldPoint.x / TILE_WIDTH;
+        const cellY = worldPoint.y / TILE_HEIGHT;
+
+        const tileX = Math.round(cellY - ORIGIN.y + (cellX - ORIGIN.x));
+        const tileY = Math.round(cellY - ORIGIN.y - (cellX - ORIGIN.x));
+
+        const tile = this.tilemap.getTileAt(tileX, tileY);
+        const tileWorldX = tile?.pixelX;
+        const tileWorldY = tile?.pixelY;
+
         this.posText.setText([
             `screen x: ${Math.round(this.input.x)}`,
             `screen y: ${Math.round(this.input.y)}`,
-            `world x: ${Math.round(this.input.mousePointer.worldX)}`,
-            `world y: ${Math.round(this.input.mousePointer.worldY)}`,
+            `worldPoint x: ${Math.round(worldPoint.x)}`,
+            `worldPoint y: ${Math.round(worldPoint.y)}`,
+            `tileX: ${tileX}`,
+            `tileY: ${tileY}`,
+            `tileWorldX: ${tileWorldX}`,
+            `tileWorldY: ${tileWorldY}`,
         ]);
 
         // Set up mouse move listener
@@ -137,18 +131,16 @@ export class Game extends Scene {
         ) as Phaser.Math.Vector2;
 
         // Convert world coordinates to isometric tile coordinates
-        const tileX = Math.floor(
-            worldPoint.y / TILE_HEIGHT + worldPoint.x / (TILE_WIDTH / 2)
-        );
-        const tileY =
-            Math.floor(
-                worldPoint.x / TILE_WIDTH / 2 - worldPoint.y / TILE_HEIGHT
-            ) * -1;
+        const cellX = worldPoint.x / TILE_WIDTH;
+        const cellY = worldPoint.y / TILE_HEIGHT;
+
+        const tileX = Math.round(cellY - ORIGIN.y + (cellX - ORIGIN.x));
+        const tileY = Math.round(cellY - ORIGIN.y - (cellX - ORIGIN.x));
 
         if (this.tilemap.hasTileAt(tileX, tileY)) {
             const tile = this.tilemap.getTileAt(tileX, tileY);
             if (tile) {
-                const tileWorldX = tile.pixelX + TILE_WIDTH / 2; // Center of the tile
+                const tileWorldX = tile.pixelX;
                 const tileWorldY = tile.pixelY;
 
                 // Update highlight sprite position
