@@ -13,6 +13,9 @@ export class Game extends Scene {
     private layer: Phaser.Tilemaps.TilemapLayer;
     private highlightSprite: Phaser.GameObjects.Sprite;
 
+    private drawerContainer: Phaser.GameObjects.Container;
+    private drawerPanel: Phaser.GameObjects.Rectangle;
+
     constructor() {
         super("Game");
     }
@@ -20,6 +23,44 @@ export class Game extends Scene {
     create() {
         this.cameraMovements();
         this.setUpMap();
+
+        this.cameras.main.setZoom(0.3);
+        this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
+
+        EventBus.on("centre-game", () => {
+            this.cameras.main.zoomTo(0.3, 500, "Linear", true);
+            this.cameras.main.pan(0, 9 * TILE_HEIGHT, 500, "Linear", true);
+        });
+        EventBus.on("open-shop", () => {});
+
+        const star = this.add.sprite(0, 0, "star");
+        star.setInteractive();
+        this.input.setDraggable(star);
+        this.input.on(
+            "drag",
+            (pointer: Phaser.Input.Pointer, gameObject: any) => {
+                const worldPoint = pointer.positionToCamera(
+                    this.cameras.main
+                ) as Phaser.Math.Vector2;
+
+                const cellX = worldPoint.x / TILE_WIDTH;
+                const cellY = worldPoint.y / TILE_HEIGHT;
+
+                const tileX = Math.round(cellY - ORIGIN.y + (cellX - ORIGIN.x));
+                const tileY = Math.round(cellY - ORIGIN.y - (cellX - ORIGIN.x));
+
+                if (this.tilemap.hasTileAt(tileX, tileY)) {
+                    const tile = this.tilemap.getTileAt(tileX, tileY);
+                    if (tile) {
+                        const tileWorldX = tile.pixelX + ORIGIN.x * TILE_WIDTH;
+                        const tileWorldY = tile.pixelY + ORIGIN.y * TILE_HEIGHT;
+
+                        gameObject.x = tileWorldX;
+                        gameObject.y = tileWorldY;
+                    }
+                }
+            }
+        );
 
         EventBus.emit("current-scene-ready", this);
     }
@@ -29,14 +70,6 @@ export class Game extends Scene {
     }
 
     cameraMovements() {
-        this.cameras.main.setZoom(0.3);
-        this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
-
-        EventBus.on("centre-game", () => {
-            this.cameras.main.zoomTo(0.3, 500, "Linear", true);
-            this.cameras.main.pan(0, 9 * TILE_HEIGHT, 500, "Linear", true);
-        });
-
         const keySpace = this.input?.keyboard?.addKey(
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );
