@@ -4,8 +4,7 @@ import { EventBus } from "@/game/EventBus";
 
 export default function HomeButton() {
     function openShop(): void {
-        console.log("Shop opened");
-        // EventBus.emit("open-shop");
+        EventBus.emit("open-shop");
     }
 
     return (
