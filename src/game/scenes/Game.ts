@@ -83,7 +83,7 @@ export class Game extends Scene {
                 "Tile Layer 1",
                 tileset,
                 ORIGIN.x * TILE_WIDTH - TILE_WIDTH / 2,
-                ORIGIN.y * TILE_HEIGHT,
+                ORIGIN.y * TILE_HEIGHT
             ) as Phaser.Tilemaps.TilemapLayer;
         }
 
