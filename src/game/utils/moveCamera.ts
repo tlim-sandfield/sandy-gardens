@@ -1,9 +1,14 @@
 interface MoveCameraProps {
     camera: Phaser.Cameras.Scene2D.Camera;
     input: Phaser.Input.InputPlugin;
+    pointer: Phaser.Input.Pointer;
 }
 
-export default function moveCamera({ camera, input }: MoveCameraProps) {
+export default function moveCamera({
+    camera,
+    input,
+    pointer,
+}: MoveCameraProps) {
     const ZOOM_SPEED = 0.001;
     const MOVEMENT_SPEED = 50;
 
@@ -12,13 +17,23 @@ export default function moveCamera({ camera, input }: MoveCameraProps) {
     );
 
     if (keyCtrl?.isDown) {
-        // ZOOM: CTRL + mouse wheel up and down
-        const zoomChange = input.activePointer.deltaY * -ZOOM_SPEED;
+        // ZOOM: mouse wheel up and down
+        const zoomChange = pointer.deltaY * -ZOOM_SPEED;
+
+        const pointerX = pointer.x;
+        const pointerY = pointer.y;
+        const cameraX = camera.scrollX + camera.width / 2;
+        const cameraY = camera.scrollY + camera.height / 2;
+        const dx = pointerX - cameraX;
+        const dy = pointerY - cameraY;
+
         camera.zoom += zoomChange;
+        camera.scrollX += dx * zoomChange;
+        camera.scrollY += dy * zoomChange;
     } else {
         // SCROLL: mouse wheel up and down
         const cameraYChange =
-            input.activePointer.deltaY > 0 ? MOVEMENT_SPEED : -MOVEMENT_SPEED;
+            pointer.deltaY > 0 ? MOVEMENT_SPEED : -MOVEMENT_SPEED;
         camera.scrollY += cameraYChange;
     }
 }

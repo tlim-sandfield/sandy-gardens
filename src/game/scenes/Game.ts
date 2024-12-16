@@ -59,7 +59,11 @@ export class Game extends Scene {
         );
 
         this.input.on("wheel", () =>
-            moveCamera({ camera: this.camera, input: this.input })
+            moveCamera({
+                camera: this.camera,
+                input: this.input,
+                pointer: this.input.activePointer,
+            })
         );
         this.input.on("pointerdown", () =>
             panCameraMouseWheel({
