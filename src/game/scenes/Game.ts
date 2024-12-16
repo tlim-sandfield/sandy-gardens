@@ -65,23 +65,24 @@ export class Game extends Scene {
                 pointer: this.input.activePointer,
             })
         );
-        this.input.on("pointerdown", () =>
+        this.input.on("pointerdown", () => {
             panCameraMouseWheel({
                 camera: this.camera,
                 input: this.input,
                 pointer: this.input.activePointer,
-            })
-        );
-        // keySpace?.on("down", () => {
-        //     panCameraSpaceBar({
-        //         camera: this.camera,
-        //         input: this.input,
-        //         pointer: this.input.activePointer,
-        //     });
-        // });
-        // keySpace?.on("up", () => {
-        //     this.input.setDefaultCursor("default");
-        // });
+            });
+            panCameraSpaceBar({ 
+                camera: this.camera,
+                input: this.input, 
+                pointer: this.input.activePointer,
+            });
+        });
+        keySpace?.on("down", () => {
+            this.input.setDefaultCursor("grab");
+        });
+        keySpace?.on("up", () => {
+            this.input.setDefaultCursor("default");
+        });
 
         EventBus.emit("current-scene-ready", this);
     }
