@@ -12,7 +12,7 @@ export default function Home() {
 
     return (
         <ThemeProvider theme={theme}>
-            {/* <CustomNavbar setOpen={setOpen} /> */}
+            <CustomNavbar setOpen={setOpen} />
             <PersistentDrawerLeft open={open} setOpen={setOpen} />
             <App />
         </ThemeProvider>
