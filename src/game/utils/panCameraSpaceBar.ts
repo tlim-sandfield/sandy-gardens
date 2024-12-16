@@ -14,16 +14,15 @@ export default function panCameraSpaceBar({
     const keySpace = input?.keyboard?.addKey(
         Phaser.Input.Keyboard.KeyCodes.SPACE
     );
-    
+
     if (pointer.leftButtonDown() && keySpace?.isDown) {
         input.setDefaultCursor("grabbing");
         let initialX = pointer.x;
         let initialY = pointer.y;
-        console.log(initialX, initialY);
 
         input.on("pointermove", (pointer: { x: number; y: number }) => {
-            const deltaX = pointer.x - initialX;
-            const deltaY = pointer.y - initialY;
+            const deltaX = (pointer.x - initialX) / camera.zoom;
+            const deltaY = (pointer.y - initialY) / camera.zoom;
 
             camera.scrollX -= deltaX;
             camera.scrollY -= deltaY;

@@ -1,6 +1,6 @@
 import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
-import moveCamera from "../utils/moveCamera";
+import zoomAndScrollCamera from "../utils/zoomAndScrollCamera";
 import panCameraMouseWheel from "../utils/panCameraMouseWheel";
 import panCameraSpaceBar from "../utils/panCameraSpaceBar";
 
@@ -21,7 +21,7 @@ export class Game extends Scene {
     gameWidth: number;
     gameHeight: number;
 
-    mousePosText: Phaser.GameObjects.Text;
+    posText: Phaser.GameObjects.Text;
     cellText: Phaser.GameObjects.Text;
     offsetText: Phaser.GameObjects.Text;
     rect: Phaser.GameObjects.Rectangle;
@@ -31,30 +31,15 @@ export class Game extends Scene {
     }
 
     create() {
-        this.camera = this.cameras.main;
-        // this.gameWidth = this.game.config.width as number;
-        // this.gameHeight = this.game.config.height as number;
-
-        // this.camera.setOrigin(this.gameWidth / 2, this.gameHeight / 2);
-        // this.camera.setZoom(ZOOM);
+        this.cameraMovements();
 
         this.drawTiles();
         this.tileOutline = this.add.image(0, 0, "tile-outline");
-
-        this.mousePosText = this.add.text(0, 100, "Mouse Position: ", {
-            fontSize: "70px",
-            color: "#000",
-        });
-        this.cellText = this.add.text(0, 200, "Cell: ", {
-            fontSize: "70px",
-            color: "#000",
-        });
-        this.offsetText = this.add.text(0, 300, "Offset: ", {
-            fontSize: "70px",
-            color: "#000",
-        });
-
-        this.cameraMovements();
+        this.posText = this.add
+            .text(10, 10, "Cursors to move", {
+                color: "#000000",
+            })
+            .setScrollFactor(0, 0);
 
         EventBus.emit("current-scene-ready", this);
     }
@@ -65,20 +50,20 @@ export class Game extends Scene {
         );
 
         this.input.on("wheel", () =>
-            moveCamera({
-                camera: this.camera,
+            zoomAndScrollCamera({
+                camera: this.cameras.main,
                 input: this.input,
                 pointer: this.input.activePointer,
             })
         );
         this.input.on("pointerdown", () => {
             panCameraMouseWheel({
-                camera: this.camera,
+                camera: this.cameras.main,
                 input: this.input,
                 pointer: this.input.activePointer,
             });
             panCameraSpaceBar({
-                camera: this.camera,
+                camera: this.cameras.main,
                 input: this.input,
                 pointer: this.input.activePointer,
             });
@@ -118,26 +103,17 @@ export class Game extends Scene {
         let mousePos = new Phaser.Math.Vector2(this.input.x, this.input.y);
         // Account for camera position
         // let mousePos = new Phaser.Math.Vector2(this.input.x / ZOOM, this.input.y / ZOOM);
-
         let cell = new Phaser.Math.Vector2(
             Math.round(mousePos.x / TILE_WIDTH),
             Math.round(mousePos.y / TILE_HEIGHT)
         );
 
-        let offset = new Phaser.Math.Vector2(
-            Math.round(mousePos.x % TILE_WIDTH),
-            Math.round(mousePos.y % TILE_HEIGHT)
-        );
-
-        // Get the color of the pixel at the calculated coordinates
-
-        this.mousePosText.setText(
-            "Mouse Position: " +
-                Math.round(mousePos.x) +
-                ", " +
-                Math.round(mousePos.y)
-        );
-        this.cellText.setText("Cell: " + cell.x + ", " + cell.y);
+        this.posText.setText([
+            `screen x: ${this.input.x}`,
+            `screen y: ${this.input.y}`,
+            `world x: ${this.input.mousePointer.worldX}`,
+            `world y: ${this.input.mousePointer.worldY}`,
+        ]);
 
         if (this.rect) {
             this.rect.destroy();
@@ -153,7 +129,6 @@ export class Game extends Scene {
                 0.5
             )
             .setOrigin(0, 0);
-
         this.tileOutline.x = cell.x * TILE_WIDTH;
         this.tileOutline.y = cell.y * TILE_HEIGHT;
     }

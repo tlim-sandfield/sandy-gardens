@@ -16,8 +16,8 @@ export default function panCameraMouseWheel({
         let initialY = pointer.y;
 
         input.on("pointermove", (pointer: { x: number; y: number }) => {
-            const deltaX = pointer.x - initialX;
-            const deltaY = pointer.y - initialY;
+            const deltaX = (pointer.x - initialX) / camera.zoom;
+            const deltaY = (pointer.y - initialY) / camera.zoom;
 
             camera.scrollX -= deltaX;
             camera.scrollY -= deltaY;

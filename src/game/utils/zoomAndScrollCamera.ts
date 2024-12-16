@@ -4,13 +4,13 @@ interface MoveCameraProps {
     pointer: Phaser.Input.Pointer;
 }
 
-export default function moveCamera({
+export default function zoomAndScrollCamera({
     camera,
     input,
     pointer,
 }: MoveCameraProps) {
     const ZOOM_SPEED = 0.001;
-    const MOVEMENT_SPEED = 50;
+    const MOVEMENT_SPEED = 50 / camera.zoom;
 
     const keyCtrl = input?.keyboard?.addKey(
         Phaser.Input.Keyboard.KeyCodes.CTRL
