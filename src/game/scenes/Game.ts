@@ -21,9 +21,6 @@ export class Game extends Scene {
         this.cameraMovements();
         this.setUpMap();
 
-        this.cameras.main.setZoom(0.3);
-        this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
-
         EventBus.emit("current-scene-ready", this);
     }
 
@@ -32,6 +29,14 @@ export class Game extends Scene {
     }
 
     cameraMovements() {
+        this.cameras.main.setZoom(0.3);
+        this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
+
+        EventBus.on("centre-game", () => {
+            this.cameras.main.zoomTo(0.3, 500, "Linear", true);
+            this.cameras.main.pan(0, 9 * TILE_HEIGHT, 500, "Linear", true);
+        });
+
         const keySpace = this.input?.keyboard?.addKey(
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );

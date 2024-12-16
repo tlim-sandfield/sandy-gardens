@@ -55,7 +55,7 @@ export const PhaserGame = forwardRef<IRefPhaserGame, IProps>(
                             scene: scene_instance,
                         };
                     }
-                },
+                }
             );
             return () => {
                 EventBus.removeListener("current-scene-ready");
@@ -63,5 +63,5 @@ export const PhaserGame = forwardRef<IRefPhaserGame, IProps>(
         }, [currentActiveScene, ref]);
 
         return <div id="game-container"></div>;
-    },
+    }
 );
