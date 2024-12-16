@@ -54,6 +54,12 @@ export class Game extends Scene {
             color: "#000",
         });
 
+        this.cameraMovements();
+
+        EventBus.emit("current-scene-ready", this);
+    }
+
+    cameraMovements() {
         const keySpace = this.input?.keyboard?.addKey(
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );
@@ -71,9 +77,9 @@ export class Game extends Scene {
                 input: this.input,
                 pointer: this.input.activePointer,
             });
-            panCameraSpaceBar({ 
+            panCameraSpaceBar({
                 camera: this.camera,
-                input: this.input, 
+                input: this.input,
                 pointer: this.input.activePointer,
             });
         });
@@ -83,8 +89,6 @@ export class Game extends Scene {
         keySpace?.on("up", () => {
             this.input.setDefaultCursor("default");
         });
-
-        EventBus.emit("current-scene-ready", this);
     }
 
     toScreen(x: number, y: number) {
