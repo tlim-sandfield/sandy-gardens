@@ -10,21 +10,11 @@ const TILE_HEIGHT = 128;
 const ORIGIN = { x: 0, y: 0 };
 
 export class Game extends Scene {
-    camera: Phaser.Cameras.Scene2D.Camera;
-    background: Phaser.GameObjects.Image;
-    tileOutline: Phaser.GameObjects.Image;
-
-    gameWidth: number;
-    gameHeight: number;
-
-    posText: Phaser.GameObjects.Text;
-    cellText: Phaser.GameObjects.Text;
-    offsetText: Phaser.GameObjects.Text;
-    rect: Phaser.GameObjects.Rectangle;
-
     private tilemap: Phaser.Tilemaps.Tilemap;
     private layer: Phaser.Tilemaps.TilemapLayer;
     private highlightSprite: Phaser.GameObjects.Sprite;
+
+    private posText: Phaser.GameObjects.Text;
 
     constructor() {
         super("Game");
@@ -34,13 +24,41 @@ export class Game extends Scene {
         this.cameraMovements();
         this.setUpMap();
 
+        this.cameras.main.setZoom(0.3);
+        this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
+
         this.posText = this.add
             .text(10, 10, "Cursors to move", {
                 color: "#000000",
+                fontSize: "50px",
             })
             .setScrollFactor(0, 0);
 
         EventBus.emit("current-scene-ready", this);
+    }
+
+    update() {
+        const worldPoint = this.input.activePointer.positionToCamera(
+            this.cameras.main
+        ) as Phaser.Math.Vector2;
+
+        const cellX = worldPoint.x / TILE_WIDTH;
+        const cellY = worldPoint.y / TILE_HEIGHT;
+
+        const tileX = Math.round(cellY - ORIGIN.y + (cellX - ORIGIN.x));
+        const tileY = Math.round(cellY - ORIGIN.y - (cellX - ORIGIN.x));
+
+        this.posText.setText([
+            `screen x: ${Math.round(this.input.x)}`,
+            `screen y: ${Math.round(this.input.y)}`,
+            `worldPoint x: ${Math.round(worldPoint.x)}`,
+            `worldPoint y: ${Math.round(worldPoint.y)}`,
+            `tileX: ${tileX}`,
+            `tileY: ${tileY}`,
+        ]);
+
+        // Set up mouse move listener
+        this.input.on("pointermove", this.handlePointerMove, this);
     }
 
     cameraMovements() {
@@ -77,52 +95,19 @@ export class Game extends Scene {
 
     setUpMap() {
         this.tilemap = this.make.tilemap({ key: "map" });
-        const tileset = this.tilemap.addTilesetImage("256x192 Tiles", "tiles");
-        if (tileset) {
-            this.layer = this.tilemap.createLayer(
-                "Tile Layer 1",
-                tileset,
-                ORIGIN.x * TILE_WIDTH - TILE_WIDTH / 2,
-                ORIGIN.y * TILE_HEIGHT
-            ) as Phaser.Tilemaps.TilemapLayer;
-        }
-
-        console.log(this.tilemap);
+        const tileset =
+            this.tilemap.addTilesetImage("256x192 Tiles", "tiles") || "";
+        this.layer = this.tilemap.createLayer(
+            "Tile Layer 1",
+            tileset,
+            ORIGIN.x * TILE_WIDTH - TILE_WIDTH / 2,
+            ORIGIN.y * TILE_HEIGHT
+        ) as Phaser.Tilemaps.TilemapLayer;
 
         // Add a highlight sprite
         this.highlightSprite = this.add.sprite(0, 0, "highlight");
         this.highlightSprite.setAlpha(0.5);
         this.highlightSprite.setVisible(false);
-    }
-
-    update() {
-        const worldPoint = this.input.activePointer.positionToCamera(
-            this.cameras.main
-        ) as Phaser.Math.Vector2;
-
-        const cellX = worldPoint.x / TILE_WIDTH;
-        const cellY = worldPoint.y / TILE_HEIGHT;
-
-        const tileX = Math.round(cellY - ORIGIN.y + (cellX - ORIGIN.x));
-        const tileY = Math.round(cellY - ORIGIN.y - (cellX - ORIGIN.x));
-
-        const tile = this.tilemap.getTileAt(tileX, tileY);
-        const tileWorldX = tile?.pixelX;
-        const tileWorldY = tile?.pixelY;
-
-        this.posText.setText([
-            `screen x: ${Math.round(this.input.x)}`,
-            `screen y: ${Math.round(this.input.y)}`,
-            `worldPoint x: ${Math.round(worldPoint.x)}`,
-            `worldPoint y: ${Math.round(worldPoint.y)}`,
-            `tileX: ${tileX}`,
-            `tileY: ${tileY}`,
-            `tileWorldX: ${tileWorldX}`,
-            `tileWorldY: ${tileWorldY}`,
-        ]);
-
-        // Set up mouse move listener
-        this.input.on("pointermove", this.handlePointerMove, this);
     }
 
     handlePointerMove(pointer: Phaser.Input.Pointer) {
@@ -140,8 +125,8 @@ export class Game extends Scene {
         if (this.tilemap.hasTileAt(tileX, tileY)) {
             const tile = this.tilemap.getTileAt(tileX, tileY);
             if (tile) {
-                const tileWorldX = tile.pixelX;
-                const tileWorldY = tile.pixelY;
+                const tileWorldX = tile.pixelX + ORIGIN.x * TILE_WIDTH;
+                const tileWorldY = tile.pixelY + ORIGIN.y * TILE_HEIGHT;
 
                 // Update highlight sprite position
                 this.highlightSprite.setPosition(tileWorldX, tileWorldY);
