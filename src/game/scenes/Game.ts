@@ -1,5 +1,8 @@
 import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
+import moveCamera from "../utils/moveCamera";
+import panCameraMouseWheel from "../utils/panCameraMouseWheel";
+import panCameraSpaceBar from "../utils/panCameraSpaceBar";
 
 const NAVBAR_HEIGHT = 64;
 const ZOOM = 0.3;
@@ -51,7 +54,41 @@ export class Game extends Scene {
             color: "#000",
         });
 
+        this.cameraMovements();
+
         EventBus.emit("current-scene-ready", this);
+    }
+
+    cameraMovements() {
+        const keySpace = this.input?.keyboard?.addKey(
+            Phaser.Input.Keyboard.KeyCodes.SPACE
+        );
+
+        this.input.on("wheel", () =>
+            moveCamera({
+                camera: this.camera,
+                input: this.input,
+                pointer: this.input.activePointer,
+            })
+        );
+        this.input.on("pointerdown", () => {
+            panCameraMouseWheel({
+                camera: this.camera,
+                input: this.input,
+                pointer: this.input.activePointer,
+            });
+            panCameraSpaceBar({
+                camera: this.camera,
+                input: this.input,
+                pointer: this.input.activePointer,
+            });
+        });
+        keySpace?.on("down", () => {
+            this.input.setDefaultCursor("grab");
+        });
+        keySpace?.on("up", () => {
+            this.input.setDefaultCursor("default");
+        });
     }
 
     toScreen(x: number, y: number) {
@@ -94,7 +131,6 @@ export class Game extends Scene {
 
         // Get the color of the pixel at the calculated coordinates
 
-
         this.mousePosText.setText(
             "Mouse Position: " +
                 Math.round(mousePos.x) +
@@ -120,6 +156,5 @@ export class Game extends Scene {
 
         this.tileOutline.x = cell.x * TILE_WIDTH;
         this.tileOutline.y = cell.y * TILE_HEIGHT;
-        
     }
 }
