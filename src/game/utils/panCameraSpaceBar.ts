@@ -37,5 +37,6 @@ export default function panCameraSpaceBar({
             input.setDefaultCursor("grab");
             input.off("pointermove");
         }
+        input.setDefaultCursor("default");
     });
 }

@@ -5,7 +5,6 @@ import panCameraMouseWheel from "../utils/panCameraMouseWheel";
 import panCameraSpaceBar from "../utils/panCameraSpaceBar";
 
 const NAVBAR_HEIGHT = 64;
-const ZOOM = 0.3;
 const WORLD_SIZE = { x: 4, y: 8 };
 const TILE_WIDTH = 256;
 const TILE_HEIGHT = 128;
@@ -26,15 +25,18 @@ export class Game extends Scene {
     offsetText: Phaser.GameObjects.Text;
     rect: Phaser.GameObjects.Rectangle;
 
+    private tilemap: Phaser.Tilemaps.Tilemap;
+    private layer: Phaser.Tilemaps.TilemapLayer;
+    private highlightSprite: Phaser.GameObjects.Sprite;
+
     constructor() {
         super("Game");
     }
 
     create() {
         this.cameraMovements();
+        this.setUpMap();
 
-        this.drawTiles();
-        this.tileOutline = this.add.image(0, 0, "tile-outline");
         this.posText = this.add
             .text(10, 10, "Cursors to move", {
                 color: "#000000",
@@ -76,6 +78,24 @@ export class Game extends Scene {
         });
     }
 
+    setUpMap() {
+        this.tilemap = this.make.tilemap({ key: "map" });
+        const tileset = this.tilemap.addTilesetImage("256x192 Tiles", "tiles");
+        if (tileset) {
+            this.layer = this.tilemap.createLayer(
+                "Tile Layer 1",
+                tileset,
+                0,
+                0
+            ) as Phaser.Tilemaps.TilemapLayer;
+        }
+
+        // Add a highlight sprite
+        this.highlightSprite = this.add.sprite(0, 0, "highlight");
+        this.highlightSprite.setAlpha(0.5);
+        this.highlightSprite.setVisible(false);
+    }
+
     toScreen(x: number, y: number) {
         return new Phaser.Math.Vector2(
             ORIGIN.x * TILE_WIDTH + (x - y) * (TILE_WIDTH / 2) + TILE_WIDTH / 2,
@@ -100,36 +120,43 @@ export class Game extends Scene {
     }
 
     update() {
-        let mousePos = new Phaser.Math.Vector2(this.input.x, this.input.y);
-        // Account for camera position
-        // let mousePos = new Phaser.Math.Vector2(this.input.x / ZOOM, this.input.y / ZOOM);
-        let cell = new Phaser.Math.Vector2(
-            Math.round(mousePos.x / TILE_WIDTH),
-            Math.round(mousePos.y / TILE_HEIGHT)
-        );
-
         this.posText.setText([
-            `screen x: ${this.input.x}`,
-            `screen y: ${this.input.y}`,
-            `world x: ${this.input.mousePointer.worldX}`,
-            `world y: ${this.input.mousePointer.worldY}`,
+            `screen x: ${Math.round(this.input.x)}`,
+            `screen y: ${Math.round(this.input.y)}`,
+            `world x: ${Math.round(this.input.mousePointer.worldX)}`,
+            `world y: ${Math.round(this.input.mousePointer.worldY)}`,
         ]);
 
-        if (this.rect) {
-            this.rect.destroy();
+        // Set up mouse move listener
+        this.input.on("pointermove", this.handlePointerMove, this);
+    }
+
+    handlePointerMove(pointer: Phaser.Input.Pointer) {
+        const worldPoint = pointer.positionToCamera(
+            this.cameras.main
+        ) as Phaser.Math.Vector2;
+
+        // Convert world coordinates to isometric tile coordinates
+        const tileX = Math.floor(
+            worldPoint.y / TILE_HEIGHT + worldPoint.x / (TILE_WIDTH / 2)
+        );
+        const tileY =
+            Math.floor(
+                worldPoint.x / TILE_WIDTH / 2 - worldPoint.y / TILE_HEIGHT
+            ) * -1;
+
+        if (this.tilemap.hasTileAt(tileX, tileY)) {
+            const tile = this.tilemap.getTileAt(tileX, tileY);
+            if (tile) {
+                const tileWorldX = tile.pixelX + TILE_WIDTH / 2; // Center of the tile
+                const tileWorldY = tile.pixelY;
+
+                // Update highlight sprite position
+                this.highlightSprite.setPosition(tileWorldX, tileWorldY);
+                this.highlightSprite.setVisible(true);
+            }
+        } else {
+            this.highlightSprite.setVisible(false);
         }
-        // Origin should account for ZOOM factor
-        this.rect = this.add
-            .rectangle(
-                cell.x * TILE_WIDTH - TILE_WIDTH / 2,
-                cell.y * TILE_HEIGHT - TILE_HEIGHT / 2,
-                TILE_WIDTH,
-                TILE_HEIGHT,
-                0x000000,
-                0.5
-            )
-            .setOrigin(0, 0);
-        this.tileOutline.x = cell.x * TILE_WIDTH;
-        this.tileOutline.y = cell.y * TILE_HEIGHT;
     }
 }
