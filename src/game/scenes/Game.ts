@@ -30,9 +30,10 @@ export class Game extends Scene {
         });
         EventBus.on("open-shop", () => {});
 
-        const star = this.add.sprite(0, 0, "star");
-        star.setInteractive();
-        this.input.setDraggable(star);
+        const tree2 = this.add.sprite(1, 1, "tree");
+        const tree = this.add.sprite(0, 0, "tree");
+        tree.setInteractive();
+        this.input.setDraggable(tree);
         this.input.on(
             "drag",
             (pointer: Phaser.Input.Pointer, gameObject: any) => {
@@ -124,14 +125,14 @@ export class Game extends Scene {
         const cellX = worldPoint.x / TILE_WIDTH;
         const cellY = worldPoint.y / TILE_HEIGHT;
 
-        const tileX = Math.round(cellY - ORIGIN.y + (cellX - ORIGIN.x));
-        const tileY = Math.round(cellY - ORIGIN.y - (cellX - ORIGIN.x));
+        const tileX = Math.floor(cellY - ORIGIN.y + (cellX - ORIGIN.x));
+        const tileY = Math.floor(cellY - ORIGIN.y - (cellX - ORIGIN.x));
 
         if (this.tilemap.hasTileAt(tileX, tileY)) {
             const tile = this.tilemap.getTileAt(tileX, tileY);
             if (tile) {
                 const tileWorldX = tile.pixelX + ORIGIN.x * TILE_WIDTH;
-                const tileWorldY = tile.pixelY + ORIGIN.y * TILE_HEIGHT;
+                const tileWorldY = tile.pixelY + ORIGIN.y * TILE_HEIGHT + TILE_HEIGHT / 2;
 
                 // Update highlight sprite position
                 this.highlightSprite.setPosition(tileWorldX, tileWorldY);
