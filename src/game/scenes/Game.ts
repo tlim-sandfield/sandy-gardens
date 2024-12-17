@@ -30,9 +30,38 @@ export class Game extends Scene {
         });
         EventBus.on("open-shop", () => {});
 
-        const tree2 = this.add.sprite(1, 1, "tree");
-        const tree = this.add.sprite(0, 0, "tree");
-        tree.setInteractive();
+        // conversion from tile coordinates to world coordinates function
+        // const tree2 = this.add.sprite(0 * TILE_WIDTH, 0 * TILE_HEIGHT, "tree");
+        const tree = this.add.sprite(0 * TILE_WIDTH, 0 * TILE_HEIGHT, "tree");
+
+        const hitArea = new Phaser.Geom.Ellipse(
+            0,
+            TILE_HEIGHT * 3,
+            TILE_WIDTH * 0.7,
+            TILE_HEIGHT * 0.7
+        );
+        tree.setInteractive({
+            draggable: true,
+            hitArea: hitArea,
+            hitAreaCallback: function (
+                hitArea: Phaser.Geom.Rectangle,
+                x: number,
+                y: number
+            ) {
+                return Phaser.Geom.Rectangle.Contains(hitArea, x, y);
+            },
+        });
+
+        const graphics = this.add.graphics();
+        graphics.lineStyle(2, 0xffff00, 1); // Yellow line, 2px thick
+        graphics.strokeEllipse(
+            0,
+            TILE_HEIGHT / 2,
+            hitArea.width,
+            hitArea.height
+        );
+
+        // tree.setInteractive();
         this.input.setDraggable(tree);
         this.input.on(
             "drag",
@@ -44,8 +73,8 @@ export class Game extends Scene {
                 const cellX = worldPoint.x / TILE_WIDTH;
                 const cellY = worldPoint.y / TILE_HEIGHT;
 
-                const tileX = Math.round(cellY - ORIGIN.y + (cellX - ORIGIN.x));
-                const tileY = Math.round(cellY - ORIGIN.y - (cellX - ORIGIN.x));
+                const tileX = Math.floor(cellY - ORIGIN.y + (cellX - ORIGIN.x));
+                const tileY = Math.floor(cellY - ORIGIN.y - (cellX - ORIGIN.x));
 
                 if (this.tilemap.hasTileAt(tileX, tileY)) {
                     const tile = this.tilemap.getTileAt(tileX, tileY);
@@ -132,7 +161,8 @@ export class Game extends Scene {
             const tile = this.tilemap.getTileAt(tileX, tileY);
             if (tile) {
                 const tileWorldX = tile.pixelX + ORIGIN.x * TILE_WIDTH;
-                const tileWorldY = tile.pixelY + ORIGIN.y * TILE_HEIGHT + TILE_HEIGHT / 2;
+                const tileWorldY =
+                    tile.pixelY + ORIGIN.y * TILE_HEIGHT + TILE_HEIGHT / 2;
 
                 // Update highlight sprite position
                 this.highlightSprite.setPosition(tileWorldX, tileWorldY);
