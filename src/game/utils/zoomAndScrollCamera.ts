@@ -21,10 +21,10 @@ export default function zoomAndScrollCamera({
         const zoomChange = pointer.deltaY * -ZOOM_SPEED;
         camera.zoom += zoomChange;
 
-        if (camera.zoom < 0.25) {
-            camera.zoom = 0.25;
-        } else if (camera.zoom > 2) {
-            camera.zoom = 2;
+        if (camera.zoom < 0.15) {
+            camera.zoom = 0.15;
+        } else if (camera.zoom > 1.5) {
+            camera.zoom = 1.5;
         } else {
             const pointerX = pointer.x;
             const pointerY = pointer.y;
