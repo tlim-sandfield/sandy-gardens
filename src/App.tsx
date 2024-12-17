@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { IRefPhaserGame, PhaserGame } from "./game/PhaserGame";
 import HomeButton from "./components/HomeButton";
-import ShopButton from "./components/ShopButton";
+import ShopDrawer from "./components/ShopDrawer";
 
 export default function App() {
     const phaserRef = useRef<IRefPhaserGame | null>(null);
@@ -11,7 +11,7 @@ export default function App() {
     return (
         <div id="game">
             <PhaserGame ref={phaserRef} />
-            <ShopButton />
+            <ShopDrawer />
             <HomeButton />
         </div>
     );

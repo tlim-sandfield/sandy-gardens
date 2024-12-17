@@ -172,4 +172,5 @@ ol {
     float: left;
     bottom: 70px;
     left: 15px;
+    z-index: 1;
 }

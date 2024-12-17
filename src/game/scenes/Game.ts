@@ -28,7 +28,6 @@ export class Game extends Scene {
             this.cameras.main.zoomTo(0.3, 500, "Linear", true);
             this.cameras.main.pan(0, 9 * TILE_HEIGHT, 500, "Linear", true);
         });
-        EventBus.on("open-shop", () => {});
 
         EventBus.emit("current-scene-ready", this);
     }
