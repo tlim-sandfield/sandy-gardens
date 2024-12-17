@@ -124,7 +124,7 @@
                  "x":22,
                  "y":22
                 }],
-         "height":48,
+         "height":44,
          "id":1,
          "name":"Tile Layer 1",
          "opacity":1,
@@ -132,7 +132,7 @@
          "starty":0,
          "type":"tilelayer",
          "visible":true,
-         "width":48,
+         "width":44,
          "x":0,
          "y":0
         }],
