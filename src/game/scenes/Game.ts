@@ -31,12 +31,12 @@ export class Game extends Scene {
         EventBus.on("open-shop", () => {});
 
         // conversion from tile coordinates to world coordinates function
-        // const tree2 = this.add.sprite(0 * TILE_WIDTH, 0 * TILE_HEIGHT, "tree");
-        const tree = this.add.sprite(0 * TILE_WIDTH, 0 * TILE_HEIGHT, "tree");
+        const tree2 = this.add.sprite(0 * TILE_WIDTH, 0 * TILE_HEIGHT, "tree");
+        const tree = this.add.sprite(1 * TILE_WIDTH, 2 * TILE_HEIGHT, "tree");
 
         const hitArea = new Phaser.Geom.Ellipse(
             0,
-            TILE_HEIGHT * 3,
+            TILE_HEIGHT / 2,
             TILE_WIDTH * 0.7,
             TILE_HEIGHT * 0.7
         );
@@ -44,25 +44,17 @@ export class Game extends Scene {
             draggable: true,
             hitArea: hitArea,
             hitAreaCallback: function (
-                hitArea: Phaser.Geom.Rectangle,
+                hitArea: Phaser.Geom.Ellipse,
                 x: number,
                 y: number
             ) {
-                return Phaser.Geom.Rectangle.Contains(hitArea, x, y);
+                return Phaser.Geom.Ellipse.Contains(
+                    hitArea,
+                    x - TILE_WIDTH / 2,
+                    y - TILE_HEIGHT * 3
+                );
             },
         });
-
-        const graphics = this.add.graphics();
-        graphics.lineStyle(2, 0xffff00, 1); // Yellow line, 2px thick
-        graphics.strokeEllipse(
-            0,
-            TILE_HEIGHT / 2,
-            hitArea.width,
-            hitArea.height
-        );
-
-        // tree.setInteractive();
-        this.input.setDraggable(tree);
         this.input.on(
             "drag",
             (pointer: Phaser.Input.Pointer, gameObject: any) => {
