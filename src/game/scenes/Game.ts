@@ -13,9 +13,6 @@ export class Game extends Scene {
     private layer: Phaser.Tilemaps.TilemapLayer;
     private highlightSprite: Phaser.GameObjects.Sprite;
 
-    private drawerContainer: Phaser.GameObjects.Container;
-    private drawerPanel: Phaser.GameObjects.Rectangle;
-
     constructor() {
         super("Game");
     }
