@@ -1,7 +1,7 @@
-import Button from "@mui/material/Button";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { CssBaseline, Drawer } from "@mui/material";
 import { useState } from "react";
+import ShopButton from "./ShopButton";
+import Shop from "./Shop";
 
 const drawerWidth = 450;
 
@@ -10,14 +10,7 @@ export default function ShopDrawer() {
 
     return (
         <div>
-            <Button
-                variant="contained"
-                color="primary"
-                className="game-button shop-button"
-                onClick={() => setOpen(!open)}
-            >
-                <ShoppingCartIcon />
-            </Button>
+            <ShopButton open={open} setOpen={setOpen} />
             <CssBaseline />
             <Drawer
                 variant="persistent"
@@ -27,13 +20,15 @@ export default function ShopDrawer() {
                     "& .MuiDrawer-paper": {
                         width: drawerWidth,
                         boxSizing: "border-box",
-                        backgroundColor: "rgba(245, 245, 245, 0.75)",
+                        backgroundColor: "rgba(245, 245, 245, 0.8)",
                         zIndex: 0,
                     },
                 }}
                 anchor="left"
                 open={open}
-            ></Drawer>
+            >
+                <Shop />
+            </Drawer>
         </div>
     );
 }

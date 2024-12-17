@@ -174,3 +174,8 @@ ol {
     left: 15px;
     z-index: 1;
 }
+
+.shop-content {
+    margin-top: 30px;
+    padding: 30px;
+}
