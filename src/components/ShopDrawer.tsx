@@ -3,7 +3,7 @@ import { useState } from "react";
 import ShopButton from "./ShopButton";
 import Shop from "./Shop";
 
-const drawerWidth = 450;
+const drawerWidth = 500;
 
 export default function ShopDrawer() {
     const [open, setOpen] = useState(false);

@@ -180,6 +180,7 @@ ol {
     margin-top: 30px;
     padding: 30px;
     user-select: none;
+    overflow: hidden;
 }
 
 .shop-current-item {
@@ -190,7 +191,7 @@ ol {
     padding: 0px 10px 0px 30px;
 }
 
-.current-item-img {
+.item-img {
     max-height: 150px;
     width: auto;
     -webkit-user-drag: none;
@@ -200,4 +201,37 @@ ol {
 .sell-section p {
     margin: 5px;
     text-align: center;
+}
+
+.shop-item-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    padding: 10px;
+    overflow-y: auto;
+    height: 60%;
+}
+
+.shop-item {
+    height: 220px;
+    padding: 5px;
+    background-color: whitesmoke;
+    text-align: center;
+
+    &:hover {
+        box-shadow: 0 0 0 1px #4854dc;
+    }
+}
+
+.shop-item-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.shop-item-info h3,
+.shop-item-info p {
+    margin: 0;
 }
