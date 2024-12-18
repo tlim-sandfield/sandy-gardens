@@ -3,15 +3,16 @@ import { Scene } from "phaser";
 import zoomAndScrollCamera from "../utils/zoomAndScrollCamera";
 import panCameraMouseWheel from "../utils/panCameraMouseWheel";
 import panCameraSpaceBar from "../utils/panCameraSpaceBar";
-
-const TILE_WIDTH = 256;
-const TILE_HEIGHT = 128;
-const ORIGIN = { x: 0, y: 0 };
+import { TILE_HEIGHT, TILE_WIDTH } from "../gameConstants";
+import worldPointXYToTileXY from "../utils/worldPointXYToTileXY";
 
 export class Game extends Scene {
     private tilemap: Phaser.Tilemaps.Tilemap;
     private layer: Phaser.Tilemaps.TilemapLayer;
     private highlightSprite: Phaser.GameObjects.Sprite;
+    private selectSprite: Phaser.GameObjects.Sprite;
+
+    private posText: Phaser.GameObjects.Text;
 
     constructor() {
         super("Game");
@@ -20,9 +21,17 @@ export class Game extends Scene {
     create() {
         this.cameraMovements();
         this.setUpMap();
+        this.setUpPointer();
 
         this.cameras.main.setZoom(0.3);
         this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
+
+        this.posText = this.add
+            .text(10, 10, "Cursors to move", {
+                color: "#000000",
+                fontSize: "80px",
+            })
+            .setScrollFactor(0, 0);
 
         EventBus.on("centre-game", () => {
             this.cameras.main.zoomTo(0.3, 500, "Linear", true);
@@ -34,6 +43,23 @@ export class Game extends Scene {
 
     update() {
         this.input.on("pointermove", this.handlePointerMove, this);
+        this.input.on("pointerdown", this.handlePointerSelect, this);
+
+        const worldPoint = this.input.activePointer.positionToCamera(
+            this.cameras.main
+        ) as Phaser.Math.Vector2;
+
+        const tileX = worldPointXYToTileXY(worldPoint).x;
+        const tileY = worldPointXYToTileXY(worldPoint).y;
+
+        this.posText.setText([
+            `screen x: ${this.input.x}`,
+            `screen y: ${this.input.y}`,
+            `worldPoint x: ${Math.round(worldPoint.x)}`,
+            `worldPoint y: ${Math.round(worldPoint.y)}`,
+            `tileX: ${tileX}`,
+            `tileY: ${tileY}`,
+        ]);
     }
 
     cameraMovements() {
@@ -75,41 +101,63 @@ export class Game extends Scene {
         this.layer = this.tilemap.createLayer(
             "Tile Layer 1",
             tileset,
-            ORIGIN.x * TILE_WIDTH - TILE_WIDTH / 2,
-            ORIGIN.y * TILE_HEIGHT
+            -TILE_WIDTH / 2,
+            0
         ) as Phaser.Tilemaps.TilemapLayer;
+    }
 
+    setUpPointer() {
         // Add a highlight sprite
         this.highlightSprite = this.add.sprite(0, 0, "highlight");
-        this.highlightSprite.setAlpha(0.5);
+        this.highlightSprite.setAlpha(0.75);
         this.highlightSprite.setVisible(false);
+
+        // Add a select sprite
+        this.selectSprite = this.add.sprite(0, 0, "select");
+        this.selectSprite.setAlpha(1);
+        this.selectSprite.setVisible(false);
     }
 
     handlePointerMove(pointer: Phaser.Input.Pointer) {
         const worldPoint = pointer.positionToCamera(
             this.cameras.main
         ) as Phaser.Math.Vector2;
-
-        // Convert world coordinates to isometric tile coordinates
-        const cellX = worldPoint.x / TILE_WIDTH;
-        const cellY = worldPoint.y / TILE_HEIGHT;
-
-        const tileX = Math.floor(cellY - ORIGIN.y + (cellX - ORIGIN.x));
-        const tileY = Math.floor(cellY - ORIGIN.y - (cellX - ORIGIN.x));
+        const tileX = worldPointXYToTileXY(worldPoint).x;
+        const tileY = worldPointXYToTileXY(worldPoint).y;
 
         if (this.tilemap.hasTileAt(tileX, tileY)) {
             const tile = this.tilemap.getTileAt(tileX, tileY);
             if (tile) {
-                const tileWorldX = tile.pixelX + ORIGIN.x * TILE_WIDTH;
-                const tileWorldY =
-                    tile.pixelY + ORIGIN.y * TILE_HEIGHT + TILE_HEIGHT / 2;
-
-                // Update highlight sprite position
-                this.highlightSprite.setPosition(tileWorldX, tileWorldY);
+                this.highlightSprite.setPosition(
+                    tile.pixelX,
+                    tile.pixelY + TILE_HEIGHT / 2
+                );
                 this.highlightSprite.setVisible(true);
             }
         } else {
             this.highlightSprite.setVisible(false);
+        }
+    }
+
+    handlePointerSelect(pointer: Phaser.Input.Pointer) {
+        if (pointer.leftButtonDown()) {
+            const worldPoint = pointer.positionToCamera(
+                this.cameras.main
+            ) as Phaser.Math.Vector2;
+            const tileX = worldPointXYToTileXY(worldPoint).x;
+            const tileY = worldPointXYToTileXY(worldPoint).y;
+
+            if (this.tilemap.hasTileAt(tileX, tileY)) {
+                const tile = this.tilemap.getTileAt(tileX, tileY);
+                if (tile) {
+                    this.selectSprite.setPosition(
+                        tile.pixelX,
+                        tile.pixelY + TILE_HEIGHT / 2
+                    );
+                    this.selectSprite.setVisible(true);
+                    EventBus.emit("tile-selected", tile);
+                }
+            }
         }
     }
 }

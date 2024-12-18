@@ -29,7 +29,8 @@ export class Preloader extends Scene {
         this.load.image("grass", "assets/tiles/grass.png");
         this.load.image("tiles", "assets/tiles/256x192 Tiles.png");
         this.load.tilemapTiledJSON("map", "assets/tiles/plot.json");
-        this.load.image("highlight", "assets/tiles/tile-outline.png");
+        this.load.image("highlight", "assets/tiles/tile-outline-blue.png");
+        this.load.image("select", "assets/tiles/tile-outline-yellow.png");
         this.load.image('tree', 'assets/tiles/tree.png');
     }
 

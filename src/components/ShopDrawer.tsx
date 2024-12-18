@@ -2,11 +2,16 @@ import { CssBaseline, Drawer } from "@mui/material";
 import { useState } from "react";
 import ShopButton from "./ShopButton";
 import Shop from "./Shop";
+import { EventBus } from "@/game/EventBus";
 
 const drawerWidth = 500;
 
 export default function ShopDrawer() {
     const [open, setOpen] = useState(false);
+
+    EventBus.on("tile-selected", () => {
+        setOpen(true);
+    });
 
     return (
         <div>
