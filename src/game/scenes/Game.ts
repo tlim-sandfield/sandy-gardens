@@ -86,7 +86,7 @@ export class Game extends Scene {
     setUpPointer() {
         // Add a highlight sprite
         this.highlightSprite = this.add.sprite(0, 0, "highlight");
-        this.highlightSprite.setAlpha(0.5);
+        this.highlightSprite.setAlpha(0.75);
         this.highlightSprite.setVisible(false);
 
         // Add a select sprite
@@ -145,6 +145,7 @@ export class Game extends Scene {
 
                     this.selectSprite.setPosition(tileWorldX, tileWorldY);
                     this.selectSprite.setVisible(true);
+                    EventBus.emit("tile-selected", tile);
                 }
             }
         }
