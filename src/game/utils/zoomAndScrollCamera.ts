@@ -9,7 +9,7 @@ export default function zoomAndScrollCamera({
     input,
     pointer,
 }: MoveCameraProps) {
-    const ZOOM_SPEED = 0.001;
+    const ZOOM_SPEED = 0.00025;
     const MOVEMENT_SPEED = 50 / camera.zoom;
 
     const keyCtrl = input?.keyboard?.addKey(
