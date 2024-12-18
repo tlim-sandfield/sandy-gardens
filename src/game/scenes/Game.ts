@@ -97,7 +97,7 @@ export class Game extends Scene {
     setUpMap() {
         this.tilemap = this.make.tilemap({ key: "map" });
         const tileset =
-            this.tilemap.addTilesetImage("256x192 Tiles", "tiles") || "";
+            this.tilemap.addTilesetImage("128x96 Tiles", "tiles") || "";
         this.layer = this.tilemap.createLayer(
             "Tile Layer 1",
             tileset,
