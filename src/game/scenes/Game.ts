@@ -23,8 +23,8 @@ export class Game extends Scene {
         this.setUpMap();
         this.setUpPointer();
 
-        this.cameras.main.setZoom(0.3);
-        this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
+        this.cameras.main.setZoom(0.6);
+        this.cameras.main.centerOn(0, 31 * TILE_HEIGHT);
 
         this.posText = this.add
             .text(10, 10, "Cursors to move", {
@@ -34,8 +34,8 @@ export class Game extends Scene {
             .setScrollFactor(0, 0);
 
         EventBus.on("centre-game", () => {
-            this.cameras.main.zoomTo(0.3, 500, "Linear", true);
-            this.cameras.main.pan(0, 9 * TILE_HEIGHT, 500, "Linear", true);
+            this.cameras.main.zoomTo(0.6, 500, "Linear", true);
+            this.cameras.main.pan(0, 31 * TILE_HEIGHT, 500, "Linear", true);
         });
 
         EventBus.emit("current-scene-ready", this);

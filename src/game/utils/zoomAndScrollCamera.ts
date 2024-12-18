@@ -9,7 +9,7 @@ export default function zoomAndScrollCamera({
     input,
     pointer,
 }: MoveCameraProps) {
-    const ZOOM_SPEED = 0.00025;
+    const ZOOM_SPEED = 0.0005;
     const MOVEMENT_SPEED = 50 / camera.zoom;
 
     const keyCtrl = input?.keyboard?.addKey(
@@ -20,10 +20,10 @@ export default function zoomAndScrollCamera({
         // ZOOM: mouse wheel up and down
         camera.zoom += pointer.deltaY * -ZOOM_SPEED;
 
-        if (camera.zoom < 0.15) {
-            camera.zoom = 0.15;
-        } else if (camera.zoom > 1.5) {
-            camera.zoom = 1.5;
+        if (camera.zoom < 0.1) {
+            camera.zoom = 0.1;
+        } else if (camera.zoom > 1) {
+            camera.zoom = 1;
         }
     } else {
         // SCROLL: mouse wheel up and down
