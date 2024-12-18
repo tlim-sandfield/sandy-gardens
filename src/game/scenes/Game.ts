@@ -21,14 +21,6 @@ export class Game extends Scene {
         this.cameraMovements();
         this.setUpMap();
 
-        EventBus.emit("current-scene-ready", this);
-    }
-
-    update() {
-        this.input.on("pointermove", this.handlePointerMove, this);
-    }
-
-    cameraMovements() {
         this.cameras.main.setZoom(0.3);
         this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
 
@@ -37,6 +29,14 @@ export class Game extends Scene {
             this.cameras.main.pan(0, 9 * TILE_HEIGHT, 500, "Linear", true);
         });
 
+        EventBus.emit("current-scene-ready", this);
+    }
+
+    update() {
+        this.input.on("pointermove", this.handlePointerMove, this);
+    }
+
+    cameraMovements() {
         const keySpace = this.input?.keyboard?.addKey(
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );
@@ -94,14 +94,15 @@ export class Game extends Scene {
         const cellX = worldPoint.x / TILE_WIDTH;
         const cellY = worldPoint.y / TILE_HEIGHT;
 
-        const tileX = Math.round(cellY - ORIGIN.y + (cellX - ORIGIN.x));
-        const tileY = Math.round(cellY - ORIGIN.y - (cellX - ORIGIN.x));
+        const tileX = Math.floor(cellY - ORIGIN.y + (cellX - ORIGIN.x));
+        const tileY = Math.floor(cellY - ORIGIN.y - (cellX - ORIGIN.x));
 
         if (this.tilemap.hasTileAt(tileX, tileY)) {
             const tile = this.tilemap.getTileAt(tileX, tileY);
             if (tile) {
                 const tileWorldX = tile.pixelX + ORIGIN.x * TILE_WIDTH;
-                const tileWorldY = tile.pixelY + ORIGIN.y * TILE_HEIGHT;
+                const tileWorldY =
+                    tile.pixelY + ORIGIN.y * TILE_HEIGHT + TILE_HEIGHT / 2;
 
                 // Update highlight sprite position
                 this.highlightSprite.setPosition(tileWorldX, tileWorldY);

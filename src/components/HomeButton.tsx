@@ -11,7 +11,7 @@ export default function HomeButton() {
         <Button
             variant="contained"
             color="primary"
-            className="home-button"
+            className="game-button home-button"
             onClick={() => centreGame()}
         >
             <HomeIcon />

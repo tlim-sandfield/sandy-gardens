@@ -40,7 +40,7 @@ export default function NeighboursAddBack() {
                                 primary={`${value} just added you as a neighbour!`}
                             />
                             <Button
-                                color="primary"
+                                variant="contained"
                                 onClick={() => {
                                     if (neighboursDispatch) {
                                         neighboursDispatch({

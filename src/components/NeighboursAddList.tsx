@@ -61,7 +61,7 @@ export default function NeighboursAddList({
                             <div className="neighbours-list">
                                 <p id={labelId}>{value}</p>
                                 <Button
-                                    color="primary"
+                                    variant="contained"
                                     onClick={() => {
                                         handleAdd(value);
                                     }}

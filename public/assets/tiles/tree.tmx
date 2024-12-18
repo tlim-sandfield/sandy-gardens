@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="isometric" renderorder="right-down" width="1" height="1" tilewidth="256" tileheight="512" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="256x512 Trees" tilewidth="256" tileheight="512" tilecount="12" columns="6">
+  <image source="256x512 Trees.png" width="1536" height="1024"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="1" height="1">
+  <data encoding="csv">
+1
+</data>
+ </layer>
+</map>
