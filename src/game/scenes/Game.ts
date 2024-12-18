@@ -3,10 +3,8 @@ import { Scene } from "phaser";
 import zoomAndScrollCamera from "../utils/zoomAndScrollCamera";
 import panCameraMouseWheel from "../utils/panCameraMouseWheel";
 import panCameraSpaceBar from "../utils/panCameraSpaceBar";
-
-const TILE_WIDTH = 256;
-const TILE_HEIGHT = 128;
-const ORIGIN = { x: 0, y: 0 };
+import { TILE_HEIGHT, TILE_WIDTH } from "../gameConstants";
+import worldPointXYToTileXY from "../utils/worldPointXYToTileXY";
 
 export class Game extends Scene {
     private tilemap: Phaser.Tilemaps.Tilemap;
@@ -51,16 +49,8 @@ export class Game extends Scene {
             this.cameras.main
         ) as Phaser.Math.Vector2;
 
-        const cellX = worldPoint.x / TILE_WIDTH;
-        const cellY = worldPoint.y / TILE_HEIGHT;
-
-        const tileX = Math.floor(cellY - ORIGIN.y + (cellX - ORIGIN.x));
-        const tileY = Math.floor(cellY - ORIGIN.y - (cellX - ORIGIN.x));
-
-        const tile = this.tilemap.getTileAt(tileX, tileY);
-        const tileWorldX = (tile?.pixelX ?? 0) + ORIGIN.x * TILE_WIDTH;
-        const tileWorldY =
-            (tile?.pixelY ?? 0) + ORIGIN.y * TILE_HEIGHT + TILE_HEIGHT / 2;
+        const tileX = worldPointXYToTileXY(worldPoint).x;
+        const tileY = worldPointXYToTileXY(worldPoint).y;
 
         this.posText.setText([
             `screen x: ${this.input.x}`,
@@ -69,8 +59,6 @@ export class Game extends Scene {
             `worldPoint y: ${Math.round(worldPoint.y)}`,
             `tileX: ${tileX}`,
             `tileY: ${tileY}`,
-            `tileWorldX: ${tileWorldX}`,
-            `tileWorldY: ${tileWorldY}`,
         ]);
     }
 
@@ -113,8 +101,8 @@ export class Game extends Scene {
         this.layer = this.tilemap.createLayer(
             "Tile Layer 1",
             tileset,
-            ORIGIN.x * TILE_WIDTH - TILE_WIDTH / 2,
-            ORIGIN.y * TILE_HEIGHT
+            -TILE_WIDTH / 2,
+            0
         ) as Phaser.Tilemaps.TilemapLayer;
     }
 
@@ -134,23 +122,16 @@ export class Game extends Scene {
         const worldPoint = pointer.positionToCamera(
             this.cameras.main
         ) as Phaser.Math.Vector2;
-
-        // Convert world coordinates to isometric tile coordinates
-        const cellX = worldPoint.x / TILE_WIDTH;
-        const cellY = worldPoint.y / TILE_HEIGHT;
-
-        const tileX = Math.floor(cellY - ORIGIN.y + (cellX - ORIGIN.x));
-        const tileY = Math.floor(cellY - ORIGIN.y - (cellX - ORIGIN.x));
+        const tileX = worldPointXYToTileXY(worldPoint).x;
+        const tileY = worldPointXYToTileXY(worldPoint).y;
 
         if (this.tilemap.hasTileAt(tileX, tileY)) {
             const tile = this.tilemap.getTileAt(tileX, tileY);
             if (tile) {
-                const tileWorldX = tile.pixelX + ORIGIN.x * TILE_WIDTH;
-                const tileWorldY =
-                    tile.pixelY + ORIGIN.y * TILE_HEIGHT + TILE_HEIGHT / 2;
-
-                // Update highlight sprite position
-                this.highlightSprite.setPosition(tileWorldX, tileWorldY);
+                this.highlightSprite.setPosition(
+                    tile.pixelX,
+                    tile.pixelY + TILE_HEIGHT / 2
+                );
                 this.highlightSprite.setVisible(true);
             }
         } else {
@@ -163,22 +144,16 @@ export class Game extends Scene {
             const worldPoint = pointer.positionToCamera(
                 this.cameras.main
             ) as Phaser.Math.Vector2;
-
-            // Convert world coordinates to isometric tile coordinates
-            const cellX = worldPoint.x / TILE_WIDTH;
-            const cellY = worldPoint.y / TILE_HEIGHT;
-
-            const tileX = Math.floor(cellY - ORIGIN.y + (cellX - ORIGIN.x));
-            const tileY = Math.floor(cellY - ORIGIN.y - (cellX - ORIGIN.x));
+            const tileX = worldPointXYToTileXY(worldPoint).x;
+            const tileY = worldPointXYToTileXY(worldPoint).y;
 
             if (this.tilemap.hasTileAt(tileX, tileY)) {
                 const tile = this.tilemap.getTileAt(tileX, tileY);
                 if (tile) {
-                    const tileWorldX = tile.pixelX + ORIGIN.x * TILE_WIDTH;
-                    const tileWorldY =
-                        tile.pixelY + ORIGIN.y * TILE_HEIGHT + TILE_HEIGHT / 2;
-
-                    this.selectSprite.setPosition(tileWorldX, tileWorldY);
+                    this.selectSprite.setPosition(
+                        tile.pixelX,
+                        tile.pixelY + TILE_HEIGHT / 2
+                    );
                     this.selectSprite.setVisible(true);
                     EventBus.emit("tile-selected", tile);
                 }
