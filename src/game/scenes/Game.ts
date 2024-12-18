@@ -14,6 +14,8 @@ export class Game extends Scene {
     private highlightSprite: Phaser.GameObjects.Sprite;
     private selectSprite: Phaser.GameObjects.Sprite;
 
+    private posText: Phaser.GameObjects.Text;
+
     constructor() {
         super("Game");
     }
@@ -26,6 +28,13 @@ export class Game extends Scene {
         this.cameras.main.setZoom(0.3);
         this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
 
+        this.posText = this.add
+            .text(10, 10, "Cursors to move", {
+                color: "#000000",
+                fontSize: "80px",
+            })
+            .setScrollFactor(0, 0);
+
         EventBus.on("centre-game", () => {
             this.cameras.main.zoomTo(0.3, 500, "Linear", true);
             this.cameras.main.pan(0, 9 * TILE_HEIGHT, 500, "Linear", true);
@@ -37,6 +46,32 @@ export class Game extends Scene {
     update() {
         this.input.on("pointermove", this.handlePointerMove, this);
         this.input.on("pointerdown", this.handlePointerSelect, this);
+
+        const worldPoint = this.input.activePointer.positionToCamera(
+            this.cameras.main
+        ) as Phaser.Math.Vector2;
+
+        const cellX = worldPoint.x / TILE_WIDTH;
+        const cellY = worldPoint.y / TILE_HEIGHT;
+
+        const tileX = Math.floor(cellY - ORIGIN.y + (cellX - ORIGIN.x));
+        const tileY = Math.floor(cellY - ORIGIN.y - (cellX - ORIGIN.x));
+
+        const tile = this.tilemap.getTileAt(tileX, tileY);
+        const tileWorldX = (tile?.pixelX ?? 0) + ORIGIN.x * TILE_WIDTH;
+        const tileWorldY =
+            (tile?.pixelY ?? 0) + ORIGIN.y * TILE_HEIGHT + TILE_HEIGHT / 2;
+
+        this.posText.setText([
+            `screen x: ${this.input.x}`,
+            `screen y: ${this.input.y}`,
+            `worldPoint x: ${Math.round(worldPoint.x)}`,
+            `worldPoint y: ${Math.round(worldPoint.y)}`,
+            `tileX: ${tileX}`,
+            `tileY: ${tileY}`,
+            `tileWorldX: ${tileWorldX}`,
+            `tileWorldY: ${tileWorldY}`,
+        ]);
     }
 
     cameraMovements() {
