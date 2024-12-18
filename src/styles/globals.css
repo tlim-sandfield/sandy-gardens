@@ -192,8 +192,9 @@ ol {
 }
 
 .item-img {
-    max-height: 150px;
-    width: auto;
+    height: 120px;
+    width: 120px;
+    object-fit: scale-down;
     -webkit-user-drag: none;
     -moz-user-drag: none;
 }
@@ -214,14 +215,18 @@ ol {
 }
 
 .shop-item {
-    height: 220px;
-    padding: 5px;
+    height: 200px;
+    padding: 10px;
     background-color: whitesmoke;
-    text-align: center;
 
     &:hover {
         box-shadow: 0 0 0 1px #4854dc;
     }
+}
+
+.shop-item img {
+    display: block;
+    margin: auto;
 }
 
 .shop-item-info {
