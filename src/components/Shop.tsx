@@ -13,7 +13,7 @@ export default function Shop() {
                     alt="Selected item"
                 />
                 <div className="sell-section">
-                    <Button color="primary" onClick={() => {}}>
+                    <Button variant="contained" onClick={() => {}}>
                         Sell
                     </Button>
                     <p>for 10 🪙</p>
