@@ -1,22 +1,21 @@
 import { Button } from "@mui/material";
-import tree from "../../public/assets/tiles/tree.png";
+import tree from "../../public/assets/plants/pine_tree.png";
 import ShopItemCard from "./ShopItemCard";
 import shopItems from "@/data/shopItems";
 import { Key, useState } from "react";
 import { EventBus } from "@/game/EventBus";
-import ShopItem from "@/types/ShopItem";
 
 export default function Shop() {
-    const [selectedItem, setSelectedItem] = useState<ShopItem>();
+    const [selectedItemID, setSelectedItemID] = useState<number>();
 
-    function handleSelectedItem(item: ShopItem) {
-        if (selectedItem === item) {
-            setSelectedItem(undefined);
+    function handleSelectedItem(index: number) {
+        if (selectedItemID === index) {
+            setSelectedItemID(undefined);
             EventBus.emit("shop-item-selected", undefined);
             return;
         }
-        setSelectedItem(item);
-        EventBus.emit("shop-item-selected", item);
+        setSelectedItemID(index);
+        EventBus.emit("shop-item-selected", index);
     }
 
     return (
@@ -39,17 +38,16 @@ export default function Shop() {
                 </div>
             </div>
             <div className="shop-item-grid">
-                {shopItems.map((item) => (
+                {shopItems.map((item, index) => (
                     <div
-                        key={item.id}
+                        key={index}
                         className={`shop-item ${
-                            selectedItem === item ? "selected" : ""
+                            selectedItemID === index ? "selected" : ""
                         }`}
-                        onClick={() => handleSelectedItem(item)}
+                        onClick={() => handleSelectedItem(index)}
                     >
                         <ShopItemCard
-                            key={item.id as Key}
-                            id={item.id}
+                            key={index as Key}
                             name={item.name}
                             src={item.src}
                             price={item.price}

@@ -31,6 +31,8 @@ export class Preloader extends Scene {
         this.load.image("plants", "assets/tiles/128x256 Trees.png");
         this.load.image("highlight", "assets/tiles/tile-outline-blue.png");
         this.load.image("select", "assets/tiles/tile-outline-yellow.png");
+
+        this.loadPlants();
     }
 
     create() {
@@ -39,5 +41,13 @@ export class Preloader extends Scene {
 
         //  Move to the Game. You could also swap this for a Scene Transition, such as a camera fade.
         this.scene.start("Game");
+    }
+
+    loadPlants() {
+        this.load.image("plant_0", "assets/plants/pine_tree.png");
+        this.load.image("plant_1", "assets/plants/palm_tree_1.png");
+        this.load.image("plant_2", "assets/plants/palm_tree_2.png");
+        this.load.image("plant_3", "assets/plants/4.png");
+        this.load.image("plant_4", "assets/plants/5.png");
     }
 }

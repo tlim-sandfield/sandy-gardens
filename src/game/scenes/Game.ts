@@ -5,7 +5,6 @@ import panCameraMouseWheel from "../utils/panCameraMouseWheel";
 import panCameraSpaceBar from "../utils/panCameraSpaceBar";
 import { TILE_HEIGHT, TILE_WIDTH } from "../gameConstants";
 import worldPointXYToTileXY from "../utils/worldPointXYToTileXY";
-import ShopItem from "@/types/ShopItem";
 
 export class Game extends Scene {
     private tilemap: Phaser.Tilemaps.Tilemap;
@@ -14,7 +13,7 @@ export class Game extends Scene {
     private highlightSprite: Phaser.GameObjects.Sprite;
     private selectSprite: Phaser.GameObjects.Sprite;
     private hoverPlantSprite: Phaser.GameObjects.Sprite;
-    private selectedShopItem: ShopItem;
+    private selectedShopItemID: number;
 
     private posText: Phaser.GameObjects.Text;
 
@@ -49,17 +48,21 @@ export class Game extends Scene {
         this.input.on("pointermove", this.handlePointerMove, this);
         this.input.on("pointerdown", this.handlePointerSelect, this);
 
-        EventBus.on("shop-item-selected", (item: ShopItem) => {
-            this.selectedShopItem = item;
-            // this.load.once("complete", () => {
-            //     this.hoverPlantSprite.setTexture("tree");
-            // });
+        EventBus.on("shop-item-selected", (itemID: number) => {
+            this.selectedShopItemID = itemID;
+            this.hoverPlantSprite.destroy();
+            this.hoverPlantSprite = this.add.sprite(
+                this.highlightSprite.x,
+                this.highlightSprite.y - TILE_HEIGHT * 1.5,
+                `plant_${itemID}`
+            );
+            this.hoverPlantSprite.setAlpha(0.5);
 
-            // this.load.image("tree", item.src);
-            // this.load.start();
-
-            // this.hoverPlantSprite = this.add.sprite(0, 0, "tree"); // Create the sprite placeholder
-            // this.hoverPlantSprite.setAlpha(0.5);
+            if (itemID && this.highlightSprite.visible == true) {
+                this.hoverPlantSprite.setVisible(true);
+            } else {
+                this.hoverPlantSprite.setVisible(false);
+            }
         });
 
         const worldPoint = this.input.activePointer.positionToCamera(
@@ -163,9 +166,18 @@ export class Game extends Scene {
                     tile.pixelY + TILE_HEIGHT / 2
                 );
                 this.highlightSprite.setVisible(true);
+
+                if (this.selectedShopItemID) {
+                    this.hoverPlantSprite.setPosition(
+                        tile.pixelX,
+                        tile.pixelY - TILE_HEIGHT
+                    );
+                    this.hoverPlantSprite.setVisible(true);
+                }
             }
         } else {
             this.highlightSprite.setVisible(false);
+            this.hoverPlantSprite.setVisible(false);
         }
     }
 
@@ -180,15 +192,9 @@ export class Game extends Scene {
             if (this.tileLayer.hasTileAt(tileX, tileY)) {
                 const tile = this.tileLayer.getTileAt(tileX, tileY);
                 if (tile) {
-                    // this.selectSprite.setPosition(
-                    //     tile.pixelX,
-                    //     tile.pixelY + TILE_HEIGHT / 2
-                    // );
-                    // this.selectSprite.setVisible(true);
-
-                    if (this.selectedShopItem) {
+                    if (this.selectedShopItemID) {
                         this.plantLayer.putTileAt(
-                            this.selectedShopItem.id,
+                            this.selectedShopItemID + 91,
                             tileX,
                             tileY
                         );
