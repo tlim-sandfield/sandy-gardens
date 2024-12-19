@@ -222,6 +222,11 @@ ol {
     &:hover {
         box-shadow: 0 0 0 1px #4854dc;
     }
+
+    &.selected {
+        box-shadow: 0 0 0 2px #4854dc;
+        background-color: lightblue;
+    }
 }
 
 .shop-item img {

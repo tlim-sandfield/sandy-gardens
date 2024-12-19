@@ -1,16 +1,16 @@
 const shopItems = [
-  {
-    id: 1,
-    name: 'Pine Tree',
-    src: '/assets/tiles/tree.png',
-    price: 20,
-  },
-  {
-    id: 2,
-    name: 'Grass Patch',
-    src: '/assets/tiles/grass.png',
-    price: 10,
-  },
+    {
+        id: 91,
+        name: "Tree 91",
+        src: "/assets/tiles/tree.png",
+        price: 20,
+    },
+    {
+        id: 98,
+        name: "Tree 98",
+        src: "/assets/tiles/tree 98.png",
+        price: 30,
+    },
 ];
 
 export default shopItems;

@@ -6,7 +6,7 @@ interface ShopItemProps {
 
 export default function ShopItem({ name, src, price }: ShopItemProps) {
     return (
-        <div className="shop-item">
+        <div>
             <img className="item-img" src={src} alt="Item" />
             <div className="shop-item-info">
                 <h4>{name}</h4>

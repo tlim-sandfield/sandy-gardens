@@ -12,6 +12,7 @@ export class Game extends Scene {
     private plantLayer: Phaser.Tilemaps.TilemapLayer;
     private highlightSprite: Phaser.GameObjects.Sprite;
     private selectSprite: Phaser.GameObjects.Sprite;
+    private selectedShopItemID: number;
 
     private posText: Phaser.GameObjects.Text;
 
@@ -45,6 +46,10 @@ export class Game extends Scene {
     update() {
         this.input.on("pointermove", this.handlePointerMove, this);
         this.input.on("pointerdown", this.handlePointerSelect, this);
+
+        EventBus.on("shop-item-selected", (id: number) => {
+            this.selectedShopItemID = id;
+        });
 
         const worldPoint = this.input.activePointer.positionToCamera(
             this.cameras.main
@@ -159,12 +164,19 @@ export class Game extends Scene {
             if (this.tileLayer.hasTileAt(tileX, tileY)) {
                 const tile = this.tileLayer.getTileAt(tileX, tileY);
                 if (tile) {
-                    this.selectSprite.setPosition(
-                        tile.pixelX,
-                        tile.pixelY + TILE_HEIGHT / 2
-                    );
-                    this.selectSprite.setVisible(true);
-                    EventBus.emit("tile-selected", tile);
+                    // this.selectSprite.setPosition(
+                    //     tile.pixelX,
+                    //     tile.pixelY + TILE_HEIGHT / 2
+                    // );
+                    // this.selectSprite.setVisible(true);
+
+                    if (this.selectedShopItemID) {
+                        this.plantLayer.putTileAt(
+                            this.selectedShopItemID,
+                            tileX,
+                            tileY
+                        );
+                    }
                 }
             }
         }
