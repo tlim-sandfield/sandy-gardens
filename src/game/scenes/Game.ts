@@ -8,7 +8,8 @@ import worldPointXYToTileXY from "../utils/worldPointXYToTileXY";
 
 export class Game extends Scene {
     private tilemap: Phaser.Tilemaps.Tilemap;
-    private layer: Phaser.Tilemaps.TilemapLayer;
+    private tileLayer: Phaser.Tilemaps.TilemapLayer;
+    private plantLayer: Phaser.Tilemaps.TilemapLayer;
     private highlightSprite: Phaser.GameObjects.Sprite;
     private selectSprite: Phaser.GameObjects.Sprite;
 
@@ -23,8 +24,8 @@ export class Game extends Scene {
         this.setUpMap();
         this.setUpPointer();
 
-        this.cameras.main.setZoom(0.3);
-        this.cameras.main.centerOn(0, 9 * TILE_HEIGHT);
+        this.cameras.main.setZoom(0.6);
+        this.cameras.main.centerOn(0, 31 * TILE_HEIGHT);
 
         this.posText = this.add
             .text(10, 10, "Cursors to move", {
@@ -34,8 +35,8 @@ export class Game extends Scene {
             .setScrollFactor(0, 0);
 
         EventBus.on("centre-game", () => {
-            this.cameras.main.zoomTo(0.3, 500, "Linear", true);
-            this.cameras.main.pan(0, 9 * TILE_HEIGHT, 500, "Linear", true);
+            this.cameras.main.zoomTo(0.6, 500, "Linear", true);
+            this.cameras.main.pan(0, 31 * TILE_HEIGHT, 500, "Linear", true);
         });
 
         EventBus.emit("current-scene-ready", this);
@@ -97,12 +98,20 @@ export class Game extends Scene {
     setUpMap() {
         this.tilemap = this.make.tilemap({ key: "map" });
         const tileset =
-            this.tilemap.addTilesetImage("256x192 Tiles", "tiles") || "";
-        this.layer = this.tilemap.createLayer(
-            "Tile Layer 1",
+            this.tilemap.addTilesetImage("128x96 Tiles", "tiles") || "";
+        const treeSet =
+            this.tilemap.addTilesetImage("128x256 Trees", "trees") || "";
+        this.tileLayer = this.tilemap.createLayer(
+            "Tiles",
             tileset,
             -TILE_WIDTH / 2,
-            0
+            TILE_HEIGHT / 2
+        ) as Phaser.Tilemaps.TilemapLayer;
+        this.plantLayer = this.tilemap.createLayer(
+            "Plants",
+            treeSet,
+            -TILE_WIDTH / 2,
+            -TILE_HEIGHT * 3
         ) as Phaser.Tilemaps.TilemapLayer;
     }
 
@@ -125,8 +134,8 @@ export class Game extends Scene {
         const tileX = worldPointXYToTileXY(worldPoint).x;
         const tileY = worldPointXYToTileXY(worldPoint).y;
 
-        if (this.tilemap.hasTileAt(tileX, tileY)) {
-            const tile = this.tilemap.getTileAt(tileX, tileY);
+        if (this.tileLayer.hasTileAt(tileX, tileY)) {
+            const tile = this.tileLayer.getTileAt(tileX, tileY);
             if (tile) {
                 this.highlightSprite.setPosition(
                     tile.pixelX,
@@ -147,8 +156,8 @@ export class Game extends Scene {
             const tileX = worldPointXYToTileXY(worldPoint).x;
             const tileY = worldPointXYToTileXY(worldPoint).y;
 
-            if (this.tilemap.hasTileAt(tileX, tileY)) {
-                const tile = this.tilemap.getTileAt(tileX, tileY);
+            if (this.tileLayer.hasTileAt(tileX, tileY)) {
+                const tile = this.tileLayer.getTileAt(tileX, tileY);
                 if (tile) {
                     this.selectSprite.setPosition(
                         tile.pixelX,
