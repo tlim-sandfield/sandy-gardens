@@ -1,21 +1,22 @@
 import { Button } from "@mui/material";
 import tree from "../../public/assets/tiles/tree.png";
-import ShopItem from "./ShopItem";
+import ShopItemCard from "./ShopItemCard";
 import shopItems from "@/data/shopItems";
 import { Key, useState } from "react";
 import { EventBus } from "@/game/EventBus";
+import ShopItem from "@/types/ShopItem";
 
 export default function Shop() {
-    const [selectedItemID, setSelectedItemID] = useState<number>();
+    const [selectedItem, setSelectedItem] = useState<ShopItem>();
 
-    function handleSelectedItem(id: number) {
-        if (selectedItemID === id) {
-            setSelectedItemID(undefined);
+    function handleSelectedItem(item: ShopItem) {
+        if (selectedItem === item) {
+            setSelectedItem(undefined);
             EventBus.emit("shop-item-selected", undefined);
             return;
         }
-        setSelectedItemID(id);
-        EventBus.emit("shop-item-selected", id);
+        setSelectedItem(item);
+        EventBus.emit("shop-item-selected", item);
     }
 
     return (
@@ -42,12 +43,13 @@ export default function Shop() {
                     <div
                         key={item.id}
                         className={`shop-item ${
-                            selectedItemID === item.id ? "selected" : ""
+                            selectedItem === item ? "selected" : ""
                         }`}
-                        onClick={() => handleSelectedItem(item.id)}
+                        onClick={() => handleSelectedItem(item)}
                     >
-                        <ShopItem
+                        <ShopItemCard
                             key={item.id as Key}
+                            id={item.id}
                             name={item.name}
                             src={item.src}
                             price={item.price}

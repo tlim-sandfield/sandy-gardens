@@ -5,6 +5,7 @@ import panCameraMouseWheel from "../utils/panCameraMouseWheel";
 import panCameraSpaceBar from "../utils/panCameraSpaceBar";
 import { TILE_HEIGHT, TILE_WIDTH } from "../gameConstants";
 import worldPointXYToTileXY from "../utils/worldPointXYToTileXY";
+import ShopItem from "@/types/ShopItem";
 
 export class Game extends Scene {
     private tilemap: Phaser.Tilemaps.Tilemap;
@@ -12,7 +13,8 @@ export class Game extends Scene {
     private plantLayer: Phaser.Tilemaps.TilemapLayer;
     private highlightSprite: Phaser.GameObjects.Sprite;
     private selectSprite: Phaser.GameObjects.Sprite;
-    private selectedShopItemID: number;
+    private hoverPlantSprite: Phaser.GameObjects.Sprite;
+    private selectedShopItem: ShopItem;
 
     private posText: Phaser.GameObjects.Text;
 
@@ -47,8 +49,17 @@ export class Game extends Scene {
         this.input.on("pointermove", this.handlePointerMove, this);
         this.input.on("pointerdown", this.handlePointerSelect, this);
 
-        EventBus.on("shop-item-selected", (id: number) => {
-            this.selectedShopItemID = id;
+        EventBus.on("shop-item-selected", (item: ShopItem) => {
+            this.selectedShopItem = item;
+            // this.load.once("complete", () => {
+            //     this.hoverPlantSprite.setTexture("tree");
+            // });
+
+            // this.load.image("tree", item.src);
+            // this.load.start();
+
+            // this.hoverPlantSprite = this.add.sprite(0, 0, "tree"); // Create the sprite placeholder
+            // this.hoverPlantSprite.setAlpha(0.5);
         });
 
         const worldPoint = this.input.activePointer.positionToCamera(
@@ -104,8 +115,8 @@ export class Game extends Scene {
         this.tilemap = this.make.tilemap({ key: "map" });
         const tileset =
             this.tilemap.addTilesetImage("128x96 Tiles", "tiles") || "";
-        const treeSet =
-            this.tilemap.addTilesetImage("128x256 Trees", "trees") || "";
+        const plantset =
+            this.tilemap.addTilesetImage("128x256 Trees", "plants") || "";
         this.tileLayer = this.tilemap.createLayer(
             "Tiles",
             tileset,
@@ -114,7 +125,7 @@ export class Game extends Scene {
         ) as Phaser.Tilemaps.TilemapLayer;
         this.plantLayer = this.tilemap.createLayer(
             "Plants",
-            treeSet,
+            plantset,
             -TILE_WIDTH / 2,
             -TILE_HEIGHT * 3
         ) as Phaser.Tilemaps.TilemapLayer;
@@ -130,6 +141,11 @@ export class Game extends Scene {
         this.selectSprite = this.add.sprite(0, 0, "select");
         this.selectSprite.setAlpha(1);
         this.selectSprite.setVisible(false);
+
+        // Add a hover plant sprite
+        this.hoverPlantSprite = this.add.sprite(0, 0, "plants");
+        this.hoverPlantSprite.setAlpha(0.5);
+        this.hoverPlantSprite.setVisible(false);
     }
 
     handlePointerMove(pointer: Phaser.Input.Pointer) {
@@ -170,9 +186,9 @@ export class Game extends Scene {
                     // );
                     // this.selectSprite.setVisible(true);
 
-                    if (this.selectedShopItemID) {
+                    if (this.selectedShopItem) {
                         this.plantLayer.putTileAt(
-                            this.selectedShopItemID,
+                            this.selectedShopItem.id,
                             tileX,
                             tileY
                         );

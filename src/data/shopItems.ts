@@ -1,4 +1,6 @@
-const shopItems = [
+import ShopItem from "@/types/ShopItem";
+
+const shopItems: ShopItem[] = [
     {
         id: 91,
         name: "Tree 91",
