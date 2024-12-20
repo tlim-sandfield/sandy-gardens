@@ -11,9 +11,11 @@ export class Game extends Scene {
     private tileLayer: Phaser.Tilemaps.TilemapLayer;
     private plantLayer: Phaser.Tilemaps.TilemapLayer;
     private highlightSprite: Phaser.GameObjects.Sprite;
-    private selectSprite: Phaser.GameObjects.Sprite;
+    private selectedTileX: number;
+    private selectedTileY: number;
     private hoverPlantSprite: Phaser.GameObjects.Sprite;
     private selectedShopItemID: number;
+    private sellButton: Phaser.GameObjects.Sprite;
 
     private posText: Phaser.GameObjects.Text;
 
@@ -29,12 +31,22 @@ export class Game extends Scene {
         this.cameras.main.setZoom(0.6);
         this.cameras.main.centerOn(0, 31 * TILE_HEIGHT);
 
-        this.posText = this.add
-            .text(10, 10, "Cursors to move", {
-                color: "#000000",
-                fontSize: "80px",
-            })
-            .setScrollFactor(0, 0);
+        this.sellButton = this.add.sprite(0, 0, "star");
+        this.sellButton.setInteractive();
+        this.sellButton.on("pointerdown", () => {
+            this.plantLayer.removeTileAt(
+                this.selectedTileX,
+                this.selectedTileY
+            );
+        });
+        this.sellButton.setVisible(false);
+
+        // this.posText = this.add
+        //     .text(10, 10, "Cursors to move", {
+        //         color: "#000000",
+        //         fontSize: "80px",
+        //     })
+        //     .setScrollFactor(0, 0);
 
         EventBus.on("centre-game", () => {
             this.cameras.main.zoomTo(0.6, 500, "Linear", true);
@@ -65,21 +77,21 @@ export class Game extends Scene {
             }
         });
 
-        const worldPoint = this.input.activePointer.positionToCamera(
-            this.cameras.main
-        ) as Phaser.Math.Vector2;
+        // const worldPoint = this.input.activePointer.positionToCamera(
+        //     this.cameras.main
+        // ) as Phaser.Math.Vector2;
 
-        const tileX = worldPointXYToTileXY(worldPoint).x;
-        const tileY = worldPointXYToTileXY(worldPoint).y;
+        // const tileX = worldPointXYToTileXY(worldPoint).x;
+        // const tileY = worldPointXYToTileXY(worldPoint).y;
 
-        this.posText.setText([
-            `screen x: ${this.input.x}`,
-            `screen y: ${this.input.y}`,
-            `worldPoint x: ${Math.round(worldPoint.x)}`,
-            `worldPoint y: ${Math.round(worldPoint.y)}`,
-            `tileX: ${tileX}`,
-            `tileY: ${tileY}`,
-        ]);
+        // this.posText.setText([
+        //     `screen x: ${this.input.x}`,
+        //     `screen y: ${this.input.y}`,
+        //     `worldPoint x: ${Math.round(worldPoint.x)}`,
+        //     `worldPoint y: ${Math.round(worldPoint.y)}`,
+        //     `tileX: ${tileX}`,
+        //     `tileY: ${tileY}`,
+        // ]);
     }
 
     cameraMovements() {
@@ -140,11 +152,6 @@ export class Game extends Scene {
         this.highlightSprite.setAlpha(0.75);
         this.highlightSprite.setVisible(false);
 
-        // Add a select sprite
-        this.selectSprite = this.add.sprite(0, 0, "select");
-        this.selectSprite.setAlpha(1);
-        this.selectSprite.setVisible(false);
-
         // Add a hover plant sprite
         this.hoverPlantSprite = this.add.sprite(0, 0, "plants");
         this.hoverPlantSprite.setAlpha(0.5);
@@ -173,6 +180,12 @@ export class Game extends Scene {
                         tile.pixelY - TILE_HEIGHT
                     );
                     this.hoverPlantSprite.setVisible(true);
+                } else {
+                    if (this.plantLayer.hasTileAt(tileX, tileY)) {
+                        this.highlightSprite.setTintFill(0xffff00);
+                    } else {
+                        this.highlightSprite.clearTint();
+                    }
                 }
             }
         } else {
@@ -186,18 +199,44 @@ export class Game extends Scene {
             const worldPoint = pointer.positionToCamera(
                 this.cameras.main
             ) as Phaser.Math.Vector2;
-            const tileX = worldPointXYToTileXY(worldPoint).x;
-            const tileY = worldPointXYToTileXY(worldPoint).y;
+            this.selectedTileX = worldPointXYToTileXY(worldPoint).x;
+            this.selectedTileY = worldPointXYToTileXY(worldPoint).y;
 
-            if (this.tileLayer.hasTileAt(tileX, tileY)) {
-                const tile = this.tileLayer.getTileAt(tileX, tileY);
+            if (
+                this.tileLayer.hasTileAt(this.selectedTileX, this.selectedTileY)
+            ) {
+                const tile = this.tileLayer.getTileAt(
+                    this.selectedTileX,
+                    this.selectedTileY
+                );
                 if (tile) {
                     if (this.selectedShopItemID != undefined) {
                         this.plantLayer.putTileAt(
                             this.selectedShopItemID,
-                            tileX,
-                            tileY
+                            this.selectedTileX,
+                            this.selectedTileY
                         );
+                    } else {
+                        if (
+                            this.plantLayer.hasTileAt(
+                                this.selectedTileX,
+                                this.selectedTileY
+                            )
+                        ) {
+                            const plantTile = this.plantLayer.getTileAt(
+                                this.selectedTileX,
+                                this.selectedTileY
+                            );
+                            if (plantTile) {
+                                this.sellButton.setPosition(
+                                    plantTile.pixelX,
+                                    plantTile.pixelY + 100
+                                );
+                                this.sellButton.setVisible(true);
+                            }
+                        } else {
+                            this.sellButton.setVisible(false);
+                        }
                     }
                 }
             }

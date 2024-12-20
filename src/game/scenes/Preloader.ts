@@ -30,7 +30,7 @@ export class Preloader extends Scene {
         this.load.image("tiles", "assets/tiles/128x96 Tiles.png");
         this.load.image("plants", "assets/tiles/128x256 Trees.png");
         this.load.image("highlight", "assets/tiles/tile-outline-blue.png");
-        this.load.image("select", "assets/tiles/tile-outline-yellow.png");
+        this.load.image("star", "assets/star.png");
 
         this.loadPlants();
     }
