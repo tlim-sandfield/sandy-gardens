@@ -13,7 +13,7 @@ export default function zoomAndScrollCamera({
     const MOVEMENT_SPEED = 50 / camera.zoom;
 
     const keyCtrl = input?.keyboard?.addKey(
-        Phaser.Input.Keyboard.KeyCodes.CTRL
+        Phaser.Input.Keyboard.KeyCodes.CTRL,
     );
 
     if (keyCtrl?.isDown) {

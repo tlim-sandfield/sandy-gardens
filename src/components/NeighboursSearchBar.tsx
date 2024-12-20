@@ -28,12 +28,12 @@ export default function NeighboursSearchBar({
         if (newInputValue === "") {
             initialListRef.current = randomiseAndShortenList(
                 allAddableNames,
-                5
+                5,
             );
             setSearchList(initialListRef.current);
         } else {
             const filteredList = allAddableNames.filter((person) =>
-                person.toLowerCase().includes(newInputValue.toLowerCase())
+                person.toLowerCase().includes(newInputValue.toLowerCase()),
             );
             setSearchList(filteredList);
         }

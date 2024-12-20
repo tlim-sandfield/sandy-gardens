@@ -1,12 +1,8 @@
-interface ShopItemProps {
-    name: string;
-    src: string;
-    price: number;
-}
+import ShopItem from "@/types/ShopItem";
 
-export default function ShopItem({ name, src, price }: ShopItemProps) {
+export default function ShopItemCard({ name, src, price }: ShopItem) {
     return (
-        <div className="shop-item">
+        <div>
             <img className="item-img" src={src} alt="Item" />
             <div className="shop-item-info">
                 <h4>{name}</h4>

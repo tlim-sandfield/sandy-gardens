@@ -28,9 +28,11 @@ export class Preloader extends Scene {
         //  Load the assets for the game
         this.load.tilemapTiledJSON("map", "assets/tiles/map.json");
         this.load.image("tiles", "assets/tiles/128x96 Tiles.png");
-        this.load.image("trees", "assets/tiles/128x256 Trees.png");
+        this.load.image("plants", "assets/tiles/128x256 Trees.png");
         this.load.image("highlight", "assets/tiles/tile-outline-blue.png");
-        this.load.image("select", "assets/tiles/tile-outline-yellow.png");
+        this.load.image("star", "assets/star.png");
+
+        this.loadPlants();
     }
 
     create() {
@@ -39,5 +41,20 @@ export class Preloader extends Scene {
 
         //  Move to the Game. You could also swap this for a Scene Transition, such as a camera fade.
         this.scene.start("Game");
+    }
+
+    loadPlants() {
+        this.load.image("plant_91", "assets/plants/0.png");
+        this.load.image("plant_92", "assets/plants/1.png");
+        this.load.image("plant_93", "assets/plants/2.png");
+        this.load.image("plant_94", "assets/plants/3.png");
+        this.load.image("plant_95", "assets/plants/4.png");
+        this.load.image("plant_96", "assets/plants/5.png");
+        this.load.image("plant_97", "assets/plants/6.png");
+        this.load.image("plant_98", "assets/plants/7.png");
+        this.load.image("plant_99", "assets/plants/8.png");
+        this.load.image("plant_100", "assets/plants/9.png");
+        this.load.image("plant_101", "assets/plants/10.png");
+        this.load.image("plant_102", "assets/plants/11.png");
     }
 }

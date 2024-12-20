@@ -12,7 +12,7 @@ export default function panCameraSpaceBar({
     pointer,
 }: PanCameraProps) {
     const keySpace = input?.keyboard?.addKey(
-        Phaser.Input.Keyboard.KeyCodes.SPACE
+        Phaser.Input.Keyboard.KeyCodes.SPACE,
     );
 
     if (pointer.leftButtonDown() && keySpace?.isDown) {

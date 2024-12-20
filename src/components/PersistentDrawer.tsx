@@ -98,7 +98,7 @@ export default function PersistentDrawer({
                                     href={href}
                                     className={
                                         translatePathnameToLabel(
-                                            currentRoute
+                                            currentRoute,
                                         ) === label
                                             ? "drawer-active"
                                             : ""
@@ -106,7 +106,7 @@ export default function PersistentDrawer({
                                     onClick={() =>
                                         localStorage.setItem(
                                             "currentPage",
-                                            label
+                                            label,
                                         )
                                     }
                                 >

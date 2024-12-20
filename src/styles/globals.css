@@ -211,7 +211,7 @@ ol {
     margin-top: 20px;
     padding: 10px;
     overflow-y: auto;
-    height: 60%;
+    height: 80%;
 }
 
 .shop-item {
@@ -221,6 +221,11 @@ ol {
 
     &:hover {
         box-shadow: 0 0 0 1px #4854dc;
+    }
+
+    &.selected {
+        box-shadow: 0 0 0 2px #4854dc;
+        background-color: lightblue;
     }
 }
 
