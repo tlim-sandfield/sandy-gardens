@@ -14,7 +14,8 @@ export default function HelpContent() {
                     <h3>Movement Controls</h3>
                     <p>
                         <strong>Scroll wheel:</strong> scroll up and down <br />
-                        <strong>CTRL + scroll wheel:</strong> zoom in and out <br />
+                        <strong>CTRL + scroll wheel:</strong> zoom in and out{" "}
+                        <br />
                         <strong>SPACE + left click and drag:</strong> pan the
                         camera <br />
                         <strong>Scroll button click and drag:</strong> pan the

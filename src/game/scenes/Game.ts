@@ -216,29 +216,30 @@ export class Game extends Scene {
                             this.selectedTileX,
                             this.selectedTileY
                         );
-                    } else {
-                        if (
-                            this.plantLayer.hasTileAt(
-                                this.selectedTileX,
-                                this.selectedTileY
-                            )
-                        ) {
-                            const plantTile = this.plantLayer.getTileAt(
-                                this.selectedTileX,
-                                this.selectedTileY
-                            );
-                            if (plantTile) {
-                                this.sellButton.setPosition(
-                                    plantTile.pixelX,
-                                    plantTile.pixelY + 100
-                                );
-                                this.sellButton.setVisible(true);
-                            }
-                        } else {
-                            this.sellButton.setVisible(false);
-                        }
                     }
                 }
+            }
+
+            if (
+                this.selectedShopItemID == undefined &&
+                this.plantLayer.hasTileAt(
+                    this.selectedTileX,
+                    this.selectedTileY
+                )
+            ) {
+                const plantTile = this.plantLayer.getTileAt(
+                    this.selectedTileX,
+                    this.selectedTileY
+                );
+                if (plantTile) {
+                    this.sellButton.setPosition(
+                        plantTile.pixelX,
+                        plantTile.pixelY + 10
+                    );
+                    this.sellButton.setVisible(true);
+                }
+            } else {
+                this.sellButton.setVisible(false);
             }
         }
     }
