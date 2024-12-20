@@ -58,7 +58,7 @@ export class Game extends Scene {
             );
             this.hoverPlantSprite.setAlpha(0.5);
 
-            if (itemID && this.highlightSprite.visible == true) {
+            if (itemID != undefined && this.highlightSprite.visible == true) {
                 this.hoverPlantSprite.setVisible(true);
             } else {
                 this.hoverPlantSprite.setVisible(false);
@@ -167,7 +167,7 @@ export class Game extends Scene {
                 );
                 this.highlightSprite.setVisible(true);
 
-                if (this.selectedShopItemID) {
+                if (this.selectedShopItemID != undefined) {
                     this.hoverPlantSprite.setPosition(
                         tile.pixelX,
                         tile.pixelY - TILE_HEIGHT
@@ -192,9 +192,9 @@ export class Game extends Scene {
             if (this.tileLayer.hasTileAt(tileX, tileY)) {
                 const tile = this.tileLayer.getTileAt(tileX, tileY);
                 if (tile) {
-                    if (this.selectedShopItemID) {
+                    if (this.selectedShopItemID != undefined) {
                         this.plantLayer.putTileAt(
-                            this.selectedShopItemID + 91,
+                            this.selectedShopItemID,
                             tileX,
                             tileY
                         );

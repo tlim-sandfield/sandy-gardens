@@ -8,21 +8,21 @@ import { EventBus } from "@/game/EventBus";
 export default function Shop() {
     const [selectedItemID, setSelectedItemID] = useState<number>();
 
-    function handleSelectedItem(index: number) {
-        if (selectedItemID === index) {
+    function handleSelectedItem(itemID: number) {
+        if (selectedItemID === itemID) {
             setSelectedItemID(undefined);
             EventBus.emit("shop-item-selected", undefined);
             return;
         }
-        setSelectedItemID(index);
-        EventBus.emit("shop-item-selected", index);
+        setSelectedItemID(itemID);
+        EventBus.emit("shop-item-selected", itemID);
     }
 
     return (
         <div className="shop-content">
             <div className="current-item-container">
                 <h1>Shop</h1>
-                <h4>Currently:</h4>
+                {/* <h4>Currently:</h4>
                 <div className="shop-current-item">
                     <img
                         className="item-img"
@@ -35,19 +35,20 @@ export default function Shop() {
                         </Button>
                         <p>for 10 🪙</p>
                     </div>
-                </div>
+                </div> */}
             </div>
             <div className="shop-item-grid">
-                {shopItems.map((item, index) => (
+                {shopItems.map((item) => (
                     <div
-                        key={index}
+                        key={item.id}
                         className={`shop-item ${
-                            selectedItemID === index ? "selected" : ""
+                            selectedItemID === item.id ? "selected" : ""
                         }`}
-                        onClick={() => handleSelectedItem(index)}
+                        onClick={() => handleSelectedItem(item.id)}
                     >
                         <ShopItemCard
-                            key={index as Key}
+                            key={item.id as Key}
+                            id={item.id}
                             name={item.name}
                             src={item.src}
                             price={item.price}

@@ -44,10 +44,17 @@ export class Preloader extends Scene {
     }
 
     loadPlants() {
-        this.load.image("plant_0", "assets/plants/pine_tree.png");
-        this.load.image("plant_1", "assets/plants/palm_tree_1.png");
-        this.load.image("plant_2", "assets/plants/palm_tree_2.png");
-        this.load.image("plant_3", "assets/plants/4.png");
-        this.load.image("plant_4", "assets/plants/5.png");
+        this.load.image("plant_91", "assets/plants/0.png");
+        this.load.image("plant_92", "assets/plants/1.png");
+        this.load.image("plant_93", "assets/plants/2.png");
+        this.load.image("plant_94", "assets/plants/3.png");
+        this.load.image("plant_95", "assets/plants/4.png");
+        this.load.image("plant_96", "assets/plants/5.png");
+        this.load.image("plant_97", "assets/plants/6.png");
+        this.load.image("plant_98", "assets/plants/7.png");
+        this.load.image("plant_99", "assets/plants/8.png");
+        this.load.image("plant_100", "assets/plants/9.png");
+        this.load.image("plant_101", "assets/plants/10.png");
+        this.load.image("plant_102", "assets/plants/11.png");
     }
 }
