@@ -180,6 +180,13 @@ export class Game extends Scene {
                         tile.pixelY - TILE_HEIGHT
                     );
                     this.hoverPlantSprite.setVisible(true);
+                    if (this.plantLayer.hasTileAt(tileX, tileY)) {
+                        this.highlightSprite.setTintFill(0xff0000);
+                        this.hoverPlantSprite.setTintFill(0xff0000);
+                    } else {
+                        this.highlightSprite.clearTint();
+                        this.hoverPlantSprite.clearTint();
+                    }
                 } else {
                     if (this.plantLayer.hasTileAt(tileX, tileY)) {
                         this.highlightSprite.setTintFill(0xffff00);
@@ -211,33 +218,33 @@ export class Game extends Scene {
                 );
                 if (tile) {
                     if (this.selectedShopItemID != undefined) {
-                        this.plantLayer.putTileAt(
-                            this.selectedShopItemID,
-                            this.selectedTileX,
-                            this.selectedTileY
-                        );
+                        if (
+                            !this.plantLayer.hasTileAt(
+                                this.selectedTileX,
+                                this.selectedTileY
+                            )
+                        ) {
+                            this.plantLayer.putTileAt(
+                                this.selectedShopItemID,
+                                this.selectedTileX,
+                                this.selectedTileY
+                            );
+                        }
                     }
                 }
             }
 
-            if (
-                this.selectedShopItemID == undefined &&
-                this.plantLayer.hasTileAt(
-                    this.selectedTileX,
-                    this.selectedTileY
-                )
-            ) {
-                const plantTile = this.plantLayer.getTileAt(
-                    this.selectedTileX,
-                    this.selectedTileY
+            const plantTile = this.plantLayer.getTileAt(
+                this.selectedTileX,
+                this.selectedTileY
+            );
+
+            if (this.selectedShopItemID == undefined && plantTile) {
+                this.sellButton.setPosition(
+                    plantTile.pixelX,
+                    plantTile.pixelY + 10
                 );
-                if (plantTile) {
-                    this.sellButton.setPosition(
-                        plantTile.pixelX,
-                        plantTile.pixelY + 10
-                    );
-                    this.sellButton.setVisible(true);
-                }
+                this.sellButton.setVisible(true);
             } else {
                 this.sellButton.setVisible(false);
             }
